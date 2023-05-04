@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" styleClass="container" stylesheets="@../../../../java/com/example/klotski/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.klotski.Boardgame">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="50.0" prefHeight="536.0" prefWidth="430.0" styleClass="board">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="6.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="big_square" width="206.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="218.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="324.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="6.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="112.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="218.0" layoutY="112.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="6.0" layoutY="324.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="324.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="100.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="112.0" layoutY="324.0" stroke="BLACK" strokeType="INSIDE" styleClass="horizontal_rectangle" width="206.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="112.0" layoutY="430.0" stroke="BLACK" strokeType="INSIDE" styleClass="horizontal_rectangle" width="206.0" />
+         </children>
+      </AnchorPane>
+      <Label alignment="TOP_LEFT" layoutX="538.0" layoutY="50.0" prefHeight="36.0" prefWidth="212.0" styleClass="configuration_title" text="LEVEL 1" />
+      <Label layoutX="555.0" layoutY="105.0" styleClass="property_name" text="MOVES" />
+      <Label layoutX="618.0" layoutY="107.0" styleClass="property_value" text="3" />
+      <Button layoutX="538.0" layoutY="141.0" mnemonicParsing="false" styleClass="little_button" text="Undo" />
+      <Button layoutX="614.0" layoutY="141.0" mnemonicParsing="false" styleClass="little_button" text="Hint" />
+      <Button layoutX="683.0" layoutY="141.0" mnemonicParsing="false" styleClass="exit_button" text="Exit" />
+   </children>
+</AnchorPane>
