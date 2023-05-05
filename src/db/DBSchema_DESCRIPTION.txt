@@ -1,0 +1,36 @@
+================================ KLOTSKI DB DESCRIPTION ================================
+Sono presenti 2 tabelle: 
+
+1) DISPOSITION: contiene l'insieme delle disposizioni di gioco del Klotski. Possono essere 
+Sia quelle proposte per la partenza che quelle di salvataggio di fine partita. Per riconoscere 
+le due tipologie si utilizza il campo "original" che se impostato TRUE indica una configurazione di partenza, FLASE altrimenti. 
+Il campo "schema" rappresenta una codifica della configurazione di gioco tramite una stringa composta da numeri che rappresentano univocamente i blocchi e gli spazi della griglia di gioco. Tale griglia viene scritta concatenando ogni riga composta da 4 elementi ciascuna. Gli '0' rappresentano gli spazi vuoti 
+
+ESEMPIO: 
+
+1 2 2 3 
+1 2 2 3 
+4 5 5 6 
+4 7 8 6 
+9 0 0 10
+
+2) MATCHES: contiene lo storico delle partite che possiedono un nome, il numero dei punti e un puntatore alla disposizione salvata per l'ultima mossa effettuata.  
+L'ID del match rappresenta il nome del file da ricercare in locale su cui viene salvato lo storico. 
+
+================================ SCRIPT FOR https://dbdiagram.io/ ================================
+
+
+// tabella disposizioni: la disposizione
+Table DISPOSITION {
+  disposition_id integer [primary key]
+  schema varchar
+  original boolean 
+}
+Table MATCHES {
+  match_id integer [primary key]
+  name varchar
+  last_disposition integer //the disposition ID
+  score integer
+}
+
+Ref: MATCHES.last_disposition - DISPOSITION.disposition_id 
