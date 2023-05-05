@@ -1,6 +1,10 @@
-.menu-font{
-    -fx-font-family: "Dubai Medium";
-    -fx-font-size: 75;
+.menu-title
+{
+    -fx-alignment: center;
+    -fx-text-fill: #286287;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+    -fx-font-size: 50px;
 }
 
 /*COMMON*/
