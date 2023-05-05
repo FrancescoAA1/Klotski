@@ -4,7 +4,7 @@
     -fx-text-fill: #286287;
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
-    -fx-font-size: 50px;
+    -fx-font-size: 60px;
 }
 
 /*COMMON*/
@@ -21,14 +21,22 @@
 .board
 {
     -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #155175, #266f98);
+    -fx-background-radius: 4px;
 }
 
-.label{
+.move_number{
     -fx-background-color: #eff1f0;
+    -fx-background-radius: 2px;
     -fx-text-fill: #d37158;
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
+}
+
+.record{
+    -fx-text-fill: #f9b66f;
+    -fx-font-family: Ebrima;
+    -fx-font-size: 14px;
 }
 
 .big_square
