@@ -1,6 +1,6 @@
 package com.klotski.ViewControllers;
 
-import com.klotski.UI.*;
+import com.klotski.model.Direction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,18 +9,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.SwipeEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class GameController implements Initializable
+{
+    private static final int COLUMNS = 4;
+    private static final int ROWS = 5;
+
     @FXML
     private GridPane grid;
 
@@ -67,64 +68,6 @@ public class GameController implements Initializable {
 
 
 
-    private Pane current;
-    private double x;
-    private double y;
-    private boolean isDirectionDefined;
-    private boolean isVerticalDirection;
-
-    public void MouseDragged(MouseEvent event) {
-        double xf = event.getX();
-        double yf = event.getY();
-        System.out.println("D " + xf + " " + yf);
-
-        if(isDirectionDefined)
-            if(isVerticalDirection)
-                if(Math.abs(yf - y) < 100)
-                    current.setTranslateY(yf - y);
-                else
-                    current.setTranslateY(yf - y > 0 ? 100 : -100);
-            else
-                if(Math.abs(xf - x) < 100)
-                    current.setTranslateX(xf - x);
-                else
-                    current.setTranslateX(xf - x > 0 ? 100 : -100);
-        else
-            if(Math.abs(xf-x) > 10)
-            {
-                isDirectionDefined = true;
-                isVerticalDirection = false;
-            }
-            else if(Math.abs(yf-y) > 10)
-            {
-                isDirectionDefined = true;
-                isVerticalDirection = true;
-            }
-    }
-
-    public void MouseReleased(MouseEvent event)
-    {
-        if(!isDirectionDefined) return;
-
-        double xf = event.getX();
-        double yf = event.getY();
-        current.setTranslateY(0);
-        current.setTranslateX(0);
-
-        if(!isVerticalDirection)
-            GridPane.setColumnIndex( current,xf > x ? GridPane.getColumnIndex(current) + 1 : GridPane.getColumnIndex(current) - 1);
-        else
-            GridPane.setRowIndex( current,yf > y ? GridPane.getRowIndex(current) + 1 : GridPane.getRowIndex(current) - 1);
-
-    }
-
-    public void MousePressed(MouseEvent event)
-    {
-        current = (Pane)event.getSource();
-        isDirectionDefined = false;
-        x = event.getX();
-        y = event.getY();
-    }
 
     private void CreateSquare(int column, int row)
     {
@@ -150,12 +93,93 @@ public class GameController implements Initializable {
         square.getStyleClass().add("horizontal_rectangle");
         AssignBehaviour(square, column, row, 2, 1);
     }
-
     private void AssignBehaviour(Pane pane, int column, int row, int columnSpan, int rowSpan)
     {
         pane.setOnMousePressed(e -> MousePressed(e));
         pane.setOnMouseDragged(e -> MouseDragged((e)));
         pane.setOnMouseReleased(e -> MouseReleased(e));
-        grid.add(pane, row, column, rowSpan, columnSpan);
+        grid.add(pane, column, row, columnSpan, rowSpan);
+    }
+
+
+
+    /* HANDLING SLIDE INPUT FUNCTION */
+    private Pane current;           // Current block selected
+    private double initialX;        // X of the start point
+    private double initialY;        // Y of the start point
+    private boolean isDirectionDefined;     // Sliding direction defined
+    private Direction direction;            // Sliding direction
+    private static final int MAXOFFSET = 106;   // Max sliding
+    private static final int MINOFFSET = 10;    // Sliding sensibility
+
+
+    private void MouseDragged(MouseEvent event)
+    {
+        double xf = event.getScreenX();
+        double yf = event.getScreenY();
+
+        if(isDirectionDefined)
+            switch(direction)
+            {
+                case UP:
+                case DOWN:
+                    if(Math.abs(yf - initialY) < MAXOFFSET)
+                        current.setTranslateY(yf - initialY);
+                    else
+                        current.setTranslateY(yf - initialY > 0 ? MAXOFFSET : -MAXOFFSET);
+                    break;
+                case LEFT:
+                case RIGHT:
+                    if(Math.abs(xf - initialX) < MAXOFFSET)
+                        current.setTranslateX(xf - initialX);
+                    else
+                        current.setTranslateX(xf - initialX > 0 ? MAXOFFSET : -MAXOFFSET);
+                    break;
+            }
+        else
+            if(Math.abs(xf- initialX) > MINOFFSET)
+            {
+                isDirectionDefined = true;
+                direction = Direction.LEFT;
+            }
+            else if(Math.abs(yf- initialY) > MINOFFSET)
+            {
+                isDirectionDefined = true;
+                direction = Direction.UP;
+            }
+    }
+
+    private void MouseReleased(MouseEvent event)
+    {
+        if(!isDirectionDefined) return;
+
+        double xf = event.getScreenX();
+        double yf = event.getScreenY();
+        current.setTranslateY(0);
+        current.setTranslateX(0);
+
+        switch(direction)
+        {
+            case UP:
+            case DOWN:
+                int row = GridPane.getRowIndex(current) + ( yf > initialY ? 1 : - 1);
+                if(row >= 0 && row < ROWS - (GridPane.getRowSpan(current) - 1) )
+                    GridPane.setRowIndex( current, row);
+                break;
+            case LEFT:
+            case RIGHT:
+                int column = GridPane.getColumnIndex(current) + ( xf > initialX ? 1 : - 1);
+                if(column >= 0 && column < COLUMNS - (GridPane.getColumnSpan(current) - 1) )
+                    GridPane.setColumnIndex( current, column);
+                break;
+        }
+
+    }
+    private void MousePressed(MouseEvent event)
+    {
+        current = (Pane)event.getSource();
+        isDirectionDefined = false;
+        initialX = event.getScreenX();
+        initialY = event.getScreenY();
     }
 }
