@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="520.0" prefWidth="400.0" styleClass="disposition_container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.DispositionsController">
+<AnchorPane prefHeight="520.0" prefWidth="400.0" styleClass="disposition_container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.DispositionsListController">
    <children>
       <GridPane fx:id="grid" layoutX="20.0" layoutY="20.0" styleClass="disposition_grid" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -24,43 +18,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="disposition_card" GridPane.columnIndex="1">
-               <children>
-                  <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="15.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/miniatura.png" />
-                     </image>
-                  </ImageView>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="16.0" />
-               </GridPane.margin>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="disposition_card">
-               <children>
-                  <Label layoutX="42.0" layoutY="-12.0" prefHeight="24.0" prefWidth="24.0" styleClass="circle_label" text="1" textAlignment="CENTER" />
-                  <Button mnemonicParsing="false">
-                     <graphic>
-                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/miniatura.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="16.0" />
-               </GridPane.margin>
-            </Pane>
-         </children>
       </GridPane>
    </children>
 </AnchorPane>

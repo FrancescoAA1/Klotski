@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="750.0" prefWidth="550.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.DispositionsController">
+<AnchorPane prefHeight="750.0" prefWidth="550.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.GameController">
    <children>
       <AnchorPane layoutX="60.0" layoutY="134.0" prefHeight="536.0" prefWidth="430.0" styleClass="board">
          <children>
