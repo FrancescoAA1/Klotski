@@ -7,17 +7,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Game extends Application {
+public class ExitBanner extends Application{
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+    public void start(Stage stage) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/exit.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Klotski");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args){ launch();}
 }
