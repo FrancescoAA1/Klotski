@@ -1,3 +1,5 @@
+package com.klotski.model;
+
 /**
  * Possible movement directions
  */

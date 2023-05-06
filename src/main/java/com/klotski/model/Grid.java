@@ -1,3 +1,5 @@
+package com.klotski.model;
+
 /**
  * Represents the Grid for the Klotski game. It consists of an array of 10 real Blocks and of an array of 2 Blocks
  * that indicate the free spaces on the grid.

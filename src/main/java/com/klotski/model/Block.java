@@ -1,3 +1,5 @@
+package com.klotski.model;
+
 /**
  * Represents a Block of the Klotski game. Each block is represented by the position of its top-left corner, by
  * his width and by his height.

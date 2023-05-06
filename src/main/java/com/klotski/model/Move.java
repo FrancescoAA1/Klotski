@@ -1,3 +1,5 @@
+package com.klotski.model;
+
 /**
  * Represents a correct move made by the player
  */
@@ -34,7 +36,7 @@ public class Move
     }
     // override of toString in order to have the move pattern written to file
     @Override
-    public string toString()
+    public String toString()
     {
         return init.toString() + " " + end.toString() + " " + direction.toString();
     }
