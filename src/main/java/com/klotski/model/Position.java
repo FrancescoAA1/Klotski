@@ -5,6 +5,9 @@ package com.klotski.model;
  */
 public class Position
 {
+    private static final String STRING_SEPARATOR = ";";
+    private static final int X_PATTERN_STRING_POS = 0;
+    private static final int Y_PATTERN_STRING_POS = 1;
     private int x;
     private int y;
 
@@ -72,15 +75,27 @@ public class Position
 
     @Override
     public String toString() {
-        return Integer.toString(x) + Integer.toString(y);
+        return Integer.toString(x) + STRING_SEPARATOR + Integer.toString(y);
     }
     /**
      * Method to convert a string in a position in the format XY.
      * @param position: the string to be converted
+     * @return the object position
      */
-    public void convertToPosition(String position)
+    public static Position convertToPosition(String position)
     {
-
-
+        int x;
+        int y;
+        try
+        {
+            String[] tmp = position.split(STRING_SEPARATOR);
+            x = Integer.parseInt(tmp[X_PATTERN_STRING_POS]);
+            y = Integer.parseInt(tmp[Y_PATTERN_STRING_POS]);
+            return new Position(x,y);
+        }
+        catch(Exception e)
+        {
+            throw new IllegalArgumentException("Illegal format for position. The patter is X"+STRING_SEPARATOR+"Y");
+        }
     }
 }

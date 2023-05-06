@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -95,10 +93,11 @@ public class StateHandler {
     public boolean restoreStatus()
     {
         Scanner filereader = null;
+        recordings = new Stack<Move>();
 
         try
         {
-            // if file does not exists return false
+            // if file does not exist return false
             filereader = new Scanner(new FileReader(DEFAULT_PATH + fileName));
         }
         catch(IOException e)
@@ -110,7 +109,13 @@ public class StateHandler {
         {
             count = Integer.parseInt(filereader.nextLine());
 
+            while(filereader.hasNextLine())
+                recordings.push(Move.convertToMove(filereader.nextLine()));
 
+            // check if the number of moves is equals to counter
+            // if not, something went wrong (some lines have been lost)
+            if (count != recordings.size())
+                throw new IllegalArgumentException();
         }
         catch (Exception e)
         { return false; }
