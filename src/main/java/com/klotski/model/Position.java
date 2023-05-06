@@ -70,4 +70,17 @@ public class Position
         return (position.getX()==this.getX() && position.getY()==this.getY());
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(x) + Integer.toString(y);
+    }
+    /**
+     * Method to convert a string in a position in the format XY.
+     * @param position: the string to be converted
+     */
+    public void convertToPosition(String position)
+    {
+
+
+    }
 }

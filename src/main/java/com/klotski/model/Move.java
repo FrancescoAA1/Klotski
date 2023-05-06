@@ -5,7 +5,6 @@ package com.klotski.model;
  */
 public class Move
 {
-
     // value indicating the starting position of the moved block
     private Position init;
     // value indicating the final position of the moved block
