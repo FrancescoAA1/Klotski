@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="360.0" prefWidth="300.0" style="-fx-opacity: 1;" styleClass="container" stylesheets="@../../../../java/com/example/klotski/temp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.klotski.Boardgame">
+<AnchorPane prefHeight="360.0" prefWidth="300.0" style="-fx-opacity: 1;" styleClass="container" stylesheets="@../CSS/temp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.DispositionsController">
    <children>
       <Button layoutX="28.0" layoutY="298.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" styleClass="little_button" text="Replay" />
       <Button layoutX="167.0" layoutY="298.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" styleClass="exit_button" text="Next" />
       <Label alignment="TOP_LEFT" layoutX="18.0" layoutY="141.0" prefHeight="38.0" prefWidth="264.0" styleClass="configuration_title" text="LEVEL COMPLETED!" />
-      <AnchorPane layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="125.0" styleClass="board" stylesheets="@../../../../java/com/example/klotski/temp.css">
+      <AnchorPane layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="125.0" styleClass="board" stylesheets="@../CSS/temp.css">
          <children>
             <Label alignment="CENTER" layoutX="5.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
             <Label alignment="CENTER" layoutX="45.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
@@ -21,14 +21,14 @@
       </AnchorPane>
       <ImageView fitHeight="113.0" fitWidth="126.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Icons/trophy.png" />
+            <Image url="@../Icons/trophy.png" />
          </image>
       </ImageView>
       <HBox alignment="CENTER" layoutX="98.0" layoutY="250.0" prefHeight="35.0" prefWidth="119.0">
          <children>
             <ImageView fitHeight="35.0" fitWidth="59.0" layoutX="44.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/medal.png" />
+                  <Image url="@../Icons/medal.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="69.0" styleClass="record" text=" 14 HINTS!" />

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="504.0" prefWidth="420.0" styleClass="container" stylesheets="@../../../../java/com/example/klotski/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.klotski.Boardgame">
+<AnchorPane prefHeight="504.0" prefWidth="420.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.MainMenuController">
    <children>
       <AnchorPane layoutX="52.0" layoutY="119.0" prefHeight="324.0" prefWidth="324.0" styleClass="board">
          <children>
@@ -17,12 +17,12 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="215.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="100.0" />
             <ImageView fitHeight="117.0" fitWidth="124.0" layoutX="51.0" layoutY="51.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/play.png" />
+                  <Image url="@../Icons/play.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="82.0" fitWidth="100.0" layoutX="224.0" layoutY="68.0" opacity="0.77" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/loader.png" />
+                  <Image url="@../Icons/loader.png" />
                </image>
                <effect>
                   <ColorAdjust brightness="-0.37" />
@@ -30,7 +30,7 @@
             </ImageView>
             <ImageView fitHeight="82.0" fitWidth="100.0" layoutX="68.0" layoutY="227.0" opacity="0.85" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/programmer.png" />
+                  <Image url="@../Icons/programmer.png" />
                </image>
                <effect>
                   <ColorAdjust brightness="-0.15" />
@@ -38,7 +38,7 @@
             </ImageView>
             <ImageView fitHeight="66.0" fitWidth="65.0" layoutX="233.0" layoutY="236.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/exit.png" />
+                  <Image url="@../Icons/logout.png" />
                </image>
                <effect>
                   <ColorAdjust brightness="-0.49" />

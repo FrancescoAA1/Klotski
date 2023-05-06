@@ -1,8 +1,9 @@
-module com.example.klotski {
-    requires javafx.controls;
+module com.klotski {
     requires javafx.fxml;
+    requires javafx.controls;
             
                             
-    opens com.example.klotski to javafx.fxml;
-    exports com.example.klotski;
+    opens com.klotski to javafx.fxml;
+    opens com.klotski.ViewControllers to javafx.fxml;
+    exports com.klotski;
 }
