@@ -102,7 +102,7 @@ public class GameController implements Initializable {
             }
     }
 
-    public void MouseReleased(MouseEvent event) 
+    public void MouseReleased(MouseEvent event)
     {
         if(!isDirectionDefined) return;
 
