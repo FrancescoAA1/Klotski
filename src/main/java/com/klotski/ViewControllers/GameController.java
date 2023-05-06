@@ -8,8 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.SwipeEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -18,28 +21,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
-    public static final int CELLSIDE = 94;
-    public static final int CELLSPACING = 16;
-    public static final int GRIDWIDTH = 430;
-    public static final int GRIDHEIGHT = 536;
-    public static final int GRIDPADDING = 6;
-
     @FXML
     private GridPane grid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        BigSquare bs = new BigSquare();
-        grid.add(bs.GetControl(), 0, 0, 2, 2);
-        LittleSquare ls = new LittleSquare();
-        grid.add(ls.GetControl(), 2, 0, 1, 1);
-        LittleSquare ls1 = new LittleSquare();
-        grid.add(ls1.GetControl(), 0, 4, 1, 1);
-        VerticalRectangle vr = new VerticalRectangle();
-        HorizontalRectangle hr = new HorizontalRectangle();
-        grid.add(hr.GetControl(), 2, 2, 2,1);
-        grid.add(vr.GetControl(), 0, 2,1,2);
+        CreateBigSquare(1, 0);
+        CreateSquare(3,4);
+        CreateVerticalRectangle(3,0);
+        CreateHorizontalRectangle(0, 3);
     }
 
     public void UndoClicked(ActionEvent actionEvent)
@@ -48,12 +39,6 @@ public class GameController implements Initializable {
 
     public void ResetClicked(ActionEvent actionEvent)
     {
-    }
-
-    private void PositionBlock(Rectangle block, int column, int row)
-    {
-        AnchorPane.setTopAnchor(block, (double) (GRIDPADDING + (row) * CELLSPACING + row * CELLSIDE));
-        AnchorPane.setLeftAnchor(block, (double) ( GRIDPADDING + (column) * CELLSPACING + column * CELLSIDE));
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
@@ -78,5 +63,99 @@ public class GameController implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    private Pane current;
+    private double x;
+    private double y;
+    private boolean isDirectionDefined;
+    private boolean isVerticalDirection;
+
+    public void MouseDragged(MouseEvent event) {
+        double xf = event.getX();
+        double yf = event.getY();
+        System.out.println("D " + xf + " " + yf);
+
+        if(isDirectionDefined)
+            if(isVerticalDirection)
+                if(Math.abs(yf - y) < 100)
+                    current.setTranslateY(yf - y);
+                else
+                    current.setTranslateY(yf - y > 0 ? 100 : -100);
+            else
+                if(Math.abs(xf - x) < 100)
+                    current.setTranslateX(xf - x);
+                else
+                    current.setTranslateX(xf - x > 0 ? 100 : -100);
+        else
+            if(Math.abs(xf-x) > 10)
+            {
+                isDirectionDefined = true;
+                isVerticalDirection = false;
+            }
+            else if(Math.abs(yf-y) > 10)
+            {
+                isDirectionDefined = true;
+                isVerticalDirection = true;
+            }
+    }
+
+    public void MouseReleased(MouseEvent event) 
+    {
+        if(!isDirectionDefined) return;
+
+        double xf = event.getX();
+        double yf = event.getY();
+        current.setTranslateY(0);
+        current.setTranslateX(0);
+
+        if(!isVerticalDirection)
+            GridPane.setColumnIndex( current,xf > x ? GridPane.getColumnIndex(current) + 1 : GridPane.getColumnIndex(current) - 1);
+        else
+            GridPane.setRowIndex( current,yf > y ? GridPane.getRowIndex(current) + 1 : GridPane.getRowIndex(current) - 1);
+
+    }
+
+    public void MousePressed(MouseEvent event)
+    {
+        current = (Pane)event.getSource();
+        isDirectionDefined = false;
+        x = event.getX();
+        y = event.getY();
+    }
+
+    private void CreateSquare(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("square");
+        AssignBehaviour(square, column, row, 1, 1);
+    }
+    private void CreateBigSquare(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("big_square");
+        AssignBehaviour(square, column, row, 2, 2);
+    }
+    private void CreateVerticalRectangle(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("vertical_rectangle");
+        AssignBehaviour(square, column, row, 1, 2);
+    }
+    private void CreateHorizontalRectangle(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("horizontal_rectangle");
+        AssignBehaviour(square, column, row, 2, 1);
+    }
+
+    private void AssignBehaviour(Pane pane, int column, int row, int columnSpan, int rowSpan)
+    {
+        pane.setOnMousePressed(e -> MousePressed(e));
+        pane.setOnMouseDragged(e -> MouseDragged((e)));
+        pane.setOnMouseReleased(e -> MouseReleased(e));
+        grid.add(pane, row, column, rowSpan, columnSpan);
     }
 }
