@@ -42,9 +42,9 @@
             <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
          </padding></Button>
       <Button layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
-      <AnchorPane prefHeight="60.0" prefWidth="218.0" styleClass="board_bottom" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0">
+      <AnchorPane prefHeight="60.0" prefWidth="242.0" styleClass="board_bottom" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
          <children>
-            <HBox AnchorPane.leftAnchor="58.5" AnchorPane.rightAnchor="58.5" AnchorPane.topAnchor="12.0">
+            <HBox AnchorPane.leftAnchor="62.5" AnchorPane.rightAnchor="62.5" AnchorPane.topAnchor="12.0">
                <children>
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="6" textFill="#790d0d" />
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
@@ -55,7 +55,7 @@
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" />
                </children>
             </HBox>
-            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="10.0">
+            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="12.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,7 +67,7 @@
                   <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
                </padding>
             </Button>
-            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="10.0">
+            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="12.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
