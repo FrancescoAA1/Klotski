@@ -27,7 +27,7 @@
             <Pane prefHeight="0.0" prefWidth="154.0" GridPane.columnSpan="2">
                <children>
                   <Label layoutX="122.0" layoutY="10.0" styleClass="title" text="CREDITS" textAlignment="CENTER" textFill="WHITE" />
-                  <Button layoutX="2.0" layoutY="8.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/credits.css">
+                  <Button layoutX="2.0" layoutY="8.0" mnemonicParsing="false" onAction="#MenuClicked" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/credits.css">
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
