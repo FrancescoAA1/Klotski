@@ -8,6 +8,9 @@ public class Block
     private int width;
     private int height;
 
+    private final int MAIN_WIDTH = 2;
+    private final int MAIN_HEIGHT = 2;
+
     /**
      * Constructor of a Block.
      * @param pos initial position of the block.
@@ -25,7 +28,7 @@ public class Block
      */
     public boolean isSpecial()
     {
-        return (this.width==2 && this.height ==2);
+        return (this.width==MAIN_WIDTH && this.height == MAIN_HEIGHT);
     }
 
     /**
@@ -50,6 +53,14 @@ public class Block
     public Position getPos()
     {
         return this.pos;
+    }
+
+    /**
+     * @param pos position to set.
+     */
+    public void setPos(Position pos)
+    {
+        this.pos = pos;
     }
 
 }
