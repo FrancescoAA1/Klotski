@@ -1,5 +1,6 @@
 package com.klotski.ViewControllers;
 
+import com.klotski.Credits;
 import com.klotski.UI.DispositionCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

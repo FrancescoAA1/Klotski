@@ -56,7 +56,7 @@ public class DispositionCard {
         Pane card = new Pane();
         card.setPrefWidth(200);
         card.setPrefHeight(200);
-        card.getStyleClass().add("disposition_card");
+        card.getStyleClass().add("card");
         card.setOnMouseClicked(e -> onMouseClicked(e));
         fadeIn = new FadeTransition(Duration.millis(100));
         fadeIn.setNode(card);
