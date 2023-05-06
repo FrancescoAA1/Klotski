@@ -1,51 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="504.0" prefWidth="420.0" styleClass="container" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.MainMenuController">
    <children>
-      <AnchorPane layoutX="52.0" layoutY="119.0" prefHeight="324.0" prefWidth="324.0" styleClass="board">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="6.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="big_square" width="206.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="215.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="6.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" styleClass="horizontal_rectangle" width="206.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="206.0" layoutX="215.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="100.0" />
-            <ImageView fitHeight="117.0" fitWidth="124.0" layoutX="51.0" layoutY="51.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/play.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="100.0" layoutX="224.0" layoutY="68.0" opacity="0.77" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/loader.png" />
-               </image>
-               <effect>
-                  <ColorAdjust brightness="-0.37" />
-               </effect>
-            </ImageView>
-            <ImageView fitHeight="82.0" fitWidth="100.0" layoutX="68.0" layoutY="227.0" opacity="0.85" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/programmer.png" />
-               </image>
-               <effect>
-                  <ColorAdjust brightness="-0.15" />
-               </effect>
-            </ImageView>
-            <ImageView fitHeight="66.0" fitWidth="65.0" layoutX="233.0" layoutY="236.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/logout.png" />
-               </image>
-               <effect>
-                  <ColorAdjust brightness="-0.49" />
-               </effect>
-            </ImageView>
-         </children>
-      </AnchorPane>
       <Label layoutX="113.0" layoutY="33.0" styleClass="menu-title" text="KLOTSKI" />
+      <GridPane fx:id="menuGrid" hgap="8.0" prefHeight="330.0" prefWidth="330.0" styleClass="board" vgap="8.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="125.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane onMouseClicked="#StartGameClicked" prefHeight="211.0" prefWidth="211.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="211.0" stroke="BLACK" strokeType="INSIDE" styleClass="big_square" width="211.0" />
+                  <ImageView fitHeight="211.0" fitWidth="211.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/play.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane onMouseClicked="#LoadGameClicked" prefHeight="211.0" prefWidth="101.0" GridPane.columnIndex="2" GridPane.rowSpan="2">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="211.0" stroke="BLACK" strokeType="INSIDE" styleClass="vertical_rectangle" width="101.0" />
+                  <ImageView fitHeight="211.0" fitWidth="101.0" layoutY="50.0" opacity="0.77" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/loader.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="-0.37" />
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane onMouseClicked="#CreditsClicked" prefHeight="101.0" prefWidth="211.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="101.0" stroke="BLACK" strokeType="INSIDE" styleClass="horizontal_rectangle" width="211.0" />
+                  <ImageView fitHeight="101.0" fitWidth="211.0" opacity="0.85" pickOnBounds="true" preserveRatio="true" x="50.0">
+                     <image>
+                        <Image url="@../Icons/programmer.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="-0.15" />
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane onMouseClicked="#ExitClicked" prefHeight="101.0" prefWidth="101.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="101.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="101.0" />
+                  <ImageView fitHeight="101.0" fitWidth="101.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/logout.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="-0.49" />
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+         <padding>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </padding>
+      </GridPane>
    </children>
 </AnchorPane>
