@@ -1,13 +1,14 @@
 package com.klotski.UI;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public class VerticalRectangle extends KlotskiBlock
 {
     public VerticalRectangle() { super(1,2); }
-    protected Rectangle GenerateControl()
+    protected Pane GenerateControl()
     {
-        Rectangle rect = super.GenerateControl();
+        Pane rect = super.GenerateControl();
         rect.getStyleClass().add("vertical_rectangle");
         return rect;
     }

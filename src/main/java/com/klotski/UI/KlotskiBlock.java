@@ -1,5 +1,6 @@
 package com.klotski.UI;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import static com.klotski.ViewControllers.GameController.CELLSIDE;
 import static com.klotski.ViewControllers.GameController.CELLSPACING;
@@ -11,7 +12,7 @@ public class KlotskiBlock
 
     public int getXscale() { return Xscale; }
     public int geYscale() { return Yscale; }
-    Rectangle control;
+    Pane control;
 
     public KlotskiBlock(int xScale, int yScale)
     {
@@ -20,18 +21,14 @@ public class KlotskiBlock
         control = GenerateControl();
     }
 
-    protected Rectangle GenerateControl()
+    protected Pane GenerateControl()
     {
-        Rectangle rect = new Rectangle();
-        rect.setWidth(CELLSIDE*Xscale);
-        rect.setHeight(CELLSIDE*Yscale);
-        //rect.setWidth(CELLSIDE*Xscale + (Xscale - 1)*CELLSPACING);
-        //rect.setHeight(CELLSIDE*Yscale + (Yscale - 1)*CELLSPACING);
+        Pane rect = new Pane();
 
         return rect;
     }
 
-    public Rectangle GetControl()
+    public Pane GetControl()
     {
         return control;
     }

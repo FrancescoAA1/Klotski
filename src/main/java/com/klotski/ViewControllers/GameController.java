@@ -1,9 +1,6 @@
 package com.klotski.ViewControllers;
 
-import com.klotski.UI.BigSquare;
-import com.klotski.UI.HorizontalRectangle;
-import com.klotski.UI.LittleSquare;
-import com.klotski.UI.VerticalRectangle;
+import com.klotski.UI.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -20,8 +18,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
-    public static final int CELLSIDE = 100;
-    public static final int CELLSPACING = 6;
+    public static final int CELLSIDE = 94;
+    public static final int CELLSPACING = 16;
     public static final int GRIDWIDTH = 430;
     public static final int GRIDHEIGHT = 536;
     public static final int GRIDPADDING = 6;
@@ -35,7 +33,9 @@ public class GameController implements Initializable {
         BigSquare bs = new BigSquare();
         grid.add(bs.GetControl(), 0, 0, 2, 2);
         LittleSquare ls = new LittleSquare();
-        grid.add(ls.GetControl(), 2, 0,1,1);
+        grid.add(ls.GetControl(), 2, 0, 1, 1);
+        LittleSquare ls1 = new LittleSquare();
+        grid.add(ls1.GetControl(), 0, 4, 1, 1);
         VerticalRectangle vr = new VerticalRectangle();
         HorizontalRectangle hr = new HorizontalRectangle();
         grid.add(hr.GetControl(), 2, 2, 2,1);
@@ -52,8 +52,8 @@ public class GameController implements Initializable {
 
     private void PositionBlock(Rectangle block, int column, int row)
     {
-        GridPane.setColumnIndex(block, column);
-        GridPane.setRowIndex(block, row);
+        AnchorPane.setTopAnchor(block, (double) (GRIDPADDING + (row) * CELLSPACING + row * CELLSIDE));
+        AnchorPane.setLeftAnchor(block, (double) ( GRIDPADDING + (column) * CELLSPACING + column * CELLSIDE));
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
