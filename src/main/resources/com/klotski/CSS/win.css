@@ -1,33 +1,20 @@
-.menu-title
-{
-    -fx-alignment: center;
-    -fx-text-fill: #286287;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 60px;
-}
-
 /*COMMON*/
 .container
 {
     -fx-background-color: #eff1f0;
 }
 
-
-
-
-
 /*BOARDGAME*/
 .board
 {
     -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #155175, #266f98);
-    -fx-background-radius: 4px;
+    -fx-background-radius: 12px;
 }
 
 .move_number{
     -fx-background-color: #eff1f0;
-    -fx-background-radius: 2px;
     -fx-text-fill: #d37158;
+    -fx-background-radius: 7px;
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
@@ -37,42 +24,6 @@
     -fx-text-fill: #f9b66f;
     -fx-font-family: Ebrima;
     -fx-font-size: 14px;
-}
-
-.big_square
-{
-    -fx-fill: #d37158;
-    -fx-arc-height: 14px;
-    -fx-arc-width: 14px;
-    -fx-stroke: linear-gradient(from 60% 0% to 90% 100%, #ec8161, #b1604f);
-    -fx-stroke-width: 6px;
-}
-
-.square
-{
-    -fx-fill: #faecd2;
-    -fx-arc-height: 14px;
-    -fx-arc-width: 14px;
-    -fx-stroke: linear-gradient(from 60% 0% to 90% 100%, #fff8e5, #dccaa4);
-    -fx-stroke-width: 6px;
-}
-
-.vertical_rectangle
-{
-    -fx-fill: #f9d3ac;
-    -fx-arc-height: 14px;
-    -fx-arc-width: 14px;
-    -fx-stroke: linear-gradient(from 0% 30% to 100% 50%, #fce2c1, #e8bb92);
-    -fx-stroke-width: 6px;
-}
-
-.horizontal_rectangle
-{
-    -fx-fill: #f9b66f;
-    -fx-arc-height: 14px;
-    -fx-arc-width: 14px;
-    -fx-stroke: linear-gradient(from 35% 0% to 75% 100%, #ffc386, #eca16a);
-    -fx-stroke-width: 6px;
 }
 
 .configuration_title
@@ -88,22 +39,6 @@
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
     -fx-font-size: 24px;
-}
-
-.property_name
-{
-    -fx-text-fill: #286287;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: lighter;
-    -fx-font-size: 16px;
-}
-
-.property_value
-{
-    -fx-text-fill: #286287;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
 }
 
 .little_button

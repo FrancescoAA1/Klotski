@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="360.0" prefWidth="300.0" style="-fx-opacity: 1;" styleClass="container" stylesheets="@../CSS/temp.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.VictoryController">
+<AnchorPane prefHeight="360.0" prefWidth="300.0" style="-fx-opacity: 1;" styleClass="container" stylesheets="@../CSS/win.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.VictoryController">
    <children>
       <Button layoutX="28.0" layoutY="298.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" styleClass="little_button" text="Replay" />
       <Button layoutX="167.0" layoutY="298.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" styleClass="exit_button" text="Next" />
       <Label alignment="TOP_LEFT" layoutX="18.0" layoutY="141.0" prefHeight="38.0" prefWidth="264.0" styleClass="configuration_title" text="LEVEL COMPLETED!" />
-      <AnchorPane layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="125.0" styleClass="board" stylesheets="@../CSS/temp.css">
+      <AnchorPane layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="125.0" styleClass="board" stylesheets="@../CSS/win.css">
          <children>
             <Label alignment="CENTER" layoutX="5.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
             <Label alignment="CENTER" layoutX="45.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
-            <Label alignment="CENTER" layoutX="85.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="6" textFill="#790d0d" />
+            <Label alignment="CENTER" layoutX="85.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" stylesheets="@../CSS/win.css" text="6" textFill="#790d0d" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="113.0" fitWidth="126.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

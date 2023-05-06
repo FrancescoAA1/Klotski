@@ -47,8 +47,8 @@ public class MainMenuController implements Initializable {
 
     public void ExitClicked(MouseEvent event)
     {
-        Stage stage = (Stage) menuGrid.getScene().getWindow();
-        stage.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/exit.fxml"));
+        OpenWindow(fxmlLoader, "Credits", event);
     }
 
     private void OpenWindow(FXMLLoader fxmlLoader, String title, MouseEvent event)
