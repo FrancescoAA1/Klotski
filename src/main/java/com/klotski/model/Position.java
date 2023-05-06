@@ -1,3 +1,5 @@
+package com.klotski.model;
+
 /**
  * Represents a Position as a set of (x,y) coordinates
  */
