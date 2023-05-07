@@ -29,8 +29,8 @@ public class SavedController implements Initializable {
     {
         SavedGame s = new SavedGame(getClass().getResource("/com/klotski/Images/m1.png").getPath(), 23, new Date(2023, 8, 2), true);
         SavedGame s1 = new SavedGame(getClass().getResource("/com/klotski/Images/m2.png").getPath(), 23, new Date(2023, 8, 2), true);
-        grid.add(s.getControl(), 0,2);
-        grid.add(s1.getControl(), 0,3);
+        grid.add(s.getControl(), 0,0);
+        grid.add(s1.getControl(), 0,1);
     }
 
     public void MenuClicked(ActionEvent actionEvent)

@@ -7,51 +7,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="480.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/saved.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.SavedController">
-   <children>
-      <GridPane fx:id="grid" layoutX="20.0" layoutY="20.0" styleClass="grid" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+<AnchorPane prefHeight="520.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/saved.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.SavedController">
+<children>
+    <GridPane fx:id="grid" layoutX="20.0" layoutY="20.0" styleClass="grid" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Pane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="98.0" layoutY="10.0" styleClass="title" text="SAVED GAMES" textAlignment="CENTER" textFill="WHITE" />
-                  <Button layoutX="-2.0" layoutY="8.0" mnemonicParsing="false" onAction="#MenuClicked" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/credits.css">
-                     <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Icons/black-triangular-arrowhead-pointing-to-left-direction.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fitHeight="80.0" layoutX="25.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/m1.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="109.0" layoutY="14.0" text="NUMERO MOSSE: 23" textFill="WHITE" />
-                  <Label layoutX="109.0" layoutY="37.0" text="DATA: 23/09/2023" textFill="WHITE" />
-                  <Label layoutX="109.0" layoutY="59.0" text="TERMINATO" textFill="WHITE" />
-               </children>
-            </Pane>
-         </children>
-      </GridPane>
-   </children>
+    </GridPane>
+    <Label layoutX="116.0" layoutY="20.0" prefHeight="22.0" prefWidth="128.0" styleClass="title" text="SAVED GAMES" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="20.0" />
+      <Button layoutX="20.0" layoutY="19.0" mnemonicParsing="false" onAction="#MenuClicked" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/credits.css">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/black-triangular-arrowhead-pointing-to-left-direction.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+</children>
 </AnchorPane>
