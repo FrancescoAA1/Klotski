@@ -13,13 +13,13 @@ public class Grid
     /**
      * WIN_POS represents the position that the main block must have in order to win the game.
      */
-    private final Position WIN_POS = new Position(1,2);
-    private final int GRID_WIDTH = 4;
-    private final int GRID_HEIGHT = 5;
-    private final int BLOCK_NUMBER = 10;
-    private final int FREE_BLOCK_NUMBER = 2;
-    private final int MIN_X = 0;
-    private final int MIN_Y = 0;
+    private static final Position WIN_POS = new Position(1,2);
+    private static final int GRID_WIDTH = 4;
+    private static final int GRID_HEIGHT = 5;
+    private static final int BLOCK_NUMBER = 10;
+    private static final int FREE_BLOCK_NUMBER = 2;
+    private static final int MIN_X = 0;
+    private static final int MIN_Y = 0;
 
     /**
      * Constructor of a Grid. It creates the two arrays of Blocks.
@@ -31,11 +31,24 @@ public class Grid
         counter = 0;
     }
 
+    /**
+     * Method that moves a block in the specified direction if the movement is valid.
+     * @param block block that is moving.
+     * @param direction direction of the block that is moving.
+     * @return true if the move is done, otherwise it returns false.
+     */
     public boolean move(Block block, Direction direction)
     {
         Position block_pos = block.getPos();
         int block_x = block_pos.getX();
         int block_y = block_pos.getY();
+
+        //check if the target is inside the grid
+        Position[] crit = getCritical(block,direction);
+        if(!isValid(crit[0]) || !isValid(crit[1]))
+        {
+            return false;
+        }
 
         switch (direction) {
             case UP:
@@ -56,8 +69,8 @@ public class Grid
         {
             return false;
         }
-        block.setPos(new_pos);
         moveFree(block,direction);
+        block.setPos(new_pos);
 
         return true;
     }
@@ -77,7 +90,7 @@ public class Grid
 
         Position[] crit = getCritical(block,direction);
 
-        //terget coordinates of the free block
+        //target coordinates of the free block
         int free_x1;
         int free_y1;
         //if the block is not 1x1 there might be more free blocks to move
@@ -100,7 +113,7 @@ public class Grid
                     dy1 = -1;
                     dy2 = -1;
                 }
-                //need to check 2 blocks
+                //need to move 2 free blocks
                 if(block_width != 1)
                 {
                     dx2++;
@@ -109,7 +122,7 @@ public class Grid
             case DOWN:
                 //the y coord of the blocks is the same of the current y coord of the block
 
-                //need to check 2 blocks
+                //need to move 2 free blocks
                 if(block_width != 1)
                 {
                     dx2++;
@@ -120,8 +133,8 @@ public class Grid
 
                 if(block_width != 1)
                 {
-                    dx1 = +1;
-                    dx2 = +1;
+                    dx1 = 1;
+                    dx2 = 1;
                 }
                 if(block_height != 1)
                 {
@@ -145,7 +158,6 @@ public class Grid
         free_y2 = block_y + dy2;
         Position free2_pos = new Position(free_x2,free_y2);
 
-
         //Need to move only 1 free block.
         if(crit[0] == crit[1])
         {
@@ -158,8 +170,8 @@ public class Grid
             }
         } else
         {
-            free[0].setPos(crit[0]);
-            free[1].setPos(crit[1]);
+            free[0].setPos(free1_pos);
+            free[1].setPos(free2_pos);
         }
         return;
     }

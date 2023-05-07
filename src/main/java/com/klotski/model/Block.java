@@ -7,11 +7,11 @@ package com.klotski.model;
 public class Block
 {
     private Position pos;
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
-    private final int MAIN_WIDTH = 2;
-    private final int MAIN_HEIGHT = 2;
+    private static final int MAIN_WIDTH = 2;
+    private static final int MAIN_HEIGHT = 2;
 
     /**
      * Constructor of a Block.
