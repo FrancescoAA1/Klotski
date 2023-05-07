@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="504.0" prefWidth="420.0" styleClass="container" stylesheets="@../CSS/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.MainMenuController">
+<AnchorPane prefHeight="504.0" prefWidth="420.0" styleClass="container" stylesheets="@../CSS/menu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.MainMenuController">
    <children>
       <Label layoutX="113.0" layoutY="33.0" styleClass="menu-title" text="KLOTSKI" />
       <GridPane fx:id="menuGrid" hgap="6.0" prefHeight="330.0" prefWidth="330.0" styleClass="board" vgap="6.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="125.0">
@@ -26,9 +26,9 @@
           <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane onMouseClicked="#StartGameClicked" prefHeight="211.0" prefWidth="211.0" styleClass="big_square" GridPane.columnSpan="2" GridPane.rowSpan="2">
+            <Pane onMouseClicked="#StartGameClicked" prefHeight="211.0" prefWidth="211.0" styleClass="big_square" stylesheets="@../CSS/menu.css" GridPane.columnSpan="2" GridPane.rowSpan="2">
                <children>
-                  <ImageView fitHeight="211.0" fitWidth="211.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="147.0" fitWidth="132.0" layoutX="39.0" layoutY="39.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="big_square">
                      <image>
                         <Image url="@../Icons/play.png" />
                      </image>
@@ -37,9 +37,9 @@
             </Pane>
             <Pane onMouseClicked="#LoadGameClicked" prefHeight="211.0" prefWidth="101.0" styleClass="vertical_rectangle" GridPane.columnIndex="2" GridPane.rowSpan="2">
                <children>
-                  <ImageView fitHeight="211.0" fitWidth="101.0" layoutY="50.0" opacity="0.77" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="88.0" fitWidth="83.0" layoutX="9.0" layoutY="63.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/loader.png" />
+                        <Image url="@../Icons/history.png" />
                      </image>
                      <effect>
                         <ColorAdjust brightness="-0.37" />
@@ -49,9 +49,9 @@
             </Pane>
             <Pane onMouseClicked="#CreditsClicked" prefHeight="101.0" prefWidth="211.0" styleClass="horizontal_rectangle" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="101.0" fitWidth="211.0" opacity="0.85" pickOnBounds="true" preserveRatio="true" x="50.0">
+                  <ImageView fitHeight="83.0" fitWidth="65.0" layoutX="22.0" layoutY="18.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" x="50.0">
                      <image>
-                        <Image url="@../Icons/programmer.png" />
+                        <Image url="@../Icons/web-development.png" />
                      </image>
                      <effect>
                         <ColorAdjust brightness="-0.15" />
@@ -61,7 +61,7 @@
             </Pane>
             <Pane onMouseClicked="#ExitClicked" prefHeight="101.0" prefWidth="101.0" styleClass="square" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <ImageView fitHeight="101.0" fitWidth="101.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="72.0" fitWidth="65.0" layoutX="18.0" layoutY="18.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Icons/logout.png" />
                      </image>

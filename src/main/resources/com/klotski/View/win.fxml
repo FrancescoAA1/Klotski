@@ -16,7 +16,7 @@
          <children>
             <Label alignment="CENTER" layoutX="5.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
             <Label alignment="CENTER" layoutX="45.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="0" />
-            <Label alignment="CENTER" layoutX="85.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" stylesheets="@../CSS/win.css" text="6" textFill="#790d0d" />
+            <Label alignment="CENTER" layoutX="85.0" layoutY="4.0" prefHeight="35.0" prefWidth="35.0" styleClass="move_number" text="6" textFill="#790d0d" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="113.0" fitWidth="126.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

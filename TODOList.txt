@@ -1,6 +1,13 @@
 ========= DIVISIONE TASK =========
 VIEW - CONTROLLER : Tomas e Francesco
 
+Restyling BoardGame
+Responsiveness all'aggiunta di numerose partite salvate e disposizioni
+Restilying Buttons
+Aggiornamento numero mosse
+Undo
+
+
 MODEL - DB: Mattia e Tommaso
 
 JDBC

@@ -28,5 +28,12 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
 }
 
+.label
+{
+    -fx-font-family: Ebrima;
+    -fx-font-size: 12px;
+    -fx-text-fill: #eff1f0;
+}
+
 
 

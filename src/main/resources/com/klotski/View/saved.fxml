@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="480.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/collections.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.SavedController">
+<AnchorPane prefHeight="480.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/saved.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.SavedController">
    <children>
       <GridPane fx:id="grid" layoutX="20.0" layoutY="20.0" styleClass="grid" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -37,6 +37,18 @@
                         </ImageView>
                      </graphic>
                   </Button>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="80.0" layoutX="25.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/m1.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="109.0" layoutY="14.0" text="NUMERO MOSSE: 23" textFill="WHITE" />
+                  <Label layoutX="109.0" layoutY="37.0" text="DATA: 23/09/2023" textFill="WHITE" />
+                  <Label layoutX="109.0" layoutY="59.0" text="TERMINATO" textFill="WHITE" />
                </children>
             </Pane>
          </children>
