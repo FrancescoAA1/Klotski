@@ -86,7 +86,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Icons/woman.png" />
+                              <Image url="@../Icons/man%20(3).png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="TOMAS LOVATO" />
