@@ -15,7 +15,7 @@ ESEMPIO:
 9 0 0 10
 
 2) MATCHES: contiene lo storico delle partite che possiedono un nome, il numero dei punti e un puntatore alla disposizione salvata per l'ultima mossa effettuata.  
-L'ID del match rappresenta il nome del file da ricercare in locale su cui viene salvato lo storico. 
+L'ID del match rappresenta il nome del file da ricercare in locale su cui viene salvato lo storico. il nome invece è una stringa contenente la data di creazione.
 
 ================================ SCRIPT FOR https://dbdiagram.io/ ================================
 
@@ -24,13 +24,14 @@ L'ID del match rappresenta il nome del file da ricercare in locale su cui viene 
 Table DISPOSITION {
   disposition_id integer [primary key]
   schema varchar
-  original boolean 
+  original boolean
 }
 Table MATCHES {
   match_id integer [primary key]
   name varchar
   last_disposition integer //the disposition ID
   score integer
+  terminated boolean
 }
 
 Ref: MATCHES.last_disposition - DISPOSITION.disposition_id 

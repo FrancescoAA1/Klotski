@@ -11,6 +11,11 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * Represents the object used to save the moves made by the user to file
+ */
+
 public class StateHandler {
 
     private final String DEFAULT_PATH= "/com/Data/MatchLogs/";

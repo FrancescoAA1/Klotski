@@ -1,5 +1,6 @@
 package com.klotski;
 
+import com.klotski.Controllers.DBConnector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,5 +19,9 @@ public class Victory extends Application{
         stage.show();
     }
 
-    public static void main(String[] args){ launch();}
+    public static void main(String[] args){
+        DBConnector test = new DBConnector();
+        test.Connect();
+        launch();
+    }
 }
