@@ -25,8 +25,10 @@ public class GameHandler
         {
             // Get the moving block
             Block current = findBlock(pos);
+            Move move = new Move(pos,dir);  //===AGGIUNTO===//
             // Check the validity of the move
-            if(grid.move(current, dir))
+            //if(grid.move(current, dir))  //===CAMBIATO===//
+            if(grid.move(current,move))  //===AGGIUNTO===//
             {
                 // Register move
                 return true;

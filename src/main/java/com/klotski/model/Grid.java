@@ -9,6 +9,7 @@ public class Grid
     private Block[] occupied;
     private Block[] free;
     private static int counter;
+    private static int size;
 
     /**
      * WIN_POS represents the position that the main block must have in order to win the game.
@@ -29,19 +30,18 @@ public class Grid
         occupied = new Block[BLOCK_NUMBER];
         free = new Block[FREE_BLOCK_NUMBER];
         counter = 0;
+        size = 0;
     }
 
     /**
      * Method that moves a block in the specified direction if the movement is valid.
      * @param block block that is moving.
-     * @param direction direction of the block that is moving.
+     * @param move move that the block is doing.
      * @return true if the move is done, otherwise it returns false.
      */
-    public boolean move(Block block, Direction direction)
+    public boolean move(Block block, Move move)
     {
-        Position block_pos = block.getPos();
-        int block_x = block_pos.getX();
-        int block_y = block_pos.getY();
+        Direction direction = move.getDirection();
 
         //check if the target is inside the grid
         Position[] crit = getCritical(block,direction);
@@ -50,27 +50,12 @@ public class Grid
             return false;
         }
 
-        switch (direction) {
-            case UP:
-                block_y++;
-                break;
-            case RIGHT:
-                block_x++;
-                break;
-            case DOWN:
-                block_y--;
-                break;
-            case LEFT:
-                block_x--;
-                break;
-        }
-        Position new_pos = new Position(block_x,block_y);
-        if(checkCollision(block,direction) || !isValid(new_pos))
+        if(checkCollision(block,direction) || !isValid(move.getEnd()))
         {
             return false;
         }
         moveFree(block,direction);
-        block.setPos(new_pos);
+        block.setPos(move.getEnd());
 
         return true;
     }
@@ -343,6 +328,16 @@ public class Grid
     public void makeEmpty()
     {
         counter = 0;
+    }
+
+    /**
+     * Method that adds a block in the occupied array.
+     * @param block block that is being added to the grid.
+     */
+    public void setBlock(Block block)
+    {
+        occupied[size] = block;
+        size++;
         return;
     }
 
