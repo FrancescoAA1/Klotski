@@ -20,8 +20,6 @@ public class Victory extends Application{
     }
 
     public static void main(String[] args){
-        DBConnector test = new DBConnector();
-        test.Connect();
         launch();
     }
 }
