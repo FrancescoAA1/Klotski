@@ -65,7 +65,7 @@ public class Grid
      * @param block block that is moving
      * @param direction direction of the block that is moving
      */
-    public void moveFree(Block block, Direction direction)
+    private void moveFree(Block block, Direction direction)
     {
         int block_width = block.getWidth();
         int block_height = block.getHeight();
@@ -167,7 +167,7 @@ public class Grid
      * @param direction direction of the block that is moving
      * @return an array of Positions that may be occupied by the moving block.
      */
-    public Position[] getCritical(Block block, Direction direction)
+    private Position[] getCritical(Block block, Direction direction)
     {
         int block_width = block.getWidth();
         int block_height = block.getHeight();
@@ -273,7 +273,7 @@ public class Grid
      * @param pos position to check.
      * @return true if the position is valid, otherwise it returns false.
      */
-    boolean isValid(Position pos)
+    private boolean isValid(Position pos)
     {
         return (pos.getX()>=MIN_X && pos.getX()<GRID_WIDTH && pos.getY()>MIN_Y && pos.getY()<=GRID_HEIGHT);
     }
@@ -281,7 +281,7 @@ public class Grid
      * Method to check whether the puzzle has been solved or not.
      * @return true if the main block is in the winning position, otherwise it returns false.
      */
-    boolean isSolved()
+    public boolean isSolved()
     {
         for(Block block : occupied)
         {
@@ -338,7 +338,16 @@ public class Grid
     {
         occupied[size] = block;
         size++;
-        return;
+    }
+
+    /**
+     * Method that adds blocks in the free array.
+     * @param block block that is being added to the grid.
+     */
+    public void setFreeBlock(Block block1, Block block2)
+    {
+        free[0] = block1;
+        free[1] = block2;
     }
 
 }

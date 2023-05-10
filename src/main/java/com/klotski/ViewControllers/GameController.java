@@ -2,8 +2,12 @@ package com.klotski.ViewControllers;
 
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.Axis;
+import com.klotski.model.Block;
 import com.klotski.model.Direction;
 import com.klotski.model.Position;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +19,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable
@@ -33,10 +40,34 @@ public class GameController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        CreateBigSquare(1, 0);
-        CreateSquare(3,4);
-        CreateVerticalRectangle(3,0);
-        CreateHorizontalRectangle(0, 3);
+        gameHandler = new GameHandler();
+        ArrayList<Block> blocks = gameHandler.getAllBlocks();
+
+        for (Block current: blocks)
+        {
+            if(current.isSpecial())
+                CreateBigSquare(current.getPos().getX(), current.getPos().getY());
+            else if (current.getWidth() == 2 && current.getHeight() == 1)
+                CreateHorizontalRectangle(current.getPos().getX(), current.getPos().getY());
+            else if (current.getWidth() == 1 && current.getHeight() == 2)
+                CreateVerticalRectangle(current.getPos().getX(), current.getPos().getY());
+            else
+                CreateSquare(current.getPos().getX(), current.getPos().getY());
+        }
+
+        // Set animations
+        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        xTranslateAnimation.setFromX(-3);
+        xTranslateAnimation.setToX(3);
+        xTranslateAnimation.setCycleCount(4);
+        xTranslateAnimation.setAutoReverse(true);
+        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
+        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        yTranslateAnimation.setFromY(-3);
+        yTranslateAnimation.setToY(3);
+        yTranslateAnimation.setCycleCount(4);
+        yTranslateAnimation.setAutoReverse(true);
+        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
     }
 
     public void UndoClicked(ActionEvent actionEvent)
@@ -72,7 +103,8 @@ public class GameController implements Initializable
     }
 
 
-
+    private TranslateTransition xTranslateAnimation;
+    private TranslateTransition yTranslateAnimation;
 
     private void CreateSquare(int column, int row)
     {
@@ -246,6 +278,11 @@ public class GameController implements Initializable
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
                     GridPane.setRowIndex( current, destination.getY());
                 }
+                else
+                {
+                    yTranslateAnimation.setNode(current);
+                    yTranslateAnimation.play();
+                }
                 break;
             }
             case HORIZONTAL:
@@ -259,6 +296,11 @@ public class GameController implements Initializable
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
                     GridPane.setColumnIndex( current, destination.getX());
+                }
+                else
+                {
+                    xTranslateAnimation.setNode(current);
+                    xTranslateAnimation.play();
                 }
                 break;
             }
