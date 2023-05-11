@@ -5,9 +5,7 @@ import com.klotski.UI.Axis;
 import com.klotski.model.Block;
 import com.klotski.model.Direction;
 import com.klotski.model.Position;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import com.klotski.model.Move;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,20 +27,29 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable
 {
-    private static final int COLUMNS = 4;
-    private static final int ROWS = 5;
+    /* VARS */
+    private GameHandler gameHandler;    // CONTROLLER object
 
-    private GameHandler gameHandler;
-
+    /* VIEW VARS */
     @FXML
     private GridPane grid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        // Initialize objects
         gameHandler = new GameHandler();
+
+        // Load dynamically blocks from controller.
+        loadKlotski();
+    }
+
+    private void loadKlotski()
+    {
+        // Get all blocks from CONTROLLER
         ArrayList<Block> blocks = gameHandler.getAllBlocks();
 
+        // Load all blocks in VIEW
         for (Block current: blocks)
         {
             if(current.isSpecial())
@@ -54,28 +61,43 @@ public class GameController implements Initializable
             else
                 CreateSquare(current.getPos().getX(), current.getPos().getY());
         }
-
-        // Set animations
-        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        xTranslateAnimation.setFromX(-3);
-        xTranslateAnimation.setToX(3);
-        xTranslateAnimation.setCycleCount(4);
-        xTranslateAnimation.setAutoReverse(true);
-        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
-        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        yTranslateAnimation.setFromY(-3);
-        yTranslateAnimation.setToY(3);
-        yTranslateAnimation.setCycleCount(4);
-        yTranslateAnimation.setAutoReverse(true);
-        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
     }
 
     public void UndoClicked(ActionEvent actionEvent)
     {
+        // Execute undo
+        if(gameHandler.undo())
+        {
+            // Get undo move
+            Move undo = gameHandler.getLastUndoMove();
+            // Get moved block
+            Position pos = undo.getInit();
+            current = null;
+            for(Node child : grid.getChildren())
+            {
+                if(GridPane.getColumnIndex(child) == pos.getX() && GridPane.getRowIndex(child) == pos.getY())
+                    current = (Pane)child;
+            }
+            // Set end position
+            if(current != null)
+            {
+                GridPane.setColumnIndex( current, undo.getEnd().getX());
+                GridPane.setRowIndex( current, undo.getEnd().getY());
+                startUndoAnimation(undo.getDirection(), current);
+            }
+        }
     }
 
     public void ResetClicked(ActionEvent actionEvent)
     {
+        // Unload all existing blocks
+        grid.getChildren().clear();
+
+        // Initialize objects
+        gameHandler = new GameHandler();
+
+        // Load dynamically blocks from controller.
+        loadKlotski();
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
@@ -101,10 +123,6 @@ public class GameController implements Initializable
         stage.setScene(scene);
         stage.show();
     }
-
-
-    private TranslateTransition xTranslateAnimation;
-    private TranslateTransition yTranslateAnimation;
 
     private void CreateSquare(int column, int row)
     {
@@ -149,8 +167,58 @@ public class GameController implements Initializable
     private static final int MAXOFFSET = 106;   // Max drag consented
     private static final int MINOFFSET = 10;    // Drag sensibility
     private boolean[] availability;             // Destinations availability
+    private TranslateTransition xTranslateAnimation;        // Animation for horizontal move-error
+    private TranslateTransition yTranslateAnimation;        // Animation for vertical move-error
+    private TranslateTransition undoTranslateAnimation;     // Animation for undo move
 
 
+    /**
+     * Initialize animations object.
+     */
+    private void initializeAnimations()
+    {
+        // X translation for move error
+        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        xTranslateAnimation.setFromX(-3);
+        xTranslateAnimation.setToX(3);
+        xTranslateAnimation.setCycleCount(4);
+        xTranslateAnimation.setAutoReverse(true);
+        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
+
+        // Y translation for move error
+        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        yTranslateAnimation.setFromY(-3);
+        yTranslateAnimation.setToY(3);
+        yTranslateAnimation.setCycleCount(4);
+        yTranslateAnimation.setAutoReverse(true);
+        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
+    }
+    private void startUndoAnimation(Direction undo, Pane control)
+    {
+        // UNDO translation
+        undoTranslateAnimation = new TranslateTransition(Duration.millis(150));
+        switch(undo)
+        {
+            case UP:
+                undoTranslateAnimation.setFromY(MAXOFFSET);
+                undoTranslateAnimation.setToY(0);
+                break;
+            case DOWN:
+                undoTranslateAnimation.setFromY(MAXOFFSET * -1);
+                undoTranslateAnimation.setToY(0);
+                break;
+            case LEFT:
+                undoTranslateAnimation.setFromX(MAXOFFSET);
+                undoTranslateAnimation.setToX(0);
+                break;
+            case RIGHT:
+                undoTranslateAnimation.setFromX(MAXOFFSET * -1);
+                undoTranslateAnimation.setToX(0);
+                break;
+        }
+        undoTranslateAnimation.setNode(control);
+        undoTranslateAnimation.playFromStart();
+    }
 
     /**
      * Event handler: handle drag started on a klotski block.
@@ -178,7 +246,6 @@ public class GameController implements Initializable
         availability[Direction.LEFT.ordinal()] = gameHandler.checkMove(currentPos, Direction.LEFT);
         availability[Direction.RIGHT.ordinal()] = gameHandler.checkMove(currentPos, Direction.RIGHT);
     }
-
 
     /**
      * Event handler: handle dragging on a klotski block.
@@ -240,7 +307,6 @@ public class GameController implements Initializable
                 direction = Axis.VERTICAL;
             }
     }
-
 
     /**
      * Event handler: handle drop of a klotski block.

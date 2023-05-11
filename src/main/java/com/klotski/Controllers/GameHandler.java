@@ -11,6 +11,7 @@ public class GameHandler
     Grid grid;
 
     ArrayList<Move> history;
+    Move lastUndoMove;
 
     public GameHandler()
     {
@@ -128,4 +129,54 @@ public class GameHandler
         return currentBlocks;
     }
 
+    public boolean undo()
+    {
+        // If there are no moves, exit
+        if(history.isEmpty())
+            return false;
+
+        // Get last move
+        Move last = history.get(history.size() - 1);
+        // Create new inverted move.
+        Move inverted = new Move(last.getEnd(), calculateOpposite(last.getDirection()));
+
+        try
+        {
+            // Get the moving block
+            Block current = findBlock(inverted.getInit());
+            // Execute move
+            if(grid.move(current,inverted))
+            {
+                // Remove canceled move
+                history.remove(history.size() - 1);
+                lastUndoMove = inverted;
+                return true;
+            }
+
+            // Cannot undo
+            return false;
+        }
+        catch (IllegalArgumentException e)
+        {
+            // Cannot undo
+            return false;
+        }
+    }
+
+    public Move getLastUndoMove()
+    {
+        return lastUndoMove;
+    }
+
+    private Direction calculateOpposite(Direction dir)
+    {
+        // Return opposite direction
+        switch(dir)
+        {
+            case UP: return Direction.DOWN;
+            case DOWN : return Direction.UP;
+            case LEFT: return Direction.RIGHT;
+            default: return Direction.LEFT;
+        }
+    }
 }
