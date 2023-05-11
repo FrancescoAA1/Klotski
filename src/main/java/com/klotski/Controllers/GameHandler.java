@@ -30,8 +30,8 @@ public class GameHandler
         currentGrid.setBlock(new Block(new Position(2,3),1,2));
         currentGrid.setBlock(new Block(new Position(2,1),1,1));
         currentGrid.setBlock(new Block(new Position(0,4),1,1));
-        currentGrid.setBlock(new Block(new Position(1,4),1,1));
         currentGrid.setBlock(new Block(new Position(0,3),2,1));
+        currentGrid.setBlock(new Block(new Position(1,4),1,1));
 
         currentGrid.setFreeBlock(new Block(new Position(3,0),1,1),
                 new Block(new Position(2,2),1,1));

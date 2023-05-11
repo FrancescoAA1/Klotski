@@ -299,7 +299,7 @@ public class Grid
      */
     public boolean hasNext()
     {
-        return (counter < occupied.length-1);
+        return (counter < size);
     }
 
     /**
