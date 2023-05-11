@@ -7,17 +7,14 @@ import java.util.List;
 
 public class GameHandler
 {
-    StateHandler status;
     Grid grid;
-
-    ArrayList<Move> history;
+    StateHandler history;
     Move lastUndoMove;
 
     public GameHandler()
     {
         grid = generateGrid();
-        status = new StateHandler("temp");
-        history = new ArrayList<Move>();
+        history = new StateHandler("temp.hst");
     }
 
     private Grid generateGrid()
@@ -54,7 +51,7 @@ public class GameHandler
             if(grid.move(current,move))
             {
                 // Register move
-                history.add(move);
+                history.pushMove(move);
                 return true;
             }
 
@@ -89,10 +86,10 @@ public class GameHandler
 
     public Position getPositionOfLastMovedBlock()
     {
-        if(history.isEmpty())
+        if(!history.hasState())
             throw new RuntimeException("Moves not ready. View cannot request last position.");
 
-        return history.get(history.size() - 1).getEnd();
+        return history.topMove().getEnd();
     }
 
     private Block findBlock(Position pos) throws IllegalArgumentException
@@ -132,11 +129,11 @@ public class GameHandler
     public boolean undo()
     {
         // If there are no moves, exit
-        if(history.isEmpty())
+        if(!history.hasState())
             return false;
 
         // Get last move
-        Move last = history.get(history.size() - 1);
+        Move last = history.topMove();
         // Create new inverted move.
         Move inverted = new Move(last.getEnd(), calculateOpposite(last.getDirection()));
 
@@ -148,7 +145,7 @@ public class GameHandler
             if(grid.move(current,inverted))
             {
                 // Remove canceled move
-                history.remove(history.size() - 1);
+                history.popMove();
                 lastUndoMove = inverted;
                 return true;
             }
@@ -178,5 +175,10 @@ public class GameHandler
             case LEFT: return Direction.RIGHT;
             default: return Direction.LEFT;
         }
+    }
+
+    public int getMoveCounter()
+    {
+        return history.getCount();
     }
 }

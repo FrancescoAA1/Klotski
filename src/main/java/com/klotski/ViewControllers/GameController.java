@@ -6,6 +6,7 @@ import com.klotski.model.Block;
 import com.klotski.model.Direction;
 import com.klotski.model.Position;
 import com.klotski.model.Move;
+import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -33,12 +35,19 @@ public class GameController implements Initializable
     /* VIEW VARS */
     @FXML
     private GridPane grid;
+    @FXML
+    private Label lblCounterUnit;
+    @FXML
+    private Label lblCounterTens;
+    @FXML
+    private Label lblCounterHundreds;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         // Initialize objects
         gameHandler = new GameHandler();
+        initializeAnimations();
 
         // Load dynamically blocks from controller.
         loadKlotski();
@@ -85,6 +94,9 @@ public class GameController implements Initializable
                 GridPane.setRowIndex( current, undo.getEnd().getY());
                 startUndoAnimation(undo.getDirection(), current);
             }
+
+            // Load counter
+            updateMoveCounter();
         }
     }
 
@@ -98,12 +110,21 @@ public class GameController implements Initializable
 
         // Load dynamically blocks from controller.
         loadKlotski();
+
+        // Load counter
+        updateMoveCounter();
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/dispositions.fxml"));
         OpenWindow(fxmlLoader, "Disposition", actionEvent);
+    }
+
+    public void HomeClicked(ActionEvent actionEvent)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/menu.fxml"));
+        OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
     public void NextBestMoveClicked(ActionEvent actionEvent) {
@@ -122,6 +143,15 @@ public class GameController implements Initializable
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void updateMoveCounter()
+    {
+        int count = gameHandler.getMoveCounter();
+
+        lblCounterUnit.setText(String.valueOf(count % 10));
+        lblCounterTens.setText(String.valueOf(count % 100  / 10));
+        lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
     }
 
     private void CreateSquare(int column, int row)
@@ -343,6 +373,9 @@ public class GameController implements Initializable
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
                     GridPane.setRowIndex( current, destination.getY());
+
+                    // Move Counter
+                    updateMoveCounter();
                 }
                 else
                 {
@@ -362,6 +395,9 @@ public class GameController implements Initializable
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
                     GridPane.setColumnIndex( current, destination.getX());
+
+                    // Move Counter
+                    updateMoveCounter();
                 }
                 else
                 {
