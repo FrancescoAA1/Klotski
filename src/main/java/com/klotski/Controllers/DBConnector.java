@@ -1,6 +1,8 @@
 package com.klotski.Controllers;
 
+import com.klotski.model.Disposition;
 import com.klotski.model.Match;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -58,7 +60,7 @@ public class DBConnector {
         }
         catch (Exception e )
         {
-            System.out.println(e.getMessage());
+            System.out.println("Unable to connect to teh local Klotski.db");
         }
     }
     /** Close the DB connection if it was opened
@@ -77,7 +79,7 @@ public class DBConnector {
      * @param match: the match to be saved
      * @return TRUE: if the DB INSERTION is correct, otherwise FALSE
      */
-    public boolean saveMatch(Match match)
+    public boolean saveMatch(Match match, Disposition disposition)
     {
         // if is not already connected to DB
         if(connector == null)
@@ -90,12 +92,11 @@ public class DBConnector {
         {
             PreparedStatement statement = connector.prepareStatement(querysql);
             statement.setString(1, match.getName());
-            statement.setString(2, match.getDisposition());
+            statement.setString(2, disposition.toString());
             statement.setInt(3, match.getScore());
             statement.setInt(4, match.isTerminated()?1:0);
             // run query
             statement.executeUpdate();
-
         }
         catch (SQLException e)
         {
@@ -104,38 +105,39 @@ public class DBConnector {
         return true;
     }
     /**
-     * This method is reserved to obtain all matches saved in DB
-     * @return the list of all saved matches or null if something went wrong
+     * This method is reserved to obtain all pair Match-LastDisposition saved in DB
+     * ordered by match_id that is autoincrement -> this is also a temporal order
+     * @return the list of Pair (Match, LastDisposition_ID) saved
+     * The ArrayList is null if something went wrong
      */
-    public ArrayList<Match> listAllRecordedMatches()
+    public ArrayList<Pair<Match,Integer>> listAllRecordedMatches()
     {
-        ArrayList<Match> matches = null;
+        ArrayList<Pair<Match,Integer>> matches = null;
 
         // if is not already connected to DB
         if(connector == null)
             connect();
         // I want to create the Query structure to select alla matches from DB
-        String querysql = "SELECT * FROM MATCHES";
+        String querysql = "SELECT name, disposition, score, terminated FROM MATCHES ORDER BY match_id";
 
         try
         {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql);
-            matches = new ArrayList<Match>();
+            matches = new ArrayList<Pair<Match,Integer>>();
             Match tmp = null;
-            while(result.next())
-            {
+
+            while(result.next()) {
                 // create a new Match from data recovered from DB
+                tmp = new Match(result.getString("name"));
+                tmp.setScore(result.getInt("score"));
 
-                tmp = new Match();
-                // to be continued...
-                // mettere l'id? ritorno dizionario?
-                //
+                if (result.getInt("terminated") == 1)
+                    tmp.terminate();
 
+                matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition_id")));
             }
-
-
         }
         catch (SQLException e)
         {
@@ -143,11 +145,9 @@ public class DBConnector {
         }
         return matches;
     }
-
-    public Match retriveMatch(int match_id)
+    public String getDisposition()
     {
-        Match match = null;
-        return match;
+        return null;
     }
 
 }

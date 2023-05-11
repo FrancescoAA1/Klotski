@@ -1,9 +1,10 @@
 CREATE TABLE "DISPOSITIONS"
 (
-    "disposition_id" INTEGER NOT NULL UNIQUE,
-    "schema"         TEXT    NOT NULL UNIQUE,
-    "original"       INTEGER NOT NULL,
-    PRIMARY KEY ("disposition_id")
+    "disposition_id"    INTEGER NOT NULL UNIQUE,
+    "schema"            TEXT    NOT NULL UNIQUE,
+    "original"          INTEGER NOT NULL,
+    "disposition_image" TEXT,
+    PRIMARY KEY ("disposition_id" AUTOINCREMENT)
 );
 
 CREATE TABLE "MATCHES"

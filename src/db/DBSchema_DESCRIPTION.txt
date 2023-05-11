@@ -25,6 +25,7 @@ Table DISPOSITION {
   disposition_id integer [primary key]
   schema varchar
   original boolean
+  disposition_image varchar
 }
 Table MATCHES {
   match_id integer [primary key]

@@ -17,8 +17,8 @@ public class Grid
     private static final Position WIN_POS = new Position(1,2);
     private static final int GRID_WIDTH = 4;
     private static final int GRID_HEIGHT = 5;
-    private static final int BLOCK_NUMBER = 10;
-    private static final int FREE_BLOCK_NUMBER = 2;
+    public static final int BLOCK_NUMBER = 10;
+    public static final int FREE_BLOCK_NUMBER = 2;
     private static final int MIN_X = 0;
     private static final int MIN_Y = 0;
 

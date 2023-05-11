@@ -6,28 +6,30 @@ import java.time.LocalDateTime;
  * Represents the object used to describe a Match
  */
 public class Match {
-
-    // describe the match's name and is automatically calculated using the current date
-    private LocalDateTime date;
     private int score;
     private boolean isTerminated;
-    private String disposition;
+    // describe the match's name and by default is automatically calculated using the current date
+    private String name;
+
+    public Match(String name)
+    {
+        isTerminated = false;
+        score = 0;
+        this.name = name;
+    }
 
     public Match()
     {
         isTerminated = false;
         score = 0;
         // obtain the current time
-        date = LocalDateTime.now();
+        name = LocalDateTime.now().toString();
     }
     public int getScore() {
         return score;
     }
     public String getName() {
-        return date.toString();
-    }
-    public String getDisposition() {
-        return disposition;
+        return name;
     }
     public boolean isTerminated() {
         return isTerminated;
@@ -42,8 +44,5 @@ public class Match {
     public void incrementScore()
     {
         score++;
-    }
-    public void setDisposition(String disposition) {
-        this.disposition = disposition;
     }
 }
