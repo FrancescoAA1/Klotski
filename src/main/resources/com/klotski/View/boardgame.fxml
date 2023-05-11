@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="715.0" prefWidth="530.0" styleClass="container" stylesheets="@../CSS/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.GameController">
    <children>
@@ -46,13 +48,22 @@
          <children>
             <HBox AnchorPane.leftAnchor="62.5" AnchorPane.rightAnchor="62.5" AnchorPane.topAnchor="12.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="6" textFill="#790d0d" />
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
+                  <Label fx:id="lblCounterHundreds" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" textFill="#790d0d" />
+                  <Label fx:id="lblCounterTens" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" />
+                  <Pane prefHeight="35.0" prefWidth="30.0" styleClass="move_number">
+                     <children>
+                        <Label fx:id="lblCounterUnit" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" />
+                        <Label fx:id="lblCounterUnitTemp" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </HBox>
             <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="12.0">

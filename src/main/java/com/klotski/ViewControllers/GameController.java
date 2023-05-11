@@ -39,6 +39,7 @@ public class GameController implements Initializable
     {
         // Initialize objects
         gameHandler = new GameHandler();
+        initializeAnimations();
 
         // Load dynamically blocks from controller.
         loadKlotski();
@@ -122,6 +123,12 @@ public class GameController implements Initializable
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void updateMoveCounter()
+    {
+        int count = gameHandler.getMoveCounter();
+
     }
 
     private void CreateSquare(int column, int row)
