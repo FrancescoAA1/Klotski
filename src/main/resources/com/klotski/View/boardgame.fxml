@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -18,7 +17,7 @@
    <children>
       <Label alignment="TOP_LEFT" layoutX="134.0" layoutY="29.0" prefHeight="38.0" prefWidth="282.0" styleClass="configuration_title" text="CONFIGURATION 1" AnchorPane.leftAnchor="124.0" />
       <Button layoutX="60.0" layoutY="657.0" mnemonicParsing="false" onAction="#UndoClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Undo" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="50.0" />
-      <Button layoutX="60.0" layoutY="28.0" mnemonicParsing="false" onAction="#ResetClicked" prefHeight="38.0" prefWidth="55.0" styleClass="top_button" AnchorPane.leftAnchor="50.0">
+      <Button layoutX="60.0" layoutY="28.0" mnemonicParsing="false" onAction="#HomeClicked" prefHeight="38.0" prefWidth="55.0" styleClass="top_button" AnchorPane.leftAnchor="50.0">
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="40.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -54,19 +53,14 @@
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Pane prefHeight="35.0" prefWidth="30.0" styleClass="move_number">
-                     <children>
-                        <Label fx:id="lblCounterUnit" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" />
-                        <Label fx:id="lblCounterUnitTemp" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
+                  <Label fx:id="lblCounterUnit" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
-            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="12.0">
+            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#ResetClicked" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="12.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
