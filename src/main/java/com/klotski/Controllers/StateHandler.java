@@ -80,6 +80,17 @@ public class StateHandler {
         }
         else return null;
     }
+    /** Return the last move from recordings without removing
+     * @return the last move removed or NULL if the collection is empty
+     */
+    public Move topMove()
+    {
+        if(hasState())
+        {
+            return recordings.peek();
+        }
+        else return null;
+    }
     /** Store all recordings in file using this pattern:
      * 1 LINE : round counter
      * OTHER LINE : list of move
