@@ -48,6 +48,18 @@ public class StateHandler {
 
         return matcher.matches();
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    /** Check if there is a state saved
+     * @return FALSE if the collection is empty, otherwise TRUE
+     */
+    public boolean hasState()
+    {
+        return !recordings.isEmpty();
+    }
     /** Add a Move in the stack recordings
      * @param move: the move
      */
@@ -57,12 +69,16 @@ public class StateHandler {
         count++;
     }
     /** Remove the last move from recordings
-     * @return the last move removed
+     * @return the last move removed or NULL if the collection is empty
      */
     public Move popMove()
     {
-        count--;
-        return recordings.pop();
+        if(hasState())
+        {
+            count--;
+            return recordings.pop();
+        }
+        else return null;
     }
     /** Store all recordings in file using this pattern:
      * 1 LINE : round counter
