@@ -95,8 +95,8 @@ public class Grid
 
                 if(block_height != 1)
                 {
-                    dy1 = -1;
-                    dy2 = -1;
+                    dy1 = +1;
+                    dy2 = +1;
                 }
                 //need to move 2 free blocks
                 if(block_width != 1)
@@ -123,7 +123,7 @@ public class Grid
                 }
                 if(block_height != 1)
                 {
-                    dy2--;
+                    dy2++;
                 }
                 break;
             case RIGHT:
@@ -131,7 +131,7 @@ public class Grid
 
                 if(block_height != 1)
                 {
-                    dy2--;
+                    dy2++;
                 }
                 break;
         }
@@ -143,12 +143,12 @@ public class Grid
         free_y2 = block_y + dy2;
         Position free2_pos = new Position(free_x2,free_y2);
 
-        //Need to move only 1 free block.
-        if(crit[0] == crit[1])
+
+        if(crit[0].equals(crit[1]))
         {
             for(Block free : free)
             {
-                if(free.getPos() == crit[0])
+                if(free.getPos().equals(crit[0]))
                 {
                     free.setPos(free1_pos);
                 }
@@ -158,7 +158,6 @@ public class Grid
             free[0].setPos(free1_pos);
             free[1].setPos(free2_pos);
         }
-        return;
     }
 
     /**
@@ -191,8 +190,8 @@ public class Grid
         switch (direction)
         {
             case UP:
-                dy1 = 1;
-                dy2 = 1;
+                dy1 = -1;
+                dy2 = -1;
                 //need to check 2 blocks
                 if(block_width != 1)
                 {
@@ -200,8 +199,8 @@ public class Grid
                 }
                 break;
             case DOWN:
-                dy1 = -block_height;
-                dy2 = -block_height;
+                dy1 = block_height;
+                dy2 = block_height;
                 //need to check 2 blocks
                 if(block_width != 1)
                 {
@@ -213,7 +212,7 @@ public class Grid
                 dx2 = -1;
                 if(block_height != 1)
                 {
-                    dy2--;
+                    dy2++;
                 }
                 break;
             case RIGHT:
@@ -221,7 +220,7 @@ public class Grid
                 dx2 = block_width;
                 if(block_height != 1)
                 {
-                    dy2--;
+                    dy2++;
                 }
                 break;
         }
@@ -275,7 +274,7 @@ public class Grid
      */
     private boolean isValid(Position pos)
     {
-        return (pos.getX()>=MIN_X && pos.getX()<GRID_WIDTH && pos.getY()>MIN_Y && pos.getY()<=GRID_HEIGHT);
+        return (pos.getX()>=MIN_X && pos.getX()<GRID_WIDTH && pos.getY()>=MIN_Y && pos.getY()<GRID_HEIGHT);
     }
     /**
      * Method to check whether the puzzle has been solved or not.
@@ -341,13 +340,15 @@ public class Grid
     }
 
     /**
-     * Method that adds blocks in the free array.
-     * @param block block that is being added to the grid.
+     * Method that adds free blocks to the grid.
+     * @param block1 first block to add.
+     * @param block2 second block to add.
      */
     public void setFreeBlock(Block block1, Block block2)
     {
         free[0] = block1;
         free[1] = block2;
     }
+
 
 }

@@ -102,13 +102,13 @@ public class Move
 
         switch (direction) {
             case UP:
-                end_y++;
+                end_y--;
                 break;
             case RIGHT:
                 end_x++;
                 break;
             case DOWN:
-                end_y--;
+                end_y++;
                 break;
             case LEFT:
                 end_x--;
