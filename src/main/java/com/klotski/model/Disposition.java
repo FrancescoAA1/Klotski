@@ -68,6 +68,8 @@ public class Disposition {
                 textDisposition+=LINE_SEPARATOR;
         }
         // MANCANO I BLOCCHI FREE DA INSERIRE:::CHIEDERE A TOMMASO SE HA UN METODO PER OTTENERLI
+
+        // getFree() ritorna un array con i 2 blocchi free :)
     }
     /**
      * this method is used to obtain the grid described by the txt format saved in teh textDisposition

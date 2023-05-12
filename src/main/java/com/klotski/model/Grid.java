@@ -332,11 +332,17 @@ public class Grid
     /**
      * Method that adds a block in the occupied array.
      * @param block block that is being added to the grid.
+     * @return true if the operation is possible, otherwise it returns false.
      */
-    public void setBlock(Block block)
+    public boolean setBlock(Block block)
     {
+        if(size>=BLOCK_NUMBER)
+        {
+            return false;
+        }
         occupied[size] = block;
         size++;
+        return true;
     }
 
     /**
@@ -348,6 +354,15 @@ public class Grid
     {
         free[0] = block1;
         free[1] = block2;
+    }
+
+    /**
+     * Method to get the free blocks array.
+     * @return the array of free blocks.
+     */
+    public Block[] getFree()
+    {
+        return free;
     }
 
 
