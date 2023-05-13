@@ -84,15 +84,60 @@ public class DBConnector {
         // if is not already connected to DB
         if(connector == null)
             connect();
-        // I want to create the Query structure to insert into DB a new match
-        // the match_id field is not necessary because is auto-calculated by DB
-        String querysql = "INSERT INTO MATCHES(name, disposition, score, terminated) VALUES(?,?,?,?)";
+        // the steps are:
+        // (1) Insert into DB the disposition
+        // (2) Obtain the disposition ID that is auto-calculated from DB
+        // (3) Insert into DB the match wid the ID disposition from (2)
+
+
+        // I want to create the Query structure to insert into DB a new disposition
+        // the disposition_id field is not necessary because is auto-calculated by DB
+        String querysql1 = "INSERT INTO DISPOSITIONS (schema, original, disposition_image) VALUES(?,?,?)";
         // Now I want to set all field of parametrized query
         try
         {
-            PreparedStatement statement = connector.prepareStatement(querysql);
+            PreparedStatement statement = connector.prepareStatement(querysql1);
+            statement.setString(1, disposition.getTextDisposition());
+            statement.setInt(2, 1); // this is not an original disposition
+            statement.setString(3, disposition.getImagePath());
+            // run query
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+        // In this case the insert has been done
+        // I sort the table in descending order by ID so
+        // the value with the largest ID is the first (and it's the last inserted).
+        // Teh I extract only the first row from the SELECT
+        String querysql2 = "SELECT disposition_id FROM DISPOSITIONS ORDER BY disposition_id DESC LIMIT 1";
+        int lastDispositionID;
+        try
+        {
+            Statement statement = connector.createStatement();
+            // executes the DB SELECT and the result is saved in result record collection
+            ResultSet result = statement.executeQuery(querysql2);
+
+            lastDispositionID = result.getInt("disposition_id");
+
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
+        // Now I have the ID to insert in the match
+
+        // I want to create the Query structure to insert into DB a new match
+        // the match_id field is not necessary because is auto-calculated by DB
+        String querysql3 = "INSERT INTO MATCHES(name, disposition, score, terminated) VALUES(?, ?, ?, ?)";
+        // Now I want to set all field of parametrized query
+        try
+        {
+            PreparedStatement statement = connector.prepareStatement(querysql3);
             statement.setString(1, match.getName());
-            statement.setString(2, disposition.toString());
+            statement.setInt(2, lastDispositionID);
             statement.setInt(3, match.getScore());
             statement.setInt(4, match.isTerminated()?1:0);
             // run query
@@ -102,7 +147,7 @@ public class DBConnector {
         {
             return false;
         }
-        // continuare qui !
+
         return true;
     }
     /**
@@ -146,9 +191,83 @@ public class DBConnector {
         }
         return matches;
     }
-    public String getDisposition(Integer disposition_id)
+    /**
+     * This method is reserved to obtain a single and specific disposition saved in DB
+     * @param disposition_id: the ID of the disposition that you want to get
+     * @return the disposition with the specified ID in DB, null if there is not a disposition
+     * with the specified ID
+     */
+    public Disposition getDisposition(Integer disposition_id)
     {
-        return null;
+        Disposition disposition = null;
+        // if is not already connected to DB
+        if(connector == null)
+            connect();
+        // I want to create the Query structure to select the specific disposition
+        String querysql = "SELECT schema, original, disposition_image FROM DISPOSITION WHERE ID = ?";
+
+        try
+        {
+            PreparedStatement statement = connector.prepareStatement(querysql);
+            //insert the param fro ID
+            statement.setInt(1, disposition_id);
+            // executes the DB SELECT and the result is saved in result record collection
+            ResultSet result = statement.executeQuery(querysql);
+            // I get only one row
+            String image = result.getString("disposition_image");
+            String schema = result.getString("schema");
+            int original = result.getInt("original");
+
+            if(original == 1)
+                disposition = new Disposition(schema, true);
+            else disposition = new Disposition(schema, false);
+
+            disposition.setImagePath(image);
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return disposition;
     }
 
+    /**
+     * This method is reserved to obtain all original dispositions in DB
+     * @return the list of all original dispositions
+     * The ArrayList is null if something went wrong
+     */
+    public ArrayList<Disposition> listAllOriginalDispositions()
+    {
+        ArrayList<Disposition> originalDisposition = null;
+
+        // if is not already connected to DB
+        if(connector == null)
+            connect();
+        // I want to create the Query structure to select all original dispositions
+        String querysql = "SELECT schema, disposition_image FROM DISPOSITIONS WHERE original=1";
+
+        try
+        {
+            Statement statement = connector.createStatement();
+            // executes the DB SELECT and the result is saved in result record collection
+            ResultSet result = statement.executeQuery(querysql);
+            originalDisposition = new ArrayList<Disposition>();
+
+            Disposition tmp = null;
+
+            while(result.next()) {
+                // create a new Match from data recovered from DB
+                tmp = new Disposition(result.getString("schema"), true);
+                tmp.setImagePath(result.getString("disposition_image"));
+
+                originalDisposition.add(tmp);
+            }
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+        return originalDisposition;
+    }
 }

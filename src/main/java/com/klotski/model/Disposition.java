@@ -10,7 +10,8 @@ import java.util.ArrayList;
  * the character separating the line of one block from that of another is '|'
  * the last two lines represents the free blocks
  */
-public class Disposition {
+public class Disposition
+{
 
     private final String LINE_SEPARATOR = "|";
     private final String FIELD_SEPARATOR = "-";
@@ -185,7 +186,7 @@ public class Disposition {
                 else return null; //something went wrong
             }
             // check if I have found the spacial block
-            if(!specialFound) return null; 
+            if(!specialFound) return null;
             // it remains only to set the two free blocks
             grid.setFreeBlock(free1, free2);
             return grid;

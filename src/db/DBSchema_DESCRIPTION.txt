@@ -3,7 +3,7 @@ Sono presenti 2 tabelle:
 
 1) DISPOSITION: contiene l'insieme delle disposizioni di gioco del Klotski. Possono essere 
 Sia quelle proposte per la partenza che quelle di salvataggio di fine partita. Per riconoscere 
-le due tipologie si utilizza il campo "original" che se impostato TRUE indica una configurazione di partenza, FLASE altrimenti. 
+le due tipologie si utilizza il campo "original" che se impostato TRUE indica una configurazione di partenza, FALSE altrimenti.
 Il campo "schema" rappresenta una codifica della configurazione di gioco tramite una stringa composta da numeri che rappresentano univocamente i blocchi e gli spazi della griglia di gioco. Tale griglia viene scritta concatenando ogni riga composta da 4 elementi ciascuna. Gli '0' rappresentano gli spazi vuoti 
 
 ESEMPIO: 
