@@ -107,10 +107,10 @@ public class DBConnector {
         {
             return false;
         }
-        // In this case the insert has been done
+        // In this case the insertion has been done
         // I sort the table in descending order by ID so
         // the value with the largest ID is the first (and it's the last inserted).
-        // Teh I extract only the first row from the SELECT
+        // Then, I extract only the first row from the SELECT
         String querysql2 = "SELECT disposition_id FROM DISPOSITIONS ORDER BY disposition_id DESC LIMIT 1";
         int lastDispositionID;
         try
@@ -127,12 +127,12 @@ public class DBConnector {
             return false;
         }
 
-        // Now I have the ID to insert in the match
+        // Now I have to insert the ID  in the match
 
         // I want to create the Query structure to insert into DB a new match
         // the match_id field is not necessary because is auto-calculated by DB
         String querysql3 = "INSERT INTO MATCHES(name, disposition, score, terminated) VALUES(?, ?, ?, ?)";
-        // Now I want to set all field of parametrized query
+        // Now I want to set all fields of parametrized query
         try
         {
             PreparedStatement statement = connector.prepareStatement(querysql3);
@@ -154,7 +154,7 @@ public class DBConnector {
      * This method is reserved to obtain all pair Match-LastDisposition saved in DB
      * ordered by match_id that is autoincrement -> this is also a temporal order
      * @return the list of Pair (Match, LastDisposition_ID) saved
-     * The ArrayList is null if something went wrong
+     * The ArrayList is null if something goes wrong
      */
     public ArrayList<Pair<Match,Integer>> listAllRecordedMatches()
     {
@@ -235,13 +235,13 @@ public class DBConnector {
     /**
      * This method is reserved to obtain all original dispositions in DB
      * @return the list of all original dispositions
-     * The ArrayList is null if something went wrong
+     * The ArrayList is null if something goes wrong
      */
     public ArrayList<Disposition> listAllOriginalDispositions()
     {
         ArrayList<Disposition> originalDisposition = null;
 
-        // if is not already connected to DB
+        // if it is not already connected to DB
         if(connector == null)
             connect();
         // I want to create the Query structure to select all original dispositions
