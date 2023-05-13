@@ -102,6 +102,7 @@ public class DBConnector {
         {
             return false;
         }
+        // continuare qui !
         return true;
     }
     /**
@@ -145,7 +146,7 @@ public class DBConnector {
         }
         return matches;
     }
-    public String getDisposition()
+    public String getDisposition(Integer disposition_id)
     {
         return null;
     }

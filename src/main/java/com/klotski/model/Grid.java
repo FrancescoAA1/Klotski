@@ -1,5 +1,9 @@
 package com.klotski.model;
 
+import javafx.util.Pair;
+
+import java.util.ArrayList;
+
 /**
  * Represents the Grid for the Klotski game. It consists of an array of 10 real Blocks and of an array of 2 Blocks
  * that indicate the free spaces on the grid.
@@ -307,9 +311,16 @@ public class Grid
      */
     public Block next()
     {
-        Block res =  occupied[counter];
-        counter++;
-        return res;
+        if(hasNext())
+        {
+            Block res =  occupied[counter];
+            counter++;
+            return res;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -360,10 +371,11 @@ public class Grid
      * Method to get the free blocks array.
      * @return the array of free blocks.
      */
-    public Block[] getFree()
+    public ArrayList<Block> getFree()
     {
-        return free;
+        ArrayList<Block> ret = new ArrayList<>();
+        ret.add(free[0]);
+        ret.add(free[1]);
+        return ret;
     }
-
-
 }
