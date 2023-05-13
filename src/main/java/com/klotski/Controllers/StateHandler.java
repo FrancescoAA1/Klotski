@@ -18,8 +18,10 @@ import java.util.regex.Pattern;
 
 public class StateHandler {
 
-    private final String DEFAULT_PATH= "/com/Data/MatchLogs/";
+    private final String DEFAULT_PATH= "/target/classes/com/Data/MatchLogs/";
     private final String REGEX_FILE_FORMAT = "^[^<>:\"/\\\\|?*]*$";
+
+    private String currentPath;
 
     private  String fileName;
     private Stack<Move> recordings;
@@ -36,6 +38,15 @@ public class StateHandler {
         if(checkFileName(file_name))
             fileName = file_name;
         else throw new IllegalArgumentException("Illegal file name");
+        // get the current directory
+        try
+        {
+            currentPath = new java.io.File(".").getCanonicalPath();
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("Unable to get the current directory");
+        }
     }
     /** Check the correctness of the file name which must be in the format file_name.extension
      * @param file_name: string to check
@@ -96,14 +107,15 @@ public class StateHandler {
      * OTHER LINE : list of move
      * The move pattern is provide by toString() of Move in the following format
      * INIT_POSITION END_POSITION DIRECTION
+     * @return TRUE if the stack was written to file successfully, FALSE otherwise
      */
-    public void flush()
+    public boolean flush()
     {
         PrintWriter filewriter = null;
         try
         {
             //try to open file in writing mode
-            filewriter = new PrintWriter(new FileWriter(DEFAULT_PATH + fileName));
+            filewriter = new PrintWriter(new FileWriter(currentPath + DEFAULT_PATH + fileName));
             // the first line is the # of rounds
             filewriter.println(count);
             // write all stack of recordings
@@ -116,7 +128,9 @@ public class StateHandler {
         catch (IOException e)
         {
             filewriter.close();
+            return false;
         }
+        return true;
     }
     /** Retrieves the state from the file whose name is the string supplied during object creation.
      * @return FALSE : if the file does not exist or the format is incorrect otherwise
@@ -130,7 +144,7 @@ public class StateHandler {
         try
         {
             // if file does not exist return false
-            filereader = new Scanner(new FileReader(DEFAULT_PATH + fileName));
+            filereader = new Scanner(new FileReader(currentPath+DEFAULT_PATH + fileName));
         }
         catch(IOException e)
         { return false; }
