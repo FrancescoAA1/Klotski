@@ -147,6 +147,9 @@ public class Disposition {
                 return null;
 
             int countNormal = 0;
+            // I have to check that there is a special block otherwise
+            // I risk a rambling grid
+            boolean specialFound = false;
 
             for (String txtBlock:stringBlocks)
             {
@@ -166,6 +169,10 @@ public class Disposition {
                         Integer.parseInt(blockFields[0])  // height is the first in txt
                         );
 
+                if(tmp.isSpecial())
+                    specialFound = true;
+
+
                 if(countNormal < Grid.BLOCK_NUMBER)
                 {
                     grid.setBlock(tmp);
@@ -177,6 +184,8 @@ public class Disposition {
                     free2 = tmp;
                 else return null; //something went wrong
             }
+            // check if I have found the spacial block
+            if(!specialFound) return null; 
             // it remains only to set the two free blocks
             grid.setFreeBlock(free1, free2);
             return grid;
