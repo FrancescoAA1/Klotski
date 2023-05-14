@@ -11,11 +11,6 @@ public class GameHandler
     private StateHandler history;       // Moves handler
     private Move lastUndoMove;          // Last undo move
 
-    public GameHandler()
-    {
-        grid = generateGrid();
-        history = new StateHandler("temp.hst");
-    }
 
     /** Constructor for saved games
      * @param savedDispositionID
@@ -24,7 +19,20 @@ public class GameHandler
      */
     public GameHandler(int savedDispositionID, int movesCount, boolean isTerminated)
     {
-        
+        // Load correct grid
+        grid = generateGrid();
+        history = new StateHandler("temp.hst");
+    }
+
+    /** Constructor for new games
+     * @param newDispositionID
+     */
+    public GameHandler(int newDispositionID)
+    {
+        // Load correct grid
+        grid = generateGrid();
+        history = new StateHandler("temp.hst");
+
     }
 
     private Grid generateGrid()

@@ -1,9 +1,11 @@
 package com.klotski.ViewControllers;
 
 import com.klotski.Controllers.DBConnector;
+import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.DispositionCard;
 import com.klotski.model.Disposition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,9 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,23 +21,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DispositionsListController implements Initializable {
-    /*@FXML
-    private Label welcomeText;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }*/
-
+public class DispositionsListController implements Initializable
+{
     @FXML
     private GridPane grid;
-
     private DBConnector db;
-    public DispositionsListController()
-    {
-        System.out.println("OK");
-    }
+    private ArrayList<DispositionCard> cards;
 
 
 
@@ -46,22 +35,24 @@ public class DispositionsListController implements Initializable {
     {
         db = new DBConnector();
         ArrayList<Disposition> disp = db.listAllOriginalDispositions();
-        ArrayList<DispositionCard> cards = new ArrayList<>();
+        cards = new ArrayList<>();
 
         String path = "";
         int disposition_index = 1;
 
         for(Disposition d: disp)
         {
-            cards.add(new DispositionCard(getClass().getResource(d.getImagePath()).getPath(), disposition_index++));
+            DispositionCard current = new DispositionCard(getClass().getResource(d.getImagePath()).getPath(), disposition_index++);
+            current.getControl().setOnMouseClicked(e -> onCardMouseClicked(e));
+            cards.add(current);
         }
 
         int x = 0;
         int y = 0;
         for(int i = 0; i < cards.size(); i++)
         {
-            grid.add(cards.get(i).GetControl(), x++,y);
-            GridPane.setMargin(cards.get(i).GetControl(), new Insets(16,6,6,6));
+            grid.add(cards.get(i).getControl(), x++,y);
+            GridPane.setMargin(cards.get(i).getControl(), new Insets(16,6,6,6));
             if(x >= 3)
             {
                 x = 0;
@@ -82,7 +73,7 @@ public class DispositionsListController implements Initializable {
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
-    private void OpenWindow(FXMLLoader fxmlLoader, String title, ActionEvent event)
+    private void OpenWindow(FXMLLoader fxmlLoader, String title, Event event)
     {
         Parent root = null;
         try {
@@ -95,5 +86,34 @@ public class DispositionsListController implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void onCardMouseClicked(Event event)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+
+        // Open game window
+        OpenWindow(fxmlLoader, "Game", event);
+
+        // Get current disposition card
+        DispositionCard current = getCurrentDispositionCard(event);
+
+        // Create new game
+        GameHandler gameHandler = new GameHandler(current.getDispositionNumber());
+
+        // Communications inter-view
+        GameController gameController = fxmlLoader.getController();
+        gameController.setController(gameHandler);
+    }
+
+    private DispositionCard getCurrentDispositionCard(Event event)
+    {
+        for (DispositionCard card: cards)
+        {
+            if(card.getControl() == event.getSource())
+                return card;
+        }
+
+        throw new IllegalArgumentException();
     }
 }

@@ -33,7 +33,7 @@ public class SavedController implements Initializable {
 
     private DBConnector db;
 
-    private GameHandler gamehandler;
+    private GameHandler gameHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

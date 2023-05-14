@@ -43,16 +43,15 @@ public class GameController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         // Initialize objects
-        gameHandler = new GameHandler();
         initializeAnimations();
-
-        // Load dynamically blocks from controller.
-        loadKlotski();
     }
 
     public void setController(GameHandler game)
     {
         gameHandler = game;
+
+        // Load dynamically blocks from controller.
+        loadKlotski();
     }
 
     private void loadKlotski()
@@ -108,7 +107,7 @@ public class GameController implements Initializable
         grid.getChildren().clear();
 
         // Initialize objects
-        gameHandler = new GameHandler();
+        // gameHandler = new GameHandler();
 
         // Load dynamically blocks from controller.
         loadKlotski();
