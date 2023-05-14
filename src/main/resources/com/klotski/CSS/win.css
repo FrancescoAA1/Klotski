@@ -37,8 +37,8 @@
     -fx-border-insets: -1px;
     -fx-text-fill: #286287;
     -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 24px; !important;
+    -fx-font-weight: bold; !important;
+    -fx-font-size: 24px;
 }
 
 .little_button
