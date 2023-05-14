@@ -17,7 +17,7 @@
     -fx-background-radius: 7px;
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
-    -fx-font-size: 24px;
+    -fx-font-size: 24px; !important;
 }
 
 .record{
@@ -38,7 +38,7 @@
     -fx-text-fill: #286287;
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
-    -fx-font-size: 24px;
+    -fx-font-size: 24px; !important;
 }
 
 .little_button
