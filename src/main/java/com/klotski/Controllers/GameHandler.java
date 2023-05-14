@@ -17,6 +17,16 @@ public class GameHandler
         history = new StateHandler("temp.hst");
     }
 
+    /** Constructor for saved games
+     * @param savedDispositionID
+     * @param movesCount
+     * @param isTerminated
+     */
+    public GameHandler(int savedDispositionID, int movesCount, boolean isTerminated)
+    {
+        
+    }
+
     private Grid generateGrid()
     {
         Grid currentGrid = new Grid();
