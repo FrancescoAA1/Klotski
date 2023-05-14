@@ -19,20 +19,21 @@ import java.text.SimpleDateFormat;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class SavedGame {
     private String ImagePath;
     private int moveNumber;
 
-    private Date gameDate;
+    private LocalDateTime gameDate;
 
     private boolean gameState;
 
 
     private Pane control;
 
-    public SavedGame(String imagePath, int move_n, Date game_d, boolean game_s) {
+    public SavedGame(String imagePath, int move_n, LocalDateTime game_d, boolean game_s) {
         ImagePath = imagePath;
         moveNumber = move_n;
         gameDate = game_d;
@@ -53,10 +54,10 @@ public class SavedGame {
     }
     public int GetMoveNumber() { return moveNumber; }
 
-    public void SetGameDate(Date game) {
+    public void SetGameDate(LocalDateTime game) {
         gameDate = game;
     }
-    public Date GetGameDate() { return gameDate; }
+    public LocalDateTime GetGameDate() { return gameDate; }
 
     public void SetGameState(boolean state) {
         gameState = state;
@@ -90,7 +91,7 @@ public class SavedGame {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        Label lbl_date = new Label("DATA: " + formatter.format(gameDate));
+        Label lbl_date = new Label("DATA: " + gameDate);
         lbl_date.setLayoutX(109);
         lbl_date.setLayoutY(37);
         lbl_date.getStyleClass().add("label");

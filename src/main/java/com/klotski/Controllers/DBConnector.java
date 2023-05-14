@@ -182,7 +182,8 @@ public class DBConnector {
                 if (result.getInt("terminated") == 1)
                     tmp.terminate();
 
-                matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition_id")));
+                matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition")));
+                System.out.println("Riga 186 DBCONnECTOr OK");
             }
         }
         catch (SQLException e)
