@@ -1,16 +1,15 @@
-package com.klotski.ViewControllers;
+package com.klotski.View;
 
 import com.klotski.Controllers.DBConnector;
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.DispositionCard;
-import com.klotski.UI.SavedGame;
+import com.klotski.UI.SavedGameCard;
 import com.klotski.model.Match;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,10 +22,9 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class SavedController implements Initializable {
+public class SavedListView implements Initializable {
 
     @FXML
     private GridPane grid;
@@ -52,7 +50,7 @@ public class SavedController implements Initializable {
             System.out.println(dateTime);
             boolean terminated = m.getKey().isTerminated();
 
-            SavedGame s = new SavedGame(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated);
+            SavedGameCard s = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated);
             s.getControl().setOnMouseClicked(e -> onMouseClicked(e));
             grid.add(s.getControl(), 0,index++);
         }
@@ -61,31 +59,29 @@ public class SavedController implements Initializable {
 
     private void onMouseClicked(Event event)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/boardgame.fxml"));
 
-        GameController ctrl = fxmlLoader.getController();
-        ctrl.setController(gameHandler);
+        // Open game window
+        OpenWindow(fxmlLoader, "Game", event);
 
-        Parent root = null;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Klotski");
-        stage.setScene(scene);
-        stage.show();
+        // Get current SavedGame card
+
+
+        // Create new game
+        //GameHandler gameHandler = new GameHandler(current.getDispositionNumber());
+
+        // Communications inter-view
+        //GameView gameView = fxmlLoader.getController();
+        //gameView.setController(gameHandler);
     }
 
     public void MenuClicked(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
-    private void OpenWindow(FXMLLoader fxmlLoader, String title, ActionEvent event)
+    private void OpenWindow(FXMLLoader fxmlLoader, String title, Event event)
     {
         Parent root = null;
         try {

@@ -1,11 +1,11 @@
-package com.klotski.ViewControllers;
+package com.klotski.View;
 
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class VictoryController implements Initializable {
+public class VictoryView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

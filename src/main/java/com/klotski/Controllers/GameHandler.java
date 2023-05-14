@@ -32,7 +32,6 @@ public class GameHandler
         // Load correct grid
         grid = generateGrid();
         history = new StateHandler("temp.hst");
-
     }
 
     private Grid generateGrid()

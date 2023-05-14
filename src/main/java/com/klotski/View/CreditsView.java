@@ -1,4 +1,4 @@
-package com.klotski.ViewControllers;
+package com.klotski.View;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreditsController implements Initializable {
+public class CreditsView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -22,7 +22,7 @@ public class CreditsController implements Initializable {
 
     public void MenuClicked(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 

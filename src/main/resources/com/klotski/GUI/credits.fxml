@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/credits.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.ViewControllers.CreditsController">
+<AnchorPane prefHeight="400.0" prefWidth="360.0" styleClass="container" stylesheets="@../CSS/credits.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.View.CreditsView">
    <children>
       <GridPane fx:id="grid" layoutX="20.0" layoutY="20.0" styleClass="grid" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>

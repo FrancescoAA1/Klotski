@@ -1,9 +1,8 @@
-package com.klotski.ViewControllers;
+package com.klotski.View;
 
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.Axis;
 import com.klotski.model.*;
-import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable
+public class GameView implements Initializable
 {
     /* VARS */
     private GameHandler gameHandler;    // CONTROLLER object
@@ -48,6 +47,7 @@ public class GameController implements Initializable
 
     public void setController(GameHandler game)
     {
+        // Get GameHandler (Controller)
         gameHandler = game;
 
         // Load dynamically blocks from controller.
@@ -118,13 +118,13 @@ public class GameController implements Initializable
 
     public void DispositionListClicked(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/dispositions.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/dispositions.fxml"));
         OpenWindow(fxmlLoader, "Disposition", actionEvent);
     }
 
     public void HomeClicked(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 

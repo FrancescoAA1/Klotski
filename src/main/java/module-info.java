@@ -5,6 +5,6 @@ module com.klotski {
 
 
     opens com.klotski to javafx.fxml;
-    opens com.klotski.ViewControllers to javafx.fxml;
+    opens com.klotski.View to javafx.fxml;
     exports com.klotski;
 }

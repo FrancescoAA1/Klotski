@@ -1,28 +1,16 @@
 package com.klotski.UI;
 
-import com.klotski.ViewControllers.GameController;
-import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
-import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+
 import java.text.SimpleDateFormat;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-public class SavedGame {
+public class SavedGameCard {
     private String ImagePath;
     private int moveNumber;
 
@@ -33,7 +21,7 @@ public class SavedGame {
 
     private Pane control;
 
-    public SavedGame(String imagePath, int move_n, LocalDateTime game_d, boolean game_s) {
+    public SavedGameCard(String imagePath, int move_n, LocalDateTime game_d, boolean game_s) {
         ImagePath = imagePath;
         moveNumber = move_n;
         gameDate = game_d;

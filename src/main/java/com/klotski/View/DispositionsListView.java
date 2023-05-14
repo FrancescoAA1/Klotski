@@ -1,4 +1,4 @@
-package com.klotski.ViewControllers;
+package com.klotski.View;
 
 import com.klotski.Controllers.DBConnector;
 import com.klotski.Controllers.GameHandler;
@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DispositionsListController implements Initializable
+public class DispositionsListView implements Initializable
 {
     @FXML
     private GridPane grid;
@@ -69,7 +69,7 @@ public class DispositionsListController implements Initializable
 
     public void MenuClicked(ActionEvent actionEvent)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
@@ -90,7 +90,7 @@ public class DispositionsListController implements Initializable
 
     private void onCardMouseClicked(Event event)
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/boardgame.fxml"));
 
         // Open game window
         OpenWindow(fxmlLoader, "Game", event);
@@ -102,8 +102,8 @@ public class DispositionsListController implements Initializable
         GameHandler gameHandler = new GameHandler(current.getDispositionNumber());
 
         // Communications inter-view
-        GameController gameController = fxmlLoader.getController();
-        gameController.setController(gameHandler);
+        GameView gameView = fxmlLoader.getController();
+        gameView.setController(gameHandler);
     }
 
     private DispositionCard getCurrentDispositionCard(Event event)
