@@ -41,37 +41,12 @@ public class SavedGame {
         control = GenerateControl();
     }
 
-    public void SetImagePath(String imagePath) {
-        ImagePath = imagePath;
-    }
-
-    public String GetImagePath() {
-        return ImagePath;
-    }
-
-    public void SetMoveNumber(int m) {
-        moveNumber = m;
-    }
-    public int GetMoveNumber() { return moveNumber; }
-
-    public void SetGameDate(LocalDateTime game) {
-        gameDate = game;
-    }
-    public LocalDateTime GetGameDate() { return gameDate; }
-
-    public void SetGameState(boolean state) {
-        gameState = state;
-    }
-    public boolean GetGameState() { return gameState; }
-
-
     private Pane GenerateControl()
     {
         // Container
         Pane game = new Pane();
         game.setPrefWidth(200);
         game.setPrefHeight(200);
-        game.setOnMouseClicked(e -> onMouseClicked(e));
 
         game.setOpacity(0.75);
 
@@ -125,20 +100,4 @@ public class SavedGame {
         return control;
     }
 
-    private void onMouseClicked(Event event)
-    {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
-
-        Parent root = null;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Klotski");
-        stage.setScene(scene);
-        stage.show();
-    }
 }

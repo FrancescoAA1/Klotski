@@ -5,6 +5,7 @@ import com.klotski.UI.DispositionCard;
 import com.klotski.UI.SavedGame;
 import com.klotski.model.Match;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,9 +50,27 @@ public class SavedController implements Initializable {
             boolean terminated = m.getKey().isTerminated();
 
             SavedGame s = new SavedGame(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated);
+            s.getControl().setOnMouseClicked(e -> onMouseClicked(e));
             grid.add(s.getControl(), 0,index++);
         }
 
+    }
+
+    private void onMouseClicked(Event event)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Klotski");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void MenuClicked(ActionEvent actionEvent)
