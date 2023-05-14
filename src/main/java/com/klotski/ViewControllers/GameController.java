@@ -50,9 +50,9 @@ public class GameController implements Initializable
         loadKlotski();
     }
 
-    public GameController(GameHandler game)
+    public void setController(GameHandler game)
     {
-
+        gameHandler = game;
     }
 
     private void loadKlotski()
