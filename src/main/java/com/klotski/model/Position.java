@@ -5,7 +5,7 @@ package com.klotski.model;
  */
 public class Position
 {
-    private static final String STRING_SEPARATOR = ";";
+    private static final String STRING_SEPARATOR = "*";
     private static final int X_PATTERN_STRING_POS = 0;
     private static final int Y_PATTERN_STRING_POS = 1;
     private int x;

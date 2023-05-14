@@ -1,6 +1,8 @@
 package com.klotski.ViewControllers;
 
+import com.klotski.Controllers.DBConnector;
 import com.klotski.UI.DispositionCard;
+import com.klotski.model.Disposition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,21 +32,29 @@ public class DispositionsListController implements Initializable {
 
     @FXML
     private GridPane grid;
+
+    private DBConnector db;
     public DispositionsListController()
     {
         System.out.println("OK");
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        db = new DBConnector();
+        ArrayList<Disposition> disp = db.listAllOriginalDispositions();
         ArrayList<DispositionCard> cards = new ArrayList<>();
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), 1));
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m2.png").getPath(), 2));
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m3.png").getPath(), 3));
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), 4));
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m2.png").getPath(), 5));
-        cards.add(new DispositionCard(getClass().getResource("/com/klotski/Images/m3.png").getPath(), 16));
+
+        String path = "";
+        int disposition_index = 1;
+
+        for(Disposition d: disp)
+        {
+            cards.add(new DispositionCard(getClass().getResource(d.getImagePath()).getPath(), disposition_index++));
+        }
 
         int x = 0;
         int y = 0;
