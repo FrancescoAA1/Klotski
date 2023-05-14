@@ -2,10 +2,7 @@ package com.klotski.ViewControllers;
 
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.Axis;
-import com.klotski.model.Block;
-import com.klotski.model.Direction;
-import com.klotski.model.Position;
-import com.klotski.model.Move;
+import com.klotski.model.*;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +48,11 @@ public class GameController implements Initializable
 
         // Load dynamically blocks from controller.
         loadKlotski();
+    }
+
+    public GameController(GameHandler game)
+    {
+
     }
 
     private void loadKlotski()

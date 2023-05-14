@@ -7,9 +7,9 @@ import java.util.List;
 
 public class GameHandler
 {
-    Grid grid;
-    StateHandler history;
-    Move lastUndoMove;
+    private Grid grid;                  // Klotski data & logic (model)
+    private StateHandler history;       // Moves handler
+    private Move lastUndoMove;          // Last undo move
 
     public GameHandler()
     {
@@ -180,5 +180,10 @@ public class GameHandler
     public int getMoveCounter()
     {
         return history.getCount();
+    }
+
+    public void saveGame()
+    {
+        history.flush();
     }
 }
