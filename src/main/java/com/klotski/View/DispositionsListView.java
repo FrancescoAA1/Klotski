@@ -25,7 +25,6 @@ public class DispositionsListView implements Initializable
 {
     @FXML
     private GridPane grid;
-    private DBConnector db;
     private ArrayList<DispositionCard> cards;
 
 
@@ -33,7 +32,7 @@ public class DispositionsListView implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        db = new DBConnector();
+        DBConnector db = new DBConnector();
         ArrayList<Disposition> disp = db.listAllOriginalDispositions();
         cards = new ArrayList<>();
 
@@ -59,6 +58,7 @@ public class DispositionsListView implements Initializable
                 y++;
             }
         }
+        db.close();
     }
 
     public void CloseClicked(ActionEvent actionEvent)

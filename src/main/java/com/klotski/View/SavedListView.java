@@ -16,27 +16,26 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class SavedListView implements Initializable {
 
     @FXML
     private GridPane grid;
-
-    private DBConnector db;
-
     private GameHandler gameHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        db = new DBConnector();
+        DBConnector db = new DBConnector();
         ArrayList<Pair<Match, Integer>> matches = db.listAllRecordedMatches();
         System.out.println(matches.size());
         int index = 0;
@@ -45,16 +44,17 @@ public class SavedListView implements Initializable {
         {
             int score = m.getKey().getScore();
             String date = m.getKey().getName();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-            System.out.println(dateTime);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            //LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+            //System.out.println(dateTime);
+            LocalDateTime dateTime = LocalDateTime.now();
             boolean terminated = m.getKey().isTerminated();
 
             SavedGameCard s = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated);
             s.getControl().setOnMouseClicked(e -> onMouseClicked(e));
             grid.add(s.getControl(), 0,index++);
         }
-
+        db.close();
     }
 
     private void onMouseClicked(Event event)
@@ -68,11 +68,11 @@ public class SavedListView implements Initializable {
 
 
         // Create new game
-        //GameHandler gameHandler = new GameHandler(current.getDispositionNumber());
+        GameHandler gameHandler = new GameHandler(27, 5, false);
 
         // Communications inter-view
-        //GameView gameView = fxmlLoader.getController();
-        //gameView.setController(gameHandler);
+        GameView gameView = fxmlLoader.getController();
+        gameView.setController(gameHandler);
     }
 
     public void MenuClicked(ActionEvent actionEvent)

@@ -80,7 +80,7 @@ public class Move
             String[] tmp = move.split(STRING_SEPARATOR);
             init = Position.convertToPosition(tmp[INIT_PATTERN_STRING_POS]);
             end = Position.convertToPosition(tmp[END_PATTERN_STRING_POS]);
-            dir = Direction.values()[Integer.parseInt(tmp[DIRECTION_PATTERN_STRING_POS])];
+            dir = Direction.valueOf(tmp[DIRECTION_PATTERN_STRING_POS]);
             return new Move(init, end, dir);
         }
         catch(Exception e)

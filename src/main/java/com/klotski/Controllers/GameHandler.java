@@ -19,9 +19,16 @@ public class GameHandler
      */
     public GameHandler(int savedDispositionID, int movesCount, boolean isTerminated)
     {
+        DBConnector db = new DBConnector();
+        db.connect();
+        Disposition disposition = db.getDisposition(savedDispositionID);
+
         // Load correct grid
-        grid = generateGrid();
+        grid = disposition.convertToGrid();
         history = new StateHandler("temp.hst");
+        history.restoreStatus();
+
+        db.close();
     }
 
     /** Constructor for new games
@@ -29,29 +36,15 @@ public class GameHandler
      */
     public GameHandler(int newDispositionID)
     {
+        DBConnector db = new DBConnector();
+        db.connect();
+        Disposition disposition = db.getDisposition(newDispositionID);
+
         // Load correct grid
-        grid = generateGrid();
+        grid = disposition.convertToGrid();
         history = new StateHandler("temp.hst");
-    }
 
-    private Grid generateGrid()
-    {
-        Grid currentGrid = new Grid();
-        currentGrid.setBlock(new Block(new Position(0,0),2,2));
-        currentGrid.setBlock(new Block(new Position(2,0),1,1));
-        currentGrid.setBlock(new Block(new Position(0,2),2,1));
-        currentGrid.setBlock(new Block(new Position(3,3),1,2));
-        currentGrid.setBlock(new Block(new Position(3,1),1,2));
-        currentGrid.setBlock(new Block(new Position(2,3),1,2));
-        currentGrid.setBlock(new Block(new Position(2,1),1,1));
-        currentGrid.setBlock(new Block(new Position(0,4),1,1));
-        currentGrid.setBlock(new Block(new Position(0,3),2,1));
-        currentGrid.setBlock(new Block(new Position(1,4),1,1));
-
-        currentGrid.setFreeBlock(new Block(new Position(3,0),1,1),
-                new Block(new Position(2,2),1,1));
-
-        return currentGrid;
+        db.close();
     }
 
     public boolean move(Position pos, Direction dir)
@@ -201,6 +194,13 @@ public class GameHandler
 
     public void saveGame()
     {
+        DBConnector db = new DBConnector();
+        db.connect();
+        Match match = new Match();
+        match.setScore(history.getCount());
+        Disposition current = new Disposition(grid, false);
+        db.saveMatch(match, current);
         history.flush();
+        db.close();
     }
 }

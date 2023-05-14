@@ -72,7 +72,7 @@
                   <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
                </padding>
             </Button>
-            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="12.0">
+            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" onAction="#SaveClicked" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="12.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>

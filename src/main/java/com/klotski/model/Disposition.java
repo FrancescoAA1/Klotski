@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Disposition
 {
 
-    private final String LINE_SEPARATOR = "|";
+    private final String LINE_SEPARATOR = "#";
     private final String FIELD_SEPARATOR = "-";
 
     private final int NUM_FIELDS = 3;
@@ -52,6 +52,7 @@ public class Disposition
     public Disposition(String txtSnapGrid, boolean isOriginal)
     {
         this.textDisposition = txtSnapGrid;
+        this.isOriginal = isOriginal;
     }
 
     public boolean isOriginal()
@@ -99,16 +100,13 @@ public class Disposition
                     block.getWidth() + FIELD_SEPARATOR +
                     block.getPos() ;
 
-            if (grid.hasNext()) // if is the last I can't add the line separator
-                textDisposition += LINE_SEPARATOR;
+            textDisposition += LINE_SEPARATOR;
         }
         // Now I have to obtain the free block and I write them on the snap
         ArrayList<Block> free = grid.getFree();
 
-        int count = 0;
-
-        while (!free.isEmpty()) {
-
+        for (int count = 0; count < free.size(); count++)
+        {
             Block block = free.get(count);
 
             textDisposition = textDisposition +
@@ -116,10 +114,8 @@ public class Disposition
                     block.getWidth() + FIELD_SEPARATOR +
                     block.getPos() ;
 
-            if (!grid.isEmpty()) // if is the last I can't add the line separator
+            if (count < free.size() - 1) // if is the last I can't add the line separator
                 textDisposition += LINE_SEPARATOR;
-
-            count++;
         }
     }
 

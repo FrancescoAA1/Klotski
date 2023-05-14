@@ -2,10 +2,7 @@ package com.klotski.Controllers;
 
 import com.klotski.model.Move;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -18,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class StateHandler {
 
-    private final String DEFAULT_PATH= "/target/classes/com/Data/MatchLogs/";
+    private final String DEFAULT_PATH= "/target/classes/com/klotski/Data/MatchLogs/";
     private final String REGEX_FILE_FORMAT = "^[^<>:\"/\\\\|?*]*$";
 
     private String currentPath;
@@ -127,9 +124,11 @@ public class StateHandler {
         }
         catch (IOException e)
         {
-            filewriter.close();
+            if(filewriter != null)
+                filewriter.close();
             return false;
         }
+        filewriter.close();
         return true;
     }
     /** Retrieves the state from the file whose name is the string supplied during object creation.

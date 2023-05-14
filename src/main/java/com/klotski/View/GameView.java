@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class GameView implements Initializable
+public class GameView
 {
     /* VARS */
     private GameHandler gameHandler;    // CONTROLLER object
@@ -38,8 +38,7 @@ public class GameView implements Initializable
     @FXML
     private Label lblCounterHundreds;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
+    public GameView()
     {
         // Initialize objects
         initializeAnimations();
@@ -114,6 +113,11 @@ public class GameView implements Initializable
 
         // Load counter
         updateMoveCounter();
+    }
+
+    public void SaveClicked(ActionEvent actionEvent)
+    {
+        gameHandler.saveGame();
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)

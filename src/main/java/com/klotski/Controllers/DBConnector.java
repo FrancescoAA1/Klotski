@@ -98,7 +98,7 @@ public class DBConnector {
         {
             PreparedStatement statement = connector.prepareStatement(querysql1);
             statement.setString(1, disposition.getTextDisposition());
-            statement.setInt(2, 1); // this is not an original disposition
+            statement.setInt(2, 0); // this is not an original disposition
             statement.setString(3, disposition.getImagePath());
             // run query
             statement.executeUpdate();
@@ -205,7 +205,7 @@ public class DBConnector {
         if(connector == null)
             connect();
         // I want to create the Query structure to select the specific disposition
-        String querysql = "SELECT schema, original, disposition_image FROM DISPOSITION WHERE ID = ?";
+        String querysql = "SELECT schema, original, disposition_image FROM DISPOSITIONS WHERE disposition_id = ?";
 
         try
         {
@@ -213,7 +213,7 @@ public class DBConnector {
             //insert the param fro ID
             statement.setInt(1, disposition_id);
             // executes the DB SELECT and the result is saved in result record collection
-            ResultSet result = statement.executeQuery(querysql);
+            ResultSet result = statement.executeQuery();
             // I get only one row
             String image = result.getString("disposition_image");
             String schema = result.getString("schema");
@@ -227,6 +227,7 @@ public class DBConnector {
         }
         catch (SQLException e)
         {
+            System.out.println(e.getMessage());
             return null;
         }
 
