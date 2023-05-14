@@ -1,6 +1,7 @@
 package com.klotski.ViewControllers;
 
 import com.klotski.Controllers.DBConnector;
+import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.DispositionCard;
 import com.klotski.UI.SavedGame;
 import com.klotski.model.Match;
@@ -32,6 +33,8 @@ public class SavedController implements Initializable {
 
     private DBConnector db;
 
+    private GameHandler gamehandler;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -59,6 +62,9 @@ public class SavedController implements Initializable {
     private void onMouseClicked(Event event)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/View/boardgame.fxml"));
+
+        GameController ctrl = fxmlLoader.getController();
+        ctrl.setController(gameHandler);
 
         Parent root = null;
         try {
