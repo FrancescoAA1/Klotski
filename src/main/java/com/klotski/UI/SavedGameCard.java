@@ -1,5 +1,6 @@
 package com.klotski.UI;
 
+import com.klotski.model.Match;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,15 +13,12 @@ import java.time.LocalDateTime;
 
 public class SavedGameCard {
     private String ImagePath;
-    private int moveNumber;
     private int dispositionID;
-
+    private Match match;
     private LocalDateTime gameDate;
 
-    private boolean gameState;
-
-    public int getMoveNumber() {
-        return moveNumber;
+    public Match getMatch() {
+        return match;
     }
     public LocalDateTime getGameDate() {
         return gameDate;
@@ -28,18 +26,14 @@ public class SavedGameCard {
     public int getDispositionID() {
         return dispositionID;
     }
-    public boolean getGameState() {
-        return gameState;
-    }
 
 
     private Pane control;
 
-    public SavedGameCard(String imagePath, int move_n, LocalDateTime game_d, boolean game_s, int disposition_ID) {
+    public SavedGameCard(String imagePath, LocalDateTime game_d, Match currentMatch, int disposition_ID) {
         ImagePath = imagePath;
-        moveNumber = move_n;
+        match = currentMatch;
         gameDate = game_d;
-        gameState = game_s;
         control = GenerateControl();
         dispositionID = disposition_ID;
     }
@@ -62,7 +56,7 @@ public class SavedGameCard {
         img.setLayoutY(5);
 
         // DispositionNumber Label
-        Label lbl_mov = new Label("NUMERO DI MOSSE: " + String.valueOf(moveNumber));
+        Label lbl_mov = new Label("NUMERO DI MOSSE: " + String.valueOf(match.getScore()));
         lbl_mov.setLayoutX(109);
         lbl_mov.setLayoutY(14);
         lbl_mov.getStyleClass().add("label");
@@ -76,7 +70,7 @@ public class SavedGameCard {
 
         String state = "";
 
-        if(gameState){
+        if(match.isTerminated()){
             state = "TERMINATA";
         }
         else

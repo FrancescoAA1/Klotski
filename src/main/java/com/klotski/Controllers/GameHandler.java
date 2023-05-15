@@ -17,11 +17,16 @@ public class GameHandler
 
     /** Constructor for saved games
      * @param savedDispositionID
-     * @param movesCount
-     * @param isTerminated
+     * @param match
      */
-    public GameHandler(int savedDispositionID, int movesCount, boolean isTerminated)
+    public GameHandler(int savedDispositionID, Match match)
     {
+        // Initialize vars
+        isOriginal = false;
+        currentMatch = new Match();
+        currentMatch.setScore(match.getScore());
+        if(match.isTerminated()) currentMatch.terminate();
+
         // Connect to DB and get disposition
         DBConnector db = new DBConnector();
         db.connect();
@@ -30,14 +35,12 @@ public class GameHandler
 
         // Load correct grid
         grid = disposition.convertToGrid();
-        history = new StateHandler(String.valueOf(savedDispositionID) + ".hst");
-        history.restoreStatus();
 
-        // Initialize vars
-        isOriginal = false;
-        currentMatch = new Match();
-        currentMatch.setScore(movesCount);
-        if(isTerminated) currentMatch.terminate();
+        // Load previous match history
+        history = new StateHandler(match.getName() + ".hst");
+        history.restoreStatus();
+        // Change destination of th history
+        history.setFileName(currentMatch.getName() + ".hst");
     }
 
     /** Constructor for new games
@@ -45,6 +48,10 @@ public class GameHandler
      */
     public GameHandler(int newDispositionID)
     {
+        // Initialize vars
+        isOriginal = true;
+        currentMatch = new Match();
+
         // Connect to DB and get disposition
         DBConnector db = new DBConnector();
         db.connect();
@@ -53,11 +60,7 @@ public class GameHandler
 
         // Load correct grid
         grid = disposition.convertToGrid();
-        history = new StateHandler(String.valueOf(newDispositionID) + ".hst");
-
-        // Initialize vars
-        isOriginal = true;
-        currentMatch = new Match();
+        history = new StateHandler(currentMatch.getName() + ".hst");
     }
 
     public boolean move(Position pos, Direction dir)
@@ -221,15 +224,8 @@ public class GameHandler
         db.connect();
         Disposition current = new Disposition(grid, false);
         db.saveMatch(currentMatch, current);
+        int disposition_id = db.lastSavedMatchID();
         db.close();
-
-        // If current is a new game, change file name with correct standard.
-        if(isOriginal)
-        {
-            history.setFileName("temp.hst");
-            isOriginal = false;
-            throw new RuntimeException("Creare nome dinamico in base al salvataggio del DB");
-        }
 
         // Save moves
         history.flush();
