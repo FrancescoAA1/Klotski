@@ -3,6 +3,9 @@ package com.klotski.Controllers;
 import com.klotski.model.Move;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -32,6 +35,30 @@ public class StateHandler {
         recordings = new Stack<Move>();
         count = 0;
         setFileName(file_name);
+        // get the current directory
+        try
+        {
+            currentPath = new java.io.File(".").getCanonicalPath();
+            // Check if the MatchLocks folder exists otherwise a save has never been made then
+            // I create it
+            Path path = Paths.get(currentPath + DEFAULT_PATH);
+            if(!Files.exists(path)) // In this case I need to create the folder
+            {
+                try
+                {
+                    Files.createDirectories(path);
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Error while creating MatchLogs folder" + e.getMessage());
+                }
+            }
+
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("Unable to get the current directory");
+        }
     }
     /** Check the correctness of the file name which must be in the format file_name.extension
      * @param file_name: string to check
@@ -53,15 +80,6 @@ public class StateHandler {
         if(checkFileName(file_name))
             fileName = file_name;
         else throw new IllegalArgumentException("Illegal file name");
-        // get the current directory
-        try
-        {
-            currentPath = new java.io.File(".").getCanonicalPath();
-        }
-        catch(IOException e)
-        {
-            throw new IllegalStateException("Unable to get the current directory");
-        }
     }
 
     public int getCount() {
@@ -118,8 +136,11 @@ public class StateHandler {
         PrintWriter filewriter = null;
         try
         {
-            //try to open file in writing mode
-            filewriter = new PrintWriter(new FileWriter(currentPath + DEFAULT_PATH + fileName));
+            //Try to open file in writing mode
+            //The second parameter set to false allows you to overwrite the file.
+            //So if I want to save a game that was already saved,
+            // just pass the same filename and it gets overwritten
+            filewriter = new PrintWriter(new FileWriter(currentPath + DEFAULT_PATH + fileName, false));
             // the first line is the # of rounds
             filewriter.println(count);
             // write all stack of recordings
