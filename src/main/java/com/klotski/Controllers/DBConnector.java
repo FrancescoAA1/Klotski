@@ -29,60 +29,56 @@ public class DBConnector {
      * Constructor
      * I need to obtain the current working directory
      */
-    public DBConnector()
-    {
+    public DBConnector() {
         // get the current directory
-        try
-        {
+        try {
             currentPath = new java.io.File(".").getCanonicalPath();
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             throw new IllegalStateException("Unable to get the current directory");
         }
     }
-    /** Connect to local DB if the file dedicated exists
+
+    /**
+     * Connect to local DB if the file dedicated exists
      */
-    public void connect()
-    {
+    public void connect() {
         // check if DB file exists...otherwise throw an error
         // create a Path to check in filesystem the existence
 
         Path path = Paths.get(currentPath + URL);
-        
-        if(!Files.exists(path))
+
+        if (!Files.exists(path))
             throw new IllegalStateException("The DB file does not exist");
 
         // here the file exist so I am able to connect
-        try{
+        try {
             //Try to establish the connection
-            connector = DriverManager.getConnection(PREFIX_CONNECTOR+currentPath+URL);
-        }
-        catch (Exception e )
-        {
+            connector = DriverManager.getConnection(PREFIX_CONNECTOR + currentPath + URL);
+        } catch (Exception e) {
             System.out.println("Unable to connect to teh local Klotski.db");
         }
     }
-    /** Close the DB connection if it was opened
+
+    /**
+     * Close the DB connection if it was opened
      */
-    public void close()
-    {
-        try
-        {
-            if(connector!=null && !connector.isClosed())
+    public void close() {
+        try {
+            if (connector != null && !connector.isClosed())
                 connector.close();
-        }
-        catch (SQLException e){} // if the connection is not open
+        } catch (SQLException e) {
+        } // if the connection is not open
     }
+
     /**
      * This method is reserved to insert a new match in the DB
+     *
      * @param match: the match to be saved
      * @return TRUE: if the DB INSERTION is correct, otherwise FALSE
      */
-    public boolean saveMatch(Match match, Disposition disposition)
-    {
+    public boolean saveMatch(Match match, Disposition disposition) {
         // if is not already connected to DB
-        if(connector == null)
+        if (connector == null)
             connect();
         // the steps are:
         // (1) Insert into DB the disposition
@@ -94,17 +90,14 @@ public class DBConnector {
         // the disposition_id field is not necessary because is auto-calculated by DB
         String querysql1 = "INSERT INTO DISPOSITIONS (schema, original, disposition_image) VALUES(?,?,?)";
         // Now I want to set all field of parametrized query
-        try
-        {
+        try {
             PreparedStatement statement = connector.prepareStatement(querysql1);
             statement.setString(1, disposition.getTextDisposition());
             statement.setInt(2, 0); // this is not an original disposition
             statement.setString(3, disposition.getImagePath());
             // run query
             statement.executeUpdate();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return false;
         }
         // In this case the insertion has been done
@@ -113,17 +106,14 @@ public class DBConnector {
         // Then, I extract only the first row from the SELECT
         String querysql2 = "SELECT disposition_id FROM DISPOSITIONS ORDER BY disposition_id DESC LIMIT 1";
         int lastDispositionID;
-        try
-        {
+        try {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql2);
 
             lastDispositionID = result.getInt("disposition_id");
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return false;
         }
 
@@ -133,48 +123,45 @@ public class DBConnector {
         // the match_id field is not necessary because is auto-calculated by DB
         String querysql3 = "INSERT INTO MATCHES(name, disposition, score, terminated) VALUES(?, ?, ?, ?)";
         // Now I want to set all fields of parametrized query
-        try
-        {
+        try {
             PreparedStatement statement = connector.prepareStatement(querysql3);
             statement.setString(1, match.getName());
             statement.setInt(2, lastDispositionID);
             statement.setInt(3, match.getScore());
-            statement.setInt(4, match.isTerminated()?1:0);
+            statement.setInt(4, match.isTerminated() ? 1 : 0);
             // run query
             statement.executeUpdate();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return false;
         }
 
         return true;
     }
+
     /**
      * This method is reserved to obtain all pair Match-LastDisposition saved in DB
      * ordered by match_id that is autoincrement -> this is also a temporal order
+     *
      * @return the list of Pair (Match, LastDisposition_ID) saved
      * The ArrayList is null if something goes wrong
      */
-    public ArrayList<Pair<Match,Integer>> listAllRecordedMatches()
-    {
-        ArrayList<Pair<Match,Integer>> matches = null;
+    public ArrayList<Pair<Match, Integer>> listAllRecordedMatches() {
+        ArrayList<Pair<Match, Integer>> matches = null;
 
         // if is not already connected to DB
-        if(connector == null)
+        if (connector == null)
             connect();
         // I want to create the Query structure to select alla matches from DB
         String querysql = "SELECT name, disposition, score, terminated FROM MATCHES ORDER BY match_id";
 
-        try
-        {
+        try {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql);
-            matches = new ArrayList<Pair<Match,Integer>>();
+            matches = new ArrayList<Pair<Match, Integer>>();
             Match tmp = null;
 
-            while(result.next()) {
+            while (result.next()) {
                 // create a new Match from data recovered from DB
                 tmp = new Match(result.getString("name"));
                 tmp.setScore(result.getInt("score"));
@@ -185,30 +172,28 @@ public class DBConnector {
                 matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition")));
                 System.out.println("Riga 186 DBCONnECTOr OK");
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return null;
         }
         return matches;
     }
+
     /**
      * This method is reserved to obtain a single and specific disposition saved in DB
+     *
      * @param disposition_id: the ID of the disposition that you want to get
      * @return the disposition with the specified ID in DB, null if there is not a disposition
      * with the specified ID
      */
-    public Disposition getDisposition(Integer disposition_id)
-    {
+    public Disposition getDisposition(Integer disposition_id) {
         Disposition disposition = null;
         // if is not already connected to DB
-        if(connector == null)
+        if (connector == null)
             connect();
         // I want to create the Query structure to select the specific disposition
         String querysql = "SELECT schema, original, disposition_image FROM DISPOSITIONS WHERE disposition_id = ?";
 
-        try
-        {
+        try {
             PreparedStatement statement = connector.prepareStatement(querysql);
             //insert the param fro ID
             statement.setInt(1, disposition_id);
@@ -219,14 +204,12 @@ public class DBConnector {
             String schema = result.getString("schema");
             int original = result.getInt("original");
 
-            if(original == 1)
+            if (original == 1)
                 disposition = new Disposition(schema, true);
             else disposition = new Disposition(schema, false);
 
             disposition.setImagePath(image);
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -236,21 +219,20 @@ public class DBConnector {
 
     /**
      * This method is reserved to obtain all original dispositions in DB
+     *
      * @return the list of all original dispositions
      * The ArrayList is null if something goes wrong
      */
-    public ArrayList<Disposition> listAllOriginalDispositions()
-    {
+    public ArrayList<Disposition> listAllOriginalDispositions() {
         ArrayList<Disposition> originalDisposition = null;
 
         // if it is not already connected to DB
-        if(connector == null)
+        if (connector == null)
             connect();
         // I want to create the Query structure to select all original dispositions
         String querysql = "SELECT schema, disposition_image FROM DISPOSITIONS WHERE original=1";
 
-        try
-        {
+        try {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql);
@@ -258,18 +240,48 @@ public class DBConnector {
 
             Disposition tmp = null;
 
-            while(result.next()) {
+            while (result.next()) {
                 // create a new Match from data recovered from DB
                 tmp = new Disposition(result.getString("schema"), true);
                 tmp.setImagePath(result.getString("disposition_image"));
 
                 originalDisposition.add(tmp);
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             return null;
         }
         return originalDisposition;
     }
+
+    /**
+     * This method is reserved to return the ID of teh last match saved in DB
+     *
+     * @return the last match's ID saved on DB
+     * 0 if something goes wrong
+     */
+    public int lastSavedMatchID()
+    {
+
+        // I sort the MATCHES table in descending order by ID so
+        // the value with the largest ID is the first (and it's the last inserted).
+        // Then, I extract only the first row from the SELECT
+        String querysql = "SELECT match_id FROM MATCHES ORDER BY match_id DESC LIMIT 1";
+        int lastMatchID;
+        try
+        {
+            Statement statement = connector.createStatement();
+            // executes the DB SELECT and the result is saved in result record collection
+            ResultSet result = statement.executeQuery(querysql);
+
+            lastMatchID = result.getInt("match_id");
+
+            return lastMatchID;
+
+        } catch (SQLException e) {
+            return 0;
+        }
+
+    }
+
 }
+
