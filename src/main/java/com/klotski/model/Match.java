@@ -45,4 +45,5 @@ public class Match {
     {
         score++;
     }
+    public void decrementScore() { score--; }
 }

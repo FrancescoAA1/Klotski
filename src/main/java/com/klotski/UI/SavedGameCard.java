@@ -13,20 +13,35 @@ import java.time.LocalDateTime;
 public class SavedGameCard {
     private String ImagePath;
     private int moveNumber;
+    private int dispositionID;
 
     private LocalDateTime gameDate;
 
     private boolean gameState;
 
+    public int getMoveNumber() {
+        return moveNumber;
+    }
+    public LocalDateTime getGameDate() {
+        return gameDate;
+    }
+    public int getDispositionID() {
+        return dispositionID;
+    }
+    public boolean getGameState() {
+        return gameState;
+    }
+
 
     private Pane control;
 
-    public SavedGameCard(String imagePath, int move_n, LocalDateTime game_d, boolean game_s) {
+    public SavedGameCard(String imagePath, int move_n, LocalDateTime game_d, boolean game_s, int disposition_ID) {
         ImagePath = imagePath;
         moveNumber = move_n;
         gameDate = game_d;
         gameState = game_s;
         control = GenerateControl();
+        dispositionID = disposition_ID;
     }
 
     private Pane GenerateControl()

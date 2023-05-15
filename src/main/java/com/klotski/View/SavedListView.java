@@ -31,6 +31,7 @@ public class SavedListView implements Initializable {
     @FXML
     private GridPane grid;
     private GameHandler gameHandler;
+    private ArrayList<SavedGameCard> cards;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -38,21 +39,25 @@ public class SavedListView implements Initializable {
         DBConnector db = new DBConnector();
         ArrayList<Pair<Match, Integer>> matches = db.listAllRecordedMatches();
         System.out.println(matches.size());
+
+        cards = new ArrayList<SavedGameCard>();
         int index = 0;
 
         for(Pair<Match, Integer> m: matches)
         {
             int score = m.getKey().getScore();
             String date = m.getKey().getName();
+            int dispositionID = m.getValue();
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             //LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
             //System.out.println(dateTime);
             LocalDateTime dateTime = LocalDateTime.now();
             boolean terminated = m.getKey().isTerminated();
 
-            SavedGameCard s = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated);
-            s.getControl().setOnMouseClicked(e -> onMouseClicked(e));
-            grid.add(s.getControl(), 0,index++);
+            SavedGameCard card = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), score, dateTime, terminated, dispositionID);
+            card.getControl().setOnMouseClicked(e -> onMouseClicked(e));
+            grid.add(card.getControl(), 0,index++);
+            cards.add(card);
         }
         db.close();
     }
@@ -65,10 +70,10 @@ public class SavedListView implements Initializable {
         OpenWindow(fxmlLoader, "Game", event);
 
         // Get current SavedGame card
-
+        SavedGameCard card = getCurrentSavedGameCard(event);
 
         // Create new game
-        GameHandler gameHandler = new GameHandler(27, 5, false);
+        GameHandler gameHandler = new GameHandler(card.getDispositionID(), card.getMoveNumber(), card.getGameState());
 
         // Communications inter-view
         GameView gameView = fxmlLoader.getController();
@@ -94,5 +99,16 @@ public class SavedListView implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private SavedGameCard getCurrentSavedGameCard(Event event)
+    {
+        for (SavedGameCard card: cards)
+        {
+            if(card.getControl() == event.getSource())
+                return card;
+        }
+
+        throw new IllegalArgumentException();
     }
 }

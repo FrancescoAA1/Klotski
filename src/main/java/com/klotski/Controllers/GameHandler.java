@@ -10,6 +10,9 @@ public class GameHandler
     private Grid grid;                  // Klotski data & logic (model)
     private StateHandler history;       // Moves handler
     private Move lastUndoMove;          // Last undo move
+    private boolean isOriginal;
+
+    private Match currentMatch;
 
 
     /** Constructor for saved games
@@ -19,16 +22,22 @@ public class GameHandler
      */
     public GameHandler(int savedDispositionID, int movesCount, boolean isTerminated)
     {
+        // Connect to DB and get disposition
         DBConnector db = new DBConnector();
         db.connect();
         Disposition disposition = db.getDisposition(savedDispositionID);
+        db.close();
 
         // Load correct grid
         grid = disposition.convertToGrid();
-        history = new StateHandler("temp.hst");
+        history = new StateHandler(String.valueOf(savedDispositionID) + ".hst");
         history.restoreStatus();
 
-        db.close();
+        // Initialize vars
+        isOriginal = false;
+        currentMatch = new Match();
+        currentMatch.setScore(movesCount);
+        if(isTerminated) currentMatch.terminate();
     }
 
     /** Constructor for new games
@@ -36,15 +45,19 @@ public class GameHandler
      */
     public GameHandler(int newDispositionID)
     {
+        // Connect to DB and get disposition
         DBConnector db = new DBConnector();
         db.connect();
         Disposition disposition = db.getDisposition(newDispositionID);
+        db.close();
 
         // Load correct grid
         grid = disposition.convertToGrid();
-        history = new StateHandler("temp.hst");
+        history = new StateHandler(String.valueOf(newDispositionID) + ".hst");
 
-        db.close();
+        // Initialize vars
+        isOriginal = true;
+        currentMatch = new Match();
     }
 
     public boolean move(Position pos, Direction dir)
@@ -62,16 +75,21 @@ public class GameHandler
             {
                 // Register move
                 history.pushMove(move);
+
+                // Increment match score
+                currentMatch.incrementScore();
+
+                // Move valid
                 return true;
             }
-
-            // Move not valid
-            return false;
         }
         catch (IllegalArgumentException e)
         {
             return false;
         }
+
+        // Move not valid
+        return false;
     }
 
     public boolean checkMove(Position pos, Direction dir)
@@ -157,6 +175,10 @@ public class GameHandler
                 // Remove canceled move
                 history.popMove();
                 lastUndoMove = inverted;
+
+                // Decrement match score
+                currentMatch.decrementScore();
+
                 return true;
             }
 
@@ -189,18 +211,27 @@ public class GameHandler
 
     public int getMoveCounter()
     {
-        return history.getCount();
+        return currentMatch.getScore();
     }
 
     public void saveGame()
     {
+        // Conncect to DB and save game.
         DBConnector db = new DBConnector();
         db.connect();
-        Match match = new Match();
-        match.setScore(history.getCount());
         Disposition current = new Disposition(grid, false);
-        db.saveMatch(match, current);
-        history.flush();
+        db.saveMatch(currentMatch, current);
         db.close();
+
+        // If current is a new game, change file name with correct standard.
+        if(isOriginal)
+        {
+            history.setFileName("temp.hst");
+            isOriginal = false;
+            throw new RuntimeException("Creare nome dinamico in base al salvataggio del DB");
+        }
+
+        // Save moves
+        history.flush();
     }
 }

@@ -31,7 +31,25 @@ public class StateHandler {
     {
         recordings = new Stack<Move>();
         count = 0;
+        setFileName(file_name);
+    }
+    /** Check the correctness of the file name which must be in the format file_name.extension
+     * @param file_name: string to check
+     * @return TRUE if the format is correct, otherwise FALSE
+     */
+    private boolean checkFileName(String file_name)
+    {
+        Pattern pattern = Pattern.compile(REGEX_FILE_FORMAT);
+        Matcher matcher = pattern.matcher(file_name);
 
+        return matcher.matches();
+    }
+
+    /** Set the filename save location. Format: file_name.extension
+     * @param file_name: filename where to save
+     */
+    public void setFileName(String file_name)
+    {
         if(checkFileName(file_name))
             fileName = file_name;
         else throw new IllegalArgumentException("Illegal file name");
@@ -44,17 +62,6 @@ public class StateHandler {
         {
             throw new IllegalStateException("Unable to get the current directory");
         }
-    }
-    /** Check the correctness of the file name which must be in the format file_name.extension
-     * @param file_name: string to check
-     * @return TRUE if the format is correct, otherwise FALSE
-     */
-    private boolean checkFileName(String file_name)
-    {
-        Pattern pattern = Pattern.compile(REGEX_FILE_FORMAT);
-        Matcher matcher = pattern.matcher(file_name);
-
-        return matcher.matches();
     }
 
     public int getCount() {
