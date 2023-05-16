@@ -14,6 +14,7 @@ public class MainMenu extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Klotski");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
