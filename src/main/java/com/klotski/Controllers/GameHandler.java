@@ -23,9 +23,10 @@ public class GameHandler
     {
         // Initialize vars
         isOriginal = false;
-        currentMatch = new Match();
-        currentMatch.setScore(match.getScore());
-        if(match.isTerminated()) currentMatch.terminate();
+        currentMatch = match;
+        //currentMatch = new Match();
+        //currentMatch.setScore(match.getScore());
+        //if(match.isTerminated()) currentMatch.terminate();
 
         // Connect to DB and get disposition
         DBConnector db = new DBConnector();
@@ -223,7 +224,10 @@ public class GameHandler
         DBConnector db = new DBConnector();
         db.connect();
         Disposition current = new Disposition(grid, false);
-        db.saveMatch(currentMatch, current);
+        if(isOriginal)
+            db.saveMatch(currentMatch, current);
+        else
+            db.updateMatch(currentMatch, current);
         db.close();
 
         // Save moves

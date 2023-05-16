@@ -32,7 +32,7 @@ public class Match {
         String datePart = dateTimeParts[0];
         String timePart = dateTimeParts[1].substring(0, 7);
         String[] timeParts = timePart.split(":");
-        return datePart + "_" + timeParts[0] + "-" + timeParts[1] + "-" + timeParts[2];
+        return datePart + "_" + timeParts[0] + "-" + timeParts[1] + "-" + (timeParts[2].length() == 1 ? "0" + timeParts[2] : timeParts[2]);
     }
 
     public int getScore() {

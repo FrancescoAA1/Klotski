@@ -70,6 +70,8 @@ public class GameView
             else
                 CreateSquare(current.getPos().getX(), current.getPos().getY());
         }
+
+        updateMoveCounter();
     }
 
     public void UndoClicked(ActionEvent actionEvent)

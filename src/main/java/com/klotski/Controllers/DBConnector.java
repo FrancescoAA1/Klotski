@@ -167,7 +167,6 @@ public class DBConnector {
                     tmp.terminate();
 
                 matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition_id")));
-                System.out.println("Riga 186 DBCONnECTOr OK");
             }
         } catch (SQLException e) {
             return null;
@@ -422,7 +421,7 @@ public class DBConnector {
         if (connector == null)
             connect();
         // I want to search with a SELECTION QUERY the id associated to the match with this name
-        String querysql = "SELECT disposition FROM MATCHES WHERE match_id = ?";
+        String querysql = "SELECT disposition_id FROM MATCHES WHERE match_id = ?";
 
         try
         {
@@ -432,7 +431,7 @@ public class DBConnector {
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery();
             // It returns only one object (the ID if is present)
-            return result.getInt("disposition");
+            return result.getInt("disposition_id");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
