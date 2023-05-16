@@ -10,10 +10,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.util.converter.LocalDateTimeStringConverter;
@@ -96,6 +98,15 @@ public class SavedListView implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        // Calculate the center position of the screen
+        Rectangle2D screenBound = Screen.getPrimary().getVisualBounds();
+        double centerX = (screenBound.getWidth() - scene.getWidth())/2;
+        double centerY = (screenBound.getHeight() - scene.getHeight())/2;
+
+        // Set the scene position to the center of the screen
+        stage.setX(centerX);
+        stage.setY(centerY);
     }
 
     private SavedGameCard getCurrentSavedGameCard(Event event)
