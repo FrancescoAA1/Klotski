@@ -117,7 +117,7 @@ public class DBConnector {
 
         // I want to create the Query structure to insert into DB a new match
         // the match_id field is not necessary because is auto-calculated by DB
-        String querysql3 = "INSERT INTO MATCHES(name, disposition, score, terminated) VALUES(?, ?, ?, ?)";
+        String querysql3 = "INSERT INTO MATCHES(name, disposition_id, score, terminated) VALUES(?, ?, ?, ?)";
         // Now I want to set all fields of parametrized query
         try {
             PreparedStatement statement = connector.prepareStatement(querysql3);

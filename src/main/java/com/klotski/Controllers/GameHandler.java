@@ -224,7 +224,6 @@ public class GameHandler
         db.connect();
         Disposition current = new Disposition(grid, false);
         db.saveMatch(currentMatch, current);
-        int disposition_id = db.lastSavedMatchID();
         db.close();
 
         // Save moves
