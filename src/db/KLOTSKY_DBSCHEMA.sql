@@ -11,7 +11,7 @@ CREATE TABLE "MATCHES"
 (
     "match_id"    INTEGER NOT NULL UNIQUE,
     "name"        TEXT    NOT NULL UNIQUE,
-    "disposition" INTEGER NOT NULL,
+    "disposition_id" INTEGER NOT NULL,
     "score"       INTEGER NOT NULL,
     "terminated"  INTEGER NOT NULL,
     PRIMARY KEY ("match_id" AUTOINCREMENT),
