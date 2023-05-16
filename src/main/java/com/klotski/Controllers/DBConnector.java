@@ -149,7 +149,7 @@ public class DBConnector {
         if (connector == null)
             connect();
         // I want to create the Query structure to select alla matches from DB
-        String querysql = "SELECT name, disposition, score, terminated FROM MATCHES ORDER BY match_id";
+        String querysql = "SELECT name, disposition_id, score, terminated FROM MATCHES ORDER BY match_id";
 
         try {
             Statement statement = connector.createStatement();
@@ -166,7 +166,7 @@ public class DBConnector {
                 if (result.getInt("terminated") == 1)
                     tmp.terminate();
 
-                matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition")));
+                matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition_id")));
                 System.out.println("Riga 186 DBCONnECTOr OK");
             }
         } catch (SQLException e) {

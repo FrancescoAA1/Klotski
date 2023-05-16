@@ -23,8 +23,18 @@ public class Match {
         isTerminated = false;
         score = 0;
         // obtain the current time
-        name = LocalDateTime.now().toString();
+        name = nameFormatter(LocalDateTime.now().toString());
     }
+
+    private String nameFormatter(String name)
+    {
+        String[] dateTimeParts = name.split("T");
+        String datePart = dateTimeParts[0];
+        String timePart = dateTimeParts[1].substring(0, 7);
+        String[] timeParts = timePart.split(":");
+        return datePart + "_" + timeParts[0] + "-" + timeParts[1] + "-" + timeParts[2];
+    }
+
     public int getScore() {
         return score;
     }

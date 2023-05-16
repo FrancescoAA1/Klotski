@@ -47,8 +47,8 @@ public class SavedListView implements Initializable {
         for(Pair<Match, Integer> m: matches)
         {
             int dispositionID = m.getValue();
-            LocalDateTimeStringConverter converter = new LocalDateTimeStringConverter();
-            LocalDateTime dateTime = converter.fromString(m.getKey().getName());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            LocalDateTime dateTime = LocalDateTime.parse(m.getKey().getName(), formatter);
 
             SavedGameCard card = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), dateTime, m.getKey(), dispositionID);
             card.getControl().setOnMouseClicked(e -> onMouseClicked(e));
