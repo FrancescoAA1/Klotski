@@ -164,7 +164,7 @@ public class Disposition
                         Position.convertToPosition(blockFields[2]), // position in the last in txt
                         Integer.parseInt(blockFields[1]), // width is the second in txt
                         Integer.parseInt(blockFields[0])  // height is the first in txt
-                        );
+                );
 
                 if(tmp.isSpecial())
                     specialFound = true;
