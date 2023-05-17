@@ -10,6 +10,8 @@ public class GameHandler
     private Grid grid;                  // Klotski data & logic (model)
     private StateHandler history;       // Moves handler
     private Move lastUndoMove;          // Last undo move
+
+    private String imagePath;
     private boolean isOriginal;
 
     private Match currentMatch;
@@ -36,6 +38,7 @@ public class GameHandler
 
         // Load correct grid
         grid = disposition.convertToGrid();
+        imagePath = disposition.getImagePath();
 
         // Load previous match history
         history = new StateHandler(match.getName() + ".hst");
@@ -57,6 +60,8 @@ public class GameHandler
         DBConnector db = new DBConnector();
         db.connect();
         Disposition disposition = db.getDisposition(newDispositionID);
+        imagePath = disposition.getImagePath();
+
         db.close();
 
         // Load correct grid
@@ -224,6 +229,7 @@ public class GameHandler
         DBConnector db = new DBConnector();
         db.connect();
         Disposition current = new Disposition(grid, false);
+        current.setImagePath(imagePath);
         if(isOriginal)
             db.saveMatch(currentMatch, current);
         else

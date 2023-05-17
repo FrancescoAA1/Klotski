@@ -4,6 +4,7 @@ import com.klotski.Controllers.DBConnector;
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.DispositionCard;
 import com.klotski.UI.SavedGameCard;
+import com.klotski.model.Disposition;
 import com.klotski.model.Match;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -14,6 +15,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -49,10 +51,15 @@ public class SavedListView implements Initializable {
         for(Pair<Match, Integer> m: matches)
         {
             int dispositionID = m.getValue();
+            Disposition disp = db.getDisposition(dispositionID);
+            if(disp == null) return;
+
+            String imagePath = disp.getImagePath();
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
             LocalDateTime dateTime = LocalDateTime.parse(m.getKey().getName(), formatter);
 
-            SavedGameCard card = new SavedGameCard(getClass().getResource("/com/klotski/Images/m1.png").getPath(), dateTime, m.getKey(), dispositionID);
+            SavedGameCard card = new SavedGameCard(getClass().getResource(imagePath).getPath(), dateTime, m.getKey(), dispositionID);
             card.getControl().setOnMouseClicked(e -> onMouseClicked(e));
             grid.add(card.getControl(), 0,index++);
             cards.add(card);
@@ -92,6 +99,7 @@ public class SavedListView implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
