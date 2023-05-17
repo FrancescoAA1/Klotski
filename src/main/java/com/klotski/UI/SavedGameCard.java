@@ -12,6 +12,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 
 public class SavedGameCard {
+    private static final String SEPARATOR = "T";
     private String ImagePath;
     private int dispositionID;
     private Match match;
@@ -56,14 +57,14 @@ public class SavedGameCard {
         img.setLayoutY(5);
 
         // DispositionNumber Label
-        Label lbl_mov = new Label("NUMERO DI MOSSE: " + String.valueOf(match.getScore()));
+        Label lbl_mov = new Label("MOVE COUNT: " + String.valueOf(match.getScore()));
         lbl_mov.setLayoutX(109);
         lbl_mov.setLayoutY(14);
         lbl_mov.getStyleClass().add("label");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String[] gameDateParts = gameDate.toString().split(SEPARATOR);
 
-        Label lbl_date = new Label("DATA: " + gameDate);
+        Label lbl_date = new Label("DATE: " + gameDateParts[0] + " " + gameDateParts[1]);
         lbl_date.setLayoutX(109);
         lbl_date.setLayoutY(37);
         lbl_date.getStyleClass().add("label");
@@ -71,13 +72,13 @@ public class SavedGameCard {
         String state = "";
 
         if(match.isTerminated()){
-            state = "TERMINATA";
+            state = "GAME FINISHED";
         }
         else
         {
-            state = "NON TERMINATA";
+            state = "IN PROGRESS";
         }
-        Label lbl_state = new Label("STATO PARTITA: " + state);
+        Label lbl_state = new Label("MATCH STATUS: " + state);
         lbl_state.setLayoutX(109);
         lbl_state.setLayoutY(59);
         lbl_state.getStyleClass().add("label");

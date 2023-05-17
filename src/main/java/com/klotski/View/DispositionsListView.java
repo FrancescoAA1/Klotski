@@ -88,7 +88,6 @@ public class DispositionsListView implements Initializable
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
 
         // Calculate the center position of the screen
         Rectangle2D screenBound = Screen.getPrimary().getVisualBounds();
@@ -98,6 +97,8 @@ public class DispositionsListView implements Initializable
         // Set the scene position to the center of the screen
         stage.setX(centerX);
         stage.setY(centerY);
+
+        stage.show();
     }
 
     private void onCardMouseClicked(Event event)

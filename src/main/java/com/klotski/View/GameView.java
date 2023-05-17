@@ -152,7 +152,6 @@ public class GameView
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
 
         // Calculate the center position of the screen
         Rectangle2D screenBound = Screen.getPrimary().getVisualBounds();
@@ -162,6 +161,9 @@ public class GameView
         // Set the scene position to the center of the screen
         stage.setX(centerX);
         stage.setY(centerY);
+
+        stage.show();
+
     }
 
     private void updateMoveCounter()
@@ -172,6 +174,8 @@ public class GameView
         lblCounterTens.setText(String.valueOf(count % 100  / 10));
         lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
     }
+
+
 
     private void CreateSquare(int column, int row)
     {
