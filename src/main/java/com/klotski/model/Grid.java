@@ -18,7 +18,7 @@ public class Grid
     /**
      * WIN_POS represents the position that the main block must have in order to win the game.
      */
-    private static final Position WIN_POS = new Position(1,2);
+    private static final Position WIN_POS = new Position(1,3);
     private static final int GRID_WIDTH = 4;
     private static final int GRID_HEIGHT = 5;
     public static final int BLOCK_NUMBER = 10;

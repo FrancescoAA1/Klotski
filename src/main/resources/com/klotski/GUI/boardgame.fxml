@@ -16,7 +16,6 @@
 <AnchorPane prefHeight="715.0" prefWidth="530.0" styleClass="container" stylesheets="@../CSS/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.View.GameView">
    <children>
       <Label alignment="TOP_LEFT" layoutX="134.0" layoutY="29.0" prefHeight="38.0" prefWidth="282.0" styleClass="configuration_title" text="CONFIGURATION 1" AnchorPane.leftAnchor="124.0" />
-      <Button layoutX="60.0" layoutY="657.0" mnemonicParsing="false" onAction="#UndoClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Undo" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="50.0" />
       <Button layoutX="60.0" layoutY="28.0" mnemonicParsing="false" onAction="#HomeClicked" prefHeight="38.0" prefWidth="55.0" styleClass="top_button" AnchorPane.leftAnchor="50.0">
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="40.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
@@ -42,7 +41,6 @@
          <padding>
             <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
          </padding></Button>
-      <Button layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
       <AnchorPane prefHeight="60.0" prefWidth="242.0" styleClass="board_bottom" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
          <children>
             <HBox AnchorPane.leftAnchor="62.5" AnchorPane.rightAnchor="62.5" AnchorPane.topAnchor="12.0">
@@ -104,5 +102,7 @@
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
          </padding>
       </GridPane>
+      <Button layoutX="60.0" layoutY="657.0" mnemonicParsing="false" onAction="#UndoClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Undo" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="50.0" />
+      <Button layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
    </children>
 </AnchorPane>

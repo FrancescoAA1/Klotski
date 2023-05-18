@@ -3,6 +3,7 @@ package com.klotski.View;
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.Axis;
 import com.klotski.model.*;
+import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -148,7 +149,7 @@ public class GameView
             throw new RuntimeException(e);
         }
         Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) grid.getScene().getWindow();
         stage.setTitle(title);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -162,8 +163,8 @@ public class GameView
         stage.setX(centerX);
         stage.setY(centerY);
 
+        // Show current stage
         stage.show();
-
     }
 
     private void updateMoveCounter()
@@ -173,6 +174,21 @@ public class GameView
         lblCounterUnit.setText(String.valueOf(count % 10));
         lblCounterTens.setText(String.valueOf(count % 100  / 10));
         lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
+    }
+    private void checkVictory()
+    {
+        if(!gameHandler.isSolved())
+            return;
+
+        // If game is solver: start victory animation
+        // At animation end, victory window opens automatically
+        // see: initializeAnimations();
+        victoryTranslateAnimation.playFromStart();
+    }
+    private void openVictoryWindow(ActionEvent e)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/win.fxml"));
+        OpenWindow(fxmlLoader, "How did you win?", e);
     }
 
 
@@ -188,6 +204,8 @@ public class GameView
         Pane square = new Pane();
         square.getStyleClass().add("big_square");
         AssignBehaviour(square, column, row, 2, 2);
+        // Set victory animation
+        victoryTranslateAnimation.setNode(square);
     }
     private void CreateVerticalRectangle(int column, int row)
     {
@@ -223,6 +241,7 @@ public class GameView
     private TranslateTransition xTranslateAnimation;        // Animation for horizontal move-error
     private TranslateTransition yTranslateAnimation;        // Animation for vertical move-error
     private TranslateTransition undoTranslateAnimation;     // Animation for undo move
+    private TranslateTransition victoryTranslateAnimation;     // Animation for undo move
 
 
     /**
@@ -245,6 +264,20 @@ public class GameView
         yTranslateAnimation.setCycleCount(4);
         yTranslateAnimation.setAutoReverse(true);
         yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
+
+        // Victory translation
+        victoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
+        victoryTranslateAnimation.setFromY(0);
+        victoryTranslateAnimation.setToY(450);
+        // Set animation acceleration
+        victoryTranslateAnimation.setInterpolator(new Interpolator() {
+            @Override
+            protected double curve(double t) {
+                return (t==0.0) ? 0.0 : Math.pow(1.6, 7*(t-1));
+            }
+        });
+        // At the end of that animation, open victory window.
+        victoryTranslateAnimation.setOnFinished(e -> openVictoryWindow(e));
     }
     private void startUndoAnimation(Direction undo, Pane control)
     {
@@ -280,6 +313,10 @@ public class GameView
      */
     private void MousePressed(MouseEvent event)
     {
+        // If game is already end, block any move.
+        if(gameHandler.isSolved())
+            return;
+
         // Get current block selected by user
         current = (Pane)event.getSource();
 
@@ -307,6 +344,10 @@ public class GameView
      */
     private void MouseDragged(MouseEvent event)
     {
+        // If game is already end, block any move.
+        if(gameHandler.isSolved())
+            return;
+
         // Get current mouse position
         double finalX = event.getScreenX();
         double finalY = event.getScreenY();
@@ -368,6 +409,10 @@ public class GameView
      */
     private void MouseReleased(MouseEvent event)
     {
+        // If game is already end, block any move.
+        if(gameHandler.isSolved())
+            return;
+
         // If the direction of the drag is not defined, ignore event.
         if(!isDirectionDefined) return;
 
@@ -399,6 +444,9 @@ public class GameView
 
                     // Move Counter
                     updateMoveCounter();
+
+                    // Check victory
+                    checkVictory();
                 }
                 else
                 {
@@ -421,6 +469,9 @@ public class GameView
 
                     // Move Counter
                     updateMoveCounter();
+
+                    // Check victory
+                    checkVictory();
                 }
                 else
                 {
