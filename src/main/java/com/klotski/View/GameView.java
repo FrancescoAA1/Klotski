@@ -107,22 +107,15 @@ public class GameView
 
     public void ResetClicked(ActionEvent actionEvent)
     {
-        // Unload all existing blocks
-        grid.getChildren().clear();
-
-        // Initialize objects
-        // gameHandler = new GameHandler();
-
-        // Load dynamically blocks from controller.
-        loadKlotski();
-
-        // Load counter
-        updateMoveCounter();
+        // Undo all operations
+        while(gameHandler.getMoveCounter() > 0)
+        {
+            UndoClicked(actionEvent);
+        }
     }
 
     public void SaveClicked(ActionEvent actionEvent)
     {
-        //gameHandler.saveGame();
         gameHandler.saveGameForDB();
     }
 
@@ -437,7 +430,7 @@ public class GameView
                 double translation = finalY - initialY;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.DOWN : Direction.UP;
-                if (gameHandler.moveForDB(currentPos, dir))
+                if (gameHandler.move(currentPos, dir))
                 {
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
@@ -462,7 +455,7 @@ public class GameView
                 double translation = finalX - initialX;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.RIGHT : Direction.LEFT;
-                if (gameHandler.moveForDB(currentPos, dir))
+                if (gameHandler.move(currentPos, dir))
                 {
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();

@@ -26,9 +26,6 @@ public class GameHandler
         // Initialize vars
         isOriginal = false;
         currentMatch = match;
-        //currentMatch = new Match();
-        //currentMatch.setScore(match.getScore());
-        //if(match.isTerminated()) currentMatch.terminate();
 
         // Connect to DB and get disposition
         DBConnector db = new DBConnector();
@@ -239,6 +236,27 @@ public class GameHandler
         // Save moves
         history.flush();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // TMP, for DB-NEXT-MOVE DATA ENTRY
 
     public void saveGameForDB()
     {
