@@ -222,7 +222,7 @@ public class GameHandler
 
     public void saveGame()
     {
-        // Conncect to DB and save game.
+        // Connect to DB and save game.
         DBConnector db = new DBConnector();
         db.connect();
         Disposition current = new Disposition(grid, false);
@@ -235,6 +235,11 @@ public class GameHandler
 
         // Save moves
         history.flush();
+    }
+
+    public String getGameTitle()
+    {
+        return currentMatch.getName();
     }
 
 

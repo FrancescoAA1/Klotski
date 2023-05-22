@@ -40,6 +40,10 @@ public class GameView
     private Label lblCounterTens;
     @FXML
     private Label lblCounterHundreds;
+    @FXML
+    private Label lblCounterThousands;
+    @FXML
+    private Label lblTitle;
 
     public GameView()
     {
@@ -51,6 +55,9 @@ public class GameView
     {
         // Get GameHandler (Controller)
         gameHandler = game;
+
+        // Initialize title
+        lblTitle.setText(gameHandler.getGameTitle());
 
         // Load dynamically blocks from controller.
         loadKlotski();
@@ -116,7 +123,7 @@ public class GameView
 
     public void SaveClicked(ActionEvent actionEvent)
     {
-        gameHandler.saveGameForDB();
+        gameHandler.saveGame();
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
@@ -168,6 +175,7 @@ public class GameView
         lblCounterUnit.setText(String.valueOf(count % 10));
         lblCounterTens.setText(String.valueOf(count % 100  / 10));
         lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
+        lblCounterThousands.setText(String.valueOf(count % 10000  / 1000));
     }
     private void checkVictory()
     {
