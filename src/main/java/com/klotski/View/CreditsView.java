@@ -14,13 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreditsView implements Initializable {
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
-        System.out.println("OK");
-    }
+public class CreditsView {
 
     public void MenuClicked(ActionEvent actionEvent)
     {

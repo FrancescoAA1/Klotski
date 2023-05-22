@@ -3,15 +3,6 @@
     -fx-background-color: #232C33;
 }
 
-.title
-{
-    -fx-alignment: center;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-text-fill: #eff1f0;
-}
-
 .grid
 {
     -fx-background-color: #283943;
@@ -37,34 +28,4 @@
     -fx-font-family: Ebrima;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-}
-
-.little_button
-{
-    -fx-background-color: #809ba6;
-    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #98abaf, #5b7782);
-    -fx-border-width: 4px;
-    -fx-border-radius: 100%;
-    -fx-border-insets: -1px;
-    -fx-text-fill: #d5dbe7;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-background-radius: 20px;
-    -fx-alignment: center;
-}
-
-.exit_button
-{
-    -fx-background-color: #d37158;
-    -fx-border-color: linear-gradient(from 60% 0% to 90% 100%, #ec8161, #b1604f);
-    -fx-border-width: 4px;
-    -fx-border-radius: 100%;
-    -fx-border-insets: -1px;
-    -fx-text-fill: #facac6;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-background-radius: 20px;
-    -fx-alignment: center;
 }

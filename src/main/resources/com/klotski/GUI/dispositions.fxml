@@ -23,8 +23,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Label layoutX="149.0" layoutY="20.0" styleClass="title" text="SELECT LEVEL" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="148.6" AnchorPane.topAnchor="20.0" />
-      <Button layoutX="20.0" layoutY="19.0" mnemonicParsing="false" onAction="#MenuClicked" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/credits.css">
+      <Label layoutX="132.0" layoutY="20.0" prefHeight="23.0" prefWidth="136.0" styleClass="title" stylesheets="@../CSS/common.css" text="SELECT LEVEL" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="20.0" />
+      <Button layoutX="20.0" layoutY="19.0" mnemonicParsing="false" onAction="#MenuClicked" prefHeight="21.0" prefWidth="25.0" styleClass="btn_back" stylesheets="@../CSS/common.css">
          <graphic>
             <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>

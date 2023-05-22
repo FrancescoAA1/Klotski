@@ -66,8 +66,8 @@ public class DispositionCard {
         ImageView img = new ImageView(new Image(file.toURI().toString()));
         img.setFitHeight(100);
         img.setFitWidth(150);
-        img.setLayoutX(15);
-        img.setLayoutY(21);
+        img.setLayoutX(13);
+        img.setLayoutY(19);
         img.setPickOnBounds(true);
         img.setPreserveRatio(true);
 

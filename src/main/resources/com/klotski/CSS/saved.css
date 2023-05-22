@@ -3,15 +3,6 @@
     -fx-background-color: #232C33;
 }
 
-.title
-{
-    -fx-alignment: center;
-    -fx-font-family: Ebrima;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-text-fill: #eff1f0;
-}
-
 .grid
 {
     -fx-background-color: #283943;
