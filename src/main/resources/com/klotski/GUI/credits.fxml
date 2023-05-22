@@ -31,7 +31,7 @@
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Icons/black-triangular-arrowhead-pointing-to-left-direction.png" />
+                              <Image url="@../Assets/black-triangular-arrowhead-pointing-to-left-direction.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -44,7 +44,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                            <image>
-                              <Image url="@../Icons/man%20(1).png" />
+                              <Image url="@../Assets/man%20(1).png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="TOMMASO DANIELI" />
@@ -58,7 +58,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                            <image>
-                              <Image url="@../Icons/man.png" />
+                              <Image url="@../Assets/man.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="MATTIA GALASSI" />
@@ -72,7 +72,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                            <image>
-                              <Image url="@../Icons/man%20(2).png" />
+                              <Image url="@../Assets/man%20(2).png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="FRANCESCO FANTIN" />
@@ -86,7 +86,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Icons/man%20(3).png" />
+                              <Image url="@../Assets/man%20(3).png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="TOMAS LOVATO" />

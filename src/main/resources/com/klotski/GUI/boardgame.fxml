@@ -114,7 +114,7 @@
             <Label alignment="CENTER" contentDisplay="CENTER" styleClass="victory_label" text="CONGRATULATIONS!" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="50.0">
                <image>
-                  <Image url="@../Icons/trophy.png" />
+                  <Image url="@../Assets/trophy.png" />
                </image>
             </ImageView>
             <Label layoutX="47.0" layoutY="235.0" styleClass="move_number" text=" 0 0 0 0 " />
@@ -132,7 +132,7 @@
                   </Button>
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="140.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="16.0">
                      <image>
-                        <Image url="@../Icons/medal.png" />
+                        <Image url="@../Assets/medal.png" />
                      </image>
                   </ImageView>
                </children>

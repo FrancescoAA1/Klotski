@@ -27,7 +27,7 @@
          <graphic>
             <ImageView fitHeight="33.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Icons/black-triangular-arrowhead-pointing-to-left-direction.png" />
+                  <Image url="@../Assets/black-triangular-arrowhead-pointing-to-left-direction.png" />
                </image>
             </ImageView>
          </graphic>

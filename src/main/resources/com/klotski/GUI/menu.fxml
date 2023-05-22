@@ -30,7 +30,7 @@
                <children>
                   <ImageView fitHeight="147.0" fitWidth="132.0" layoutX="39.0" layoutY="39.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="big_square">
                      <image>
-                        <Image url="@../Icons/play.png" />
+                        <Image url="@../Assets/play.png" />
                      </image>
                   </ImageView>
                </children>
@@ -39,7 +39,7 @@
                <children>
                   <ImageView fitHeight="88.0" fitWidth="83.0" layoutX="9.0" layoutY="63.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/history.png" />
+                        <Image url="@../Assets/history.png" />
                      </image>
                      <effect>
                         <ColorAdjust brightness="-0.37" />
@@ -51,7 +51,7 @@
                <children>
                   <ImageView fitHeight="83.0" fitWidth="65.0" layoutX="22.0" layoutY="18.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" x="50.0">
                      <image>
-                        <Image url="@../Icons/web-development.png" />
+                        <Image url="@../Assets/web-development.png" />
                      </image>
                      <effect>
                         <ColorAdjust brightness="-0.15" />
@@ -63,7 +63,7 @@
                <children>
                   <ImageView fitHeight="72.0" fitWidth="65.0" layoutX="18.0" layoutY="18.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/logout.png" />
+                        <Image url="@../Assets/logout.png" />
                      </image>
                      <effect>
                         <ColorAdjust brightness="-0.49" />
