@@ -189,3 +189,21 @@
 .top_button:pressed {
     -fx-translate-y: 1px;
 }
+
+.overlay {
+    -fx-background-color: #000000;
+    -fx-opacity: 0.5;
+}
+
+.victory_container{
+    -fx-background-color: #eff1f0;
+    -fx-background-radius: 12px;
+}
+
+.victory_label
+{
+    -fx-text-fill: #d37158;
+    -fx-font-size: 24px;
+    -fx-font-family: Ebrima;
+    -fx-font-weight: bold;
+}

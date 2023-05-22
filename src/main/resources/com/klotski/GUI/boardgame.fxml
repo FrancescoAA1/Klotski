@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="715.0" prefWidth="530.0" styleClass="container" stylesheets="@../CSS/game.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.klotski.View.GameView">
    <children>
-      <Label alignment="TOP_LEFT" layoutX="134.0" layoutY="29.0" prefHeight="38.0" prefWidth="282.0" styleClass="configuration_title" text="CONFIGURATION 1" AnchorPane.leftAnchor="124.0" />
+      <Label fx:id="lblTitle" alignment="TOP_LEFT" layoutX="134.0" layoutY="29.0" prefHeight="38.0" prefWidth="282.0" styleClass="configuration_title" text="CONFIGURATION 1" AnchorPane.leftAnchor="124.0" />
       <Button layoutX="60.0" layoutY="28.0" mnemonicParsing="false" onAction="#HomeClicked" prefHeight="38.0" prefWidth="55.0" styleClass="top_button" AnchorPane.leftAnchor="50.0">
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="40.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
@@ -43,12 +43,16 @@
          </padding></Button>
       <AnchorPane prefHeight="60.0" prefWidth="242.0" styleClass="board_bottom" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="154.0">
          <children>
-            <HBox AnchorPane.leftAnchor="62.5" AnchorPane.rightAnchor="62.5" AnchorPane.topAnchor="12.0">
+            <HBox AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="12.0">
                <children>
-                  <Label fx:id="lblCounterHundreds" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" textFill="#790d0d" />
+                  <Label fx:id="lblCounterThousands" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" textFill="#790d0d" />
+                  <Label fx:id="lblCounterHundreds" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0" textFill="#790d0d">
+                     <HBox.margin>
+                        <Insets left="4.0" />
+                     </HBox.margin></Label>
                   <Label fx:id="lblCounterTens" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
                      <HBox.margin>
-                        <Insets left="5.0" right="5.0" />
+                        <Insets left="4.0" right="4.0" />
                      </HBox.margin>
                   </Label>
                   <Label fx:id="lblCounterUnit" alignment="CENTER" prefHeight="35.0" prefWidth="30.0" styleClass="move_number" text="0">
@@ -58,7 +62,7 @@
                   </Label>
                </children>
             </HBox>
-            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#ResetClicked" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="12.0">
+            <Button graphicTextGap="0.0" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#ResetClicked" prefHeight="40.0" prefWidth="40.0" styleClass="reset_button" AnchorPane.leftAnchor="11.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +74,7 @@
                   <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
                </padding>
             </Button>
-            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" onAction="#SaveClicked" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="12.0">
+            <Button layoutX="167.0" layoutY="10.0" mnemonicParsing="false" onAction="#SaveClicked" prefHeight="40.0" prefWidth="40.0" styleClass="save_button" AnchorPane.rightAnchor="11.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -104,5 +108,36 @@
       </GridPane>
       <Button layoutX="60.0" layoutY="657.0" mnemonicParsing="false" onAction="#UndoClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Undo" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="50.0" />
       <Button layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
+      <AnchorPane fx:id="pnOverlay" prefHeight="200.0" prefWidth="200.0" styleClass="overlay" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="pnVictoryPane" prefHeight="200.0" prefWidth="200.0" styleClass="victory_container" visible="false" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="victory_label" text="CONGRATULATIONS!" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="90.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="50.0">
+               <image>
+                  <Image url="@../Icons/trophy.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="47.0" layoutY="235.0" styleClass="move_number" text=" 0 0 0 0 " />
+            <AnchorPane styleClass="board" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="215.0">
+               <children>
+                  <Label fx:id="lblVictoryMovesCounter" styleClass="move_number" text=" 0 0 0 0 " AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="35.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="victory_label" text="MOVES" textAlignment="CENTER" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="5.0" />
+                  <Label fx:id="lblVictoryHintsCounter" styleClass="move_number" text=" 0 0 0 0 " AnchorPane.leftAnchor="199.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="35.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="victory_label" text="HINTS" textAlignment="CENTER" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0" />
+                  <Button mnemonicParsing="false" onAction="#ContinueGameClicked" prefHeight="37.0" prefWidth="145.0" styleClass="little_button" text="CONTINUE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+                  <Button graphicTextGap="0.0" mnemonicParsing="false" onAction="#HomeClicked" prefHeight="37.0" prefWidth="145.0" style="-fx-border-width: 3;" styleClass="reset_button" text="HOME" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <padding>
+                        <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
+                     </padding>
+                  </Button>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="140.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="16.0">
+                     <image>
+                        <Image url="@../Icons/medal.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
