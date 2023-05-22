@@ -185,7 +185,7 @@ public class StateHandler {
             for ( Pair<Move, Disposition> pair:rectemp)
             {
                 // automatically invoking toString provided by Move to write the line format
-                filewriter.println(pair.getKey().toString() + "?" + pair.getValue().getTextDisposition());
+                filewriter.println(pair.getKey().toString() + "|" + pair.getValue().getTextDisposition());
             }
         }
         catch (IOException e)
