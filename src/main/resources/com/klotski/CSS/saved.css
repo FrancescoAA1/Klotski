@@ -14,9 +14,12 @@
 
 .card
 {
-    -fx-background-color: #2F404A;
     -fx-background-radius: 6px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+    -fx-opacity: 0.85;
+}
+.card:hover
+{
+    -fx-opacity: 1;
 }
 
 .label
@@ -24,6 +27,12 @@
     -fx-font-family: Ebrima;
     -fx-font-size: 12px;
     -fx-text-fill: #eff1f0;
+}
+
+.image:hover
+{
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
 

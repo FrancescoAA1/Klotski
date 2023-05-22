@@ -45,7 +45,7 @@ public class SavedGameCard {
         Pane game = new Pane();
         game.setPrefWidth(200);
         game.setPrefHeight(200);
-
+        game.getStyleClass().add("card");
         game.setOpacity(0.75);
 
         // Disposition ImageView
@@ -55,6 +55,7 @@ public class SavedGameCard {
         img.setFitWidth(60);
         img.setLayoutX(25);
         img.setLayoutY(5);
+        img.getStyleClass().add("image");
 
         // DispositionNumber Label
         Label lbl_mov = new Label("MOVE COUNT: " + String.valueOf(match.getScore()));
