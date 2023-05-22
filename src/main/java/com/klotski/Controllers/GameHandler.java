@@ -239,4 +239,52 @@ public class GameHandler
         // Save moves
         history.flush();
     }
+
+    public void saveGameForDB()
+    {
+        // Conncect to DB and save game.
+        DBConnector db = new DBConnector();
+        db.connect();
+        Disposition current = new Disposition(grid, false);
+        current.setImagePath(imagePath);
+        if(isOriginal)
+            db.saveMatch(currentMatch, current);
+        else
+            db.updateMatch(currentMatch, current);
+        db.close();
+
+        // Save moves
+        history.flush2();
+    }
+    public boolean moveForDB(Position pos, Direction dir)
+    {
+        try
+        {
+            // Get the moving block
+            Block current = findBlock(pos);
+
+            // Create current move
+            Move move = new Move(pos,dir);
+
+            // Check the validity of the move
+            if(grid.move(current,move))
+            {
+                // Register move
+                history.pushMovetmp(move, new Disposition(grid, false));
+
+                // Increment match score
+                currentMatch.incrementScore();
+
+                // Move valid
+                return true;
+            }
+        }
+        catch (IllegalArgumentException e)
+        {
+            return false;
+        }
+
+        // Move not valid
+        return false;
+    }
 }

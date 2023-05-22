@@ -122,7 +122,8 @@ public class GameView
 
     public void SaveClicked(ActionEvent actionEvent)
     {
-        gameHandler.saveGame();
+        //gameHandler.saveGame();
+        gameHandler.saveGameForDB();
     }
 
     public void DispositionListClicked(ActionEvent actionEvent)
@@ -436,7 +437,7 @@ public class GameView
                 double translation = finalY - initialY;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.DOWN : Direction.UP;
-                if (gameHandler.move(currentPos, dir))
+                if (gameHandler.moveForDB(currentPos, dir))
                 {
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();
@@ -461,7 +462,7 @@ public class GameView
                 double translation = finalX - initialX;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.RIGHT : Direction.LEFT;
-                if (gameHandler.move(currentPos, dir))
+                if (gameHandler.moveForDB(currentPos, dir))
                 {
                     // Set new position of the block after the move.
                     Position destination = gameHandler.getPositionOfLastMovedBlock();

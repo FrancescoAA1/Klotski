@@ -110,6 +110,7 @@ public class StateHandler {
     public void pushMovetmp(Move move, Disposition disp)
     {
         rectemp.push(new Pair<Move, Disposition>(move, disp));
+        recordings.push(move);
         count++;
     }
     /** Remove the last move from recordings
@@ -184,7 +185,7 @@ public class StateHandler {
             for ( Pair<Move, Disposition> pair:rectemp)
             {
                 // automatically invoking toString provided by Move to write the line format
-                filewriter.println(pair.getKey().toString() + "?" + pair.getValue().toString());
+                filewriter.println(pair.getKey().toString() + "?" + pair.getValue().getTextDisposition());
             }
         }
         catch (IOException e)
