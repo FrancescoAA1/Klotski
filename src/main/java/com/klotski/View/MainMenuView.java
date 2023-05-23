@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 public class MainMenuView{
     @FXML
     private GridPane menuGrid;
+
+    /* MENU BUTTONS EVENT HANDLER */
     public void StartGameClicked(MouseEvent event)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/dispositions.fxml"));
@@ -42,6 +44,10 @@ public class MainMenuView{
         javafx.application.Platform.exit();
     }
 
+    /** Open window.
+     * @param fxmlLoader window loader.
+     * @param title title of the new window.
+     */
     private void OpenWindow(FXMLLoader fxmlLoader, String title, MouseEvent event)
     {
         Parent root = null;
@@ -50,6 +56,8 @@ public class MainMenuView{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //Set scene and parameters
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
@@ -65,6 +73,7 @@ public class MainMenuView{
         stage.setX(centerX);
         stage.setY(centerY);
 
+        //Show current stage
         stage.show();
     }
 }

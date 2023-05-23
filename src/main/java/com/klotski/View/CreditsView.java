@@ -18,12 +18,18 @@ import java.util.ResourceBundle;
 public class CreditsView {
 
 
+    /* BUTTON EVENT HANDLER */
+
     public void MenuClicked(ActionEvent actionEvent)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
+    /** Open main menu window.
+     * @param fxmlLoader window loader.
+     * @param title title of the new window.
+     */
     private void OpenWindow(FXMLLoader fxmlLoader, String title, ActionEvent event)
     {
         Parent root = null;
@@ -32,6 +38,8 @@ public class CreditsView {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //Set scene and parameters
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
@@ -47,6 +55,7 @@ public class CreditsView {
         stage.setX(centerX);
         stage.setY(centerY);
 
+        // Show current stage
         stage.show();
     }
 }

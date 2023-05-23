@@ -20,6 +20,8 @@ public class MainMenu extends Application {
         stage.getIcons().add(new Image(MainMenu.class.getResourceAsStream("/com/klotski/Assets/icon.png")));
         stage.setScene(scene);
         stage.setResizable(false);
+
+        //Show initial stage
         stage.show();
 
         // Calculate the center position of the screen

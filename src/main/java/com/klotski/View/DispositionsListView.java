@@ -63,18 +63,18 @@ public class DispositionsListView implements Initializable
         db.close();
     }
 
-    public void CloseClicked(ActionEvent actionEvent)
-    {
-        Stage stage = (Stage) grid.getScene().getWindow();
-        stage.close();
-    }
 
+    /* BUTTON EVENT HANDLER */
     public void MenuClicked(ActionEvent actionEvent)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu", actionEvent);
     }
 
+    /** Open new window.
+     * @param fxmlLoader window loader.
+     * @param title title of the new window.
+     */
     private void OpenWindow(FXMLLoader fxmlLoader, String title, Event event)
     {
         Parent root = null;
@@ -83,6 +83,8 @@ public class DispositionsListView implements Initializable
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //Set scene and parameters
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
@@ -98,6 +100,7 @@ public class DispositionsListView implements Initializable
         stage.setX(centerX);
         stage.setY(centerY);
 
+        // Show current stage
         stage.show();
     }
 
