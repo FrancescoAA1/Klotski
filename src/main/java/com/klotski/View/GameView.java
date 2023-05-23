@@ -99,6 +99,23 @@ public class GameView
     public void UndoClicked(ActionEvent actionEvent)
     {
         // Execute undo
+        undo();
+    }
+
+    public void ResetClicked(ActionEvent actionEvent)
+    {
+        // Undo all operations
+        while(gameHandler.getMoveCounter() > 0)
+        {
+            // Execute undo: if history-file is not found, exit reset
+            if(!undo())
+                break;
+        }
+    }
+
+    private boolean undo()
+    {
+        // Execute undo
         if(gameHandler.undo())
         {
             // Get undo move
@@ -121,16 +138,10 @@ public class GameView
 
             // Load counter
             updateMoveCounter();
-        }
-    }
 
-    public void ResetClicked(ActionEvent actionEvent)
-    {
-        // Undo all operations
-        while(gameHandler.getMoveCounter() > 0)
-        {
-            UndoClicked(actionEvent);
+            return true;
         }
+        return false;
     }
 
     public void SaveClicked(ActionEvent actionEvent)
