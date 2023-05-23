@@ -54,11 +54,11 @@ public class GameView
      */
     public void setController(GameHandler game)
     {
-        // Initialize UI
-        initializeUI();
-
         // Get GameHandler (Controller)
         gameHandler = game;
+
+        // Initialize UI
+        initializeUI();
 
         // Initialize objects
         initializeKlotskiAnimations();
