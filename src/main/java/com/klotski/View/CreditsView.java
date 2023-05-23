@@ -7,6 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CreditsView {
+
 
     public void MenuClicked(ActionEvent actionEvent)
     {

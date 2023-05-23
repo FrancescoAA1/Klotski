@@ -43,8 +43,8 @@ public class SavedGameCard {
     {
         // Container
         Pane game = new Pane();
-        game.setPrefWidth(200);
-        game.setPrefHeight(200);
+        game.setPrefWidth(280);
+        game.setPrefHeight(110);
         game.getStyleClass().add("card");
         game.setOpacity(0.75);
 
@@ -53,21 +53,21 @@ public class SavedGameCard {
         ImageView img = new ImageView(new Image(file.toURI().toString()));
         img.setFitHeight(80);
         img.setFitWidth(60);
-        img.setLayoutX(25);
-        img.setLayoutY(5);
+        img.setLayoutX(15);
+        img.setLayoutY(20);
         img.getStyleClass().add("image");
 
         // DispositionNumber Label
         Label lbl_mov = new Label("MOVE COUNT: " + String.valueOf(match.getScore()));
-        lbl_mov.setLayoutX(109);
-        lbl_mov.setLayoutY(14);
+        lbl_mov.setLayoutX(100);
+        lbl_mov.setLayoutY(20);
         lbl_mov.getStyleClass().add("label");
 
         String[] gameDateParts = gameDate.toString().split(SEPARATOR);
 
         Label lbl_date = new Label("DATE: " + gameDateParts[0] + " " + gameDateParts[1]);
-        lbl_date.setLayoutX(109);
-        lbl_date.setLayoutY(37);
+        lbl_date.setLayoutX(100);
+        lbl_date.setLayoutY(40);
         lbl_date.getStyleClass().add("label");
 
         String state = "";
@@ -80,8 +80,8 @@ public class SavedGameCard {
             state = "IN PROGRESS";
         }
         Label lbl_state = new Label("MATCH STATUS: " + state);
-        lbl_state.setLayoutX(109);
-        lbl_state.setLayoutY(59);
+        lbl_state.setLayoutX(100);
+        lbl_state.setLayoutY(60);
         lbl_state.getStyleClass().add("label");
 
 

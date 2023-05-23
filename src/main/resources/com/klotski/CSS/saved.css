@@ -12,6 +12,12 @@
     -fx-padding: 0px 6px;
 }
 
+.scroll_background
+{
+    -fx-background: #283943;
+    -fx-background-color: transparent;
+}
+
 .card
 {
     -fx-background-radius: 6px;
