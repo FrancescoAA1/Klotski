@@ -8,7 +8,6 @@ import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -24,9 +23,7 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class GameView
 {
@@ -35,46 +32,92 @@ public class GameView
 
     /* VIEW VARS */
     @FXML
-    private GridPane grid;
+    private GridPane grid;      // Game grid
     @FXML
-    private Label lblCounterUnit;
+    private Label lblCounterUnit, lblCounterTens, lblCounterHundreds, lblCounterThousands;  // Move counter labels
     @FXML
-    private Label lblCounterTens;
+    private Label lblTitle, lblVictoryMovesCounter, lblVictoryHintsCounter;     // Other labels
     @FXML
-    private Label lblCounterHundreds;
-    @FXML
-    private Label lblCounterThousands;
-    @FXML
-    private Label lblTitle;
-    @FXML
-    private Label lblVictoryMovesCounter;
-    @FXML
-    private Label lblVictoryHintsCounter;
-    @FXML
-    private AnchorPane pnOverlay;
-    @FXML
-    private AnchorPane pnVictoryPane;
+    private AnchorPane pnOverlay, pnVictoryPane, lblError;      // Popups
 
-    public GameView()
-    {
-        // Initialize objects
-        initializeAnimations();
-    }
 
+
+
+    /* COMMUNICATION FUNCTIONS */
+    /**
+     * Set Controller for MVC pattern.
+     * Load game grid (generates klotski blocks dynamically);
+     * Initialize dynamic animations (for blocks);
+     * @param game: GameHandler object created by previous view:
+     *            - DispositionList -> new game created;
+     *            - SavedGameList -> load saved game;
+     */
     public void setController(GameHandler game)
     {
+        // Initialize UI
+        initializeUI();
+
         // Get GameHandler (Controller)
         gameHandler = game;
 
+        // Initialize objects
+        initializeKlotskiAnimations();
+
         // Load dynamically blocks from controller.
         loadKlotski();
+    }
+    /**
+     * Asks the controller if the klotski is solved.
+     */
+    private void checkVictory()
+    {
+        if(!gameHandler.isSolved())
+            return;
 
-        // Initialize UI
-        lblTitle.setText(gameHandler.getGameTitle());
-        victoryFadeAnimation.setNode(pnVictoryPane);
-        pnVictoryPane.setOpacity(0);
+        // If game is solver: start victory animation
+        // At animation end, victory window opens automatically
+        // see: initializeAnimations();
+        victoryTranslateAnimation.playFromStart();
+    }
+    /** Open another window.
+     * @param fxmlLoader window loader.
+     * @param title title of the new window.
+     */
+    private void OpenWindow(FXMLLoader fxmlLoader, String title)
+    {
+        // Get current window;
+        Parent root = null;
+        try { root = fxmlLoader.load(); }
+        catch (IOException e) { throw new RuntimeException(e); }
+
+        // Set scene and parameters
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) grid.getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.setResizable(false);
+
+        // Calculate the center position of the screen
+        Rectangle2D screenBound = Screen.getPrimary().getVisualBounds();
+        double centerX = (screenBound.getWidth() - scene.getWidth())/2;
+        double centerY = (screenBound.getHeight() - scene.getHeight())/2;
+
+        // Set the scene position to the center of the screen
+        stage.setX(centerX);
+        stage.setY(centerY);
+
+        // Show current stage
+        stage.show();
     }
 
+
+
+
+    /* UTILITIES */
+
+    /** Dynamically create all the blocks of the gamegrid, based on the current match
+     * registered on the Controller.
+     */
     private void loadKlotski()
     {
         // Get all blocks from CONTROLLER
@@ -96,30 +139,24 @@ public class GameView
         updateMoveCounter();
     }
 
-    public void UndoClicked(ActionEvent actionEvent)
+    /** Undo last move.
+     *  Handle the communication with the controller;
+     *  Handle the UI effects;
+     * @param actionEvent: contains the source of the event (button)
+     * @return TRUE if undo is executed
+     */
+    private boolean undo(ActionEvent actionEvent)
     {
-        // Execute undo
-        undo();
-    }
+        // No move to undo
+        if(gameHandler.getMoveCounter() == 0)
+            return false;
 
-    public void ResetClicked(ActionEvent actionEvent)
-    {
-        // Undo all operations
-        while(gameHandler.getMoveCounter() > 0)
-        {
-            // Execute undo: if history-file is not found, exit reset
-            if(!undo())
-                break;
-        }
-    }
-
-    private boolean undo()
-    {
         // Execute undo
         if(gameHandler.undo())
         {
             // Get undo move
             Move undo = gameHandler.getLastUndoMove();
+
             // Get moved block
             Position pos = undo.getInit();
             current = null;
@@ -128,6 +165,7 @@ public class GameView
                 if(GridPane.getColumnIndex(child) == pos.getX() && GridPane.getRowIndex(child) == pos.getY())
                     current = (Pane)child;
             }
+
             // Set end position
             if(current != null)
             {
@@ -141,30 +179,103 @@ public class GameView
 
             return true;
         }
-        return false;
+        else
+        {
+            // Show error
+            xTranslateAnimation.setNode((Node)actionEvent.getSource());
+            xTranslateAnimation.playFromStart();
+            errorFadeAnimation.playFromStart();
+            return false;
+        }
+    }
+    /** Dynamically create a 1x1 square;
+     * @param column column index in grid;
+     * @param row row index in grid;
+     */
+    private void CreateSquare(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("square");
+        AssignBehaviour(square, column, row, 1, 1);
+    }
+    /** Dynamically create a 2x2 square;
+     * @param column column index in grid;
+     * @param row row index in grid;
+     */
+    private void CreateBigSquare(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("big_square");
+        AssignBehaviour(square, column, row, 2, 2);
+        // Set victory animation
+        victoryTranslateAnimation.setNode(square);
+        reverseVictoryTranslateAnimation.setNode(square);
+    }
+    /** Dynamically create a vertical rectangle;
+     * @param column column index in grid;
+     * @param row row index in grid;
+     */
+    private void CreateVerticalRectangle(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("vertical_rectangle");
+        AssignBehaviour(square, column, row, 1, 2);
+    }
+    /** Dynamically create a horizontal rectangle;
+     * @param column column index in grid;
+     * @param row row index in grid;
+     */
+    private void CreateHorizontalRectangle(int column, int row)
+    {
+        Pane square = new Pane();
+        square.getStyleClass().add("horizontal_rectangle");
+        AssignBehaviour(square, column, row, 2, 1);
+    }
+    /** Set events handler for dynamic sliding;
+     * Add the block in the game grid.
+     */
+    private void AssignBehaviour(Pane pane, int column, int row, int columnSpan, int rowSpan)
+    {
+        pane.setOnMousePressed(e -> MousePressed(e));
+        pane.setOnMouseDragged(e -> MouseDragged((e)));
+        pane.setOnMouseReleased(e -> MouseReleased(e));
+        grid.add(pane, column, row, columnSpan, rowSpan);
     }
 
+
+
+
+    /* BUTTON EVENT HANDLER */
+    public void UndoClicked(ActionEvent actionEvent)
+    {
+        // Execute undo
+        undo(actionEvent);
+    }
+    public void ResetClicked(ActionEvent actionEvent)
+    {
+        // Undo all operations
+        while(gameHandler.getMoveCounter() > 0)
+        {
+            // Execute undo: if history-file is not found, exit reset
+            if(!undo(actionEvent))
+                break;
+        }
+    }
     public void SaveClicked(ActionEvent actionEvent)
     {
         gameHandler.saveGame();
     }
-
     public void DispositionListClicked(ActionEvent actionEvent)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/dispositions.fxml"));
-        OpenWindow(fxmlLoader, "Disposition", actionEvent);
+        OpenWindow(fxmlLoader, "Disposition");
     }
-
     public void HomeClicked(ActionEvent actionEvent)
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
-        OpenWindow(fxmlLoader, "Main Menu", actionEvent);
+        OpenWindow(fxmlLoader, "Main Menu");
     }
-
-    public void NextBestMoveClicked(ActionEvent actionEvent) {
-    }
-
-
+    public void NextBestMoveClicked(ActionEvent actionEvent) {  }
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
         // Hide victory pane
@@ -176,216 +287,19 @@ public class GameView
         reverseVictoryTranslateAnimation.playFromStart();
     }
 
-    private void OpenWindow(FXMLLoader fxmlLoader, String title, ActionEvent event)
-    {
-        Parent root = null;
-        try {
-            root = fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) grid.getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.setResizable(false);
-
-        // Calculate the center position of the screen
-        Rectangle2D screenBound = Screen.getPrimary().getVisualBounds();
-        double centerX = (screenBound.getWidth() - scene.getWidth())/2;
-        double centerY = (screenBound.getHeight() - scene.getHeight())/2;
-
-        // Set the scene position to the center of the screen
-        stage.setX(centerX);
-        stage.setY(centerY);
-
-        // Show current stage
-        stage.show();
-    }
-
-    private void updateMoveCounter()
-    {
-        int count = gameHandler.getMoveCounter();
-
-        lblCounterUnit.setText(String.valueOf(count % 10));
-        lblCounterTens.setText(String.valueOf(count % 100  / 10));
-        lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
-        lblCounterThousands.setText(String.valueOf(count % 10000  / 1000));
-    }
-
-    private void showVictoryPanel()
-    {
-        // Moves counter
-        lblVictoryMovesCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
-
-        // Hints counter
-        lblVictoryHintsCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
-
-        // Show victory pane
-        victoryFadeAnimation.playFromStart();
-        pnOverlay.setVisible(true);
-        pnVictoryPane.setVisible(true);
-    }
-    private void checkVictory()
-    {
-        if(!gameHandler.isSolved())
-            return;
-
-        // If game is solver: start victory animation
-        // At animation end, victory window opens automatically
-        // see: initializeAnimations();
-        victoryTranslateAnimation.playFromStart();
-    }
-    private String formatCounters(int num, int digitCount)
-    {
-        String temp = String.valueOf(num);
-        while(temp.length() < digitCount) {
-            temp = '0' + temp;
-        }
-
-        String res = " ";
-        for(int i = 0; i < temp.length(); i++)
-        {
-            res += temp.charAt(i) + " ";
-        }
-
-        return res;
-    }
 
 
 
-    private void CreateSquare(int column, int row)
-    {
-        Pane square = new Pane();
-        square.getStyleClass().add("square");
-        AssignBehaviour(square, column, row, 1, 1);
-    }
-    private void CreateBigSquare(int column, int row)
-    {
-        Pane square = new Pane();
-        square.getStyleClass().add("big_square");
-        AssignBehaviour(square, column, row, 2, 2);
-        // Set victory animation
-        victoryTranslateAnimation.setNode(square);
-        reverseVictoryTranslateAnimation.setNode(square);
-    }
-    private void CreateVerticalRectangle(int column, int row)
-    {
-        Pane square = new Pane();
-        square.getStyleClass().add("vertical_rectangle");
-        AssignBehaviour(square, column, row, 1, 2);
-    }
-    private void CreateHorizontalRectangle(int column, int row)
-    {
-        Pane square = new Pane();
-        square.getStyleClass().add("horizontal_rectangle");
-        AssignBehaviour(square, column, row, 2, 1);
-    }
-    private void AssignBehaviour(Pane pane, int column, int row, int columnSpan, int rowSpan)
-    {
-        pane.setOnMousePressed(e -> MousePressed(e));
-        pane.setOnMouseDragged(e -> MouseDragged((e)));
-        pane.setOnMouseReleased(e -> MouseReleased(e));
-        grid.add(pane, column, row, columnSpan, rowSpan);
-    }
-
-
-
-    /* HANDLING SLIDE INPUT FUNCTION */
+    /* BLOCK SLIDING HANDLERS */
     private Pane current;           // Current block selected
-    private double initialX;        // X of the start point
-    private double initialY;        // Y of the start point
+    private double initialX, initialY;        // Position (row and column indexes) of the start point
     private boolean isDirectionDefined;         // Drag direction defined
     private Axis direction;                     // Drag direction
-    private static final int MAXOFFSET = 106;   // Max drag consented
-    private static final int MINOFFSET = 10;    // Drag sensibility
     private boolean[] availability;             // Destinations availability
-    private TranslateTransition xTranslateAnimation;        // Animation for horizontal move-error
-    private TranslateTransition yTranslateAnimation;        // Animation for vertical move-error
-    private TranslateTransition undoTranslateAnimation;     // Animation for undo move
-    private TranslateTransition victoryTranslateAnimation;     // Animation for victory
-    private TranslateTransition reverseVictoryTranslateAnimation;     // Animation for "Continue Game" after victory
-    private FadeTransition victoryFadeAnimation;
-
-
-    /**
-     * Initialize animations object.
-     */
-    private void initializeAnimations()
-    {
-        // X translation for move error
-        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        xTranslateAnimation.setFromX(-3);
-        xTranslateAnimation.setToX(3);
-        xTranslateAnimation.setCycleCount(4);
-        xTranslateAnimation.setAutoReverse(true);
-        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
-
-        // Y translation for move error
-        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        yTranslateAnimation.setFromY(-3);
-        yTranslateAnimation.setToY(3);
-        yTranslateAnimation.setCycleCount(4);
-        yTranslateAnimation.setAutoReverse(true);
-        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
-
-        // Victory translation
-        victoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
-        victoryTranslateAnimation.setFromY(0);
-        victoryTranslateAnimation.setToY(450);
-        victoryTranslateAnimation.setDelay(Duration.millis(300));
-        // Set animation acceleration
-        victoryTranslateAnimation.setInterpolator(new Interpolator() {
-            @Override
-            protected double curve(double t) {
-                return (t==0.0) ? 0.0 : Math.pow(1.6, 7*(t-1));
-            }
-        });
-        // At the end of that animation, show victory pane.
-        victoryTranslateAnimation.setOnFinished(e -> showVictoryPanel());
-
-        // Reverse victory translation
-        reverseVictoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
-        reverseVictoryTranslateAnimation.setFromY(450);
-        reverseVictoryTranslateAnimation.setToY(0);
-        // At the end of that animation, undo last move.
-        reverseVictoryTranslateAnimation.setOnFinished(e -> UndoClicked(e));
-
-        // Victory show
-        victoryFadeAnimation = new FadeTransition(Duration.millis(1200));
-        victoryFadeAnimation.setFromValue(0.1);
-        victoryFadeAnimation.setToValue(1);
-    }
-    private void startUndoAnimation(Direction undo, Pane control)
-    {
-        // UNDO translation
-        undoTranslateAnimation = new TranslateTransition(Duration.millis(150));
-        switch(undo)
-        {
-            case UP:
-                undoTranslateAnimation.setFromY(MAXOFFSET);
-                undoTranslateAnimation.setToY(0);
-                break;
-            case DOWN:
-                undoTranslateAnimation.setFromY(MAXOFFSET * -1);
-                undoTranslateAnimation.setToY(0);
-                break;
-            case LEFT:
-                undoTranslateAnimation.setFromX(MAXOFFSET);
-                undoTranslateAnimation.setToX(0);
-                break;
-            case RIGHT:
-                undoTranslateAnimation.setFromX(MAXOFFSET * -1);
-                undoTranslateAnimation.setToX(0);
-                break;
-        }
-        undoTranslateAnimation.setNode(control);
-        undoTranslateAnimation.playFromStart();
-    }
 
     /**
      * Event handler: handle drag started on a klotski block.
-     * Create all necessary variables to handle drag movement.
+     * Set all necessary variables to handle drag movement.
      * @param event event generated by the click of the mouse on a klotski block.
      */
     private void MousePressed(MouseEvent event)
@@ -413,7 +327,6 @@ public class GameView
         availability[Direction.LEFT.ordinal()] = gameHandler.checkMove(currentPos, Direction.LEFT);
         availability[Direction.RIGHT.ordinal()] = gameHandler.checkMove(currentPos, Direction.RIGHT);
     }
-
     /**
      * Event handler: handle dragging on a klotski block.
      * Show block movement for better usability.
@@ -478,7 +391,6 @@ public class GameView
                 direction = Axis.VERTICAL;
             }
     }
-
     /**
      * Event handler: handle drop of a klotski block.
      * Register movement, check validity with Controller and update View.
@@ -558,5 +470,171 @@ public class GameView
                 break;
             }
         }
+    }
+
+
+
+
+    /* BLOCK SLIDING UI */
+    private static final int MAXOFFSET = 106;   // Max drag consented
+    private static final int MINOFFSET = 10;    // Drag sensibility
+    private TranslateTransition xTranslateAnimation;        // Animation for horizontal move-error
+    private TranslateTransition yTranslateAnimation;        // Animation for vertical move-error
+    private TranslateTransition undoTranslateAnimation;     // Animation for undo move
+    private TranslateTransition victoryTranslateAnimation;     // Animation for victory
+    private TranslateTransition reverseVictoryTranslateAnimation;     // Animation for "Continue Game" after victory
+
+    /**
+     * Initialize animations object for klotski blocks.
+     */
+    private void initializeKlotskiAnimations()
+    {
+        // X translation for move error
+        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        xTranslateAnimation.setFromX(-3);
+        xTranslateAnimation.setToX(3);
+        xTranslateAnimation.setCycleCount(4);
+        xTranslateAnimation.setAutoReverse(true);
+        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
+
+        // Y translation for move error
+        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        yTranslateAnimation.setFromY(-3);
+        yTranslateAnimation.setToY(3);
+        yTranslateAnimation.setCycleCount(4);
+        yTranslateAnimation.setAutoReverse(true);
+        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
+
+        // Victory translation
+        victoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
+        victoryTranslateAnimation.setFromY(0);
+        victoryTranslateAnimation.setToY(450);
+        victoryTranslateAnimation.setDelay(Duration.millis(300));
+        // Set animation acceleration
+        victoryTranslateAnimation.setInterpolator(new Interpolator() {
+            @Override
+            protected double curve(double t) {
+                return (t==0.0) ? 0.0 : Math.pow(1.6, 7*(t-1));
+            }
+        });
+        // At the end of that animation, show victory pane.
+        victoryTranslateAnimation.setOnFinished(e -> showVictoryPanel());
+
+        // Reverse victory translation
+        reverseVictoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
+        reverseVictoryTranslateAnimation.setFromY(450);
+        reverseVictoryTranslateAnimation.setToY(0);
+        // At the end of that animation, undo last move.
+        reverseVictoryTranslateAnimation.setOnFinished(e -> UndoClicked(e));
+    }
+    /** Configure and start undo animation for klotski blocks;
+     * @param undo direction of the animation;
+     * @param control klotski block;
+     */
+    private void startUndoAnimation(Direction undo, Pane control)
+    {
+        // UNDO translation
+        undoTranslateAnimation = new TranslateTransition(Duration.millis(150));
+        switch(undo)
+        {
+            case UP:
+                undoTranslateAnimation.setFromY(MAXOFFSET);
+                undoTranslateAnimation.setToY(0);
+                break;
+            case DOWN:
+                undoTranslateAnimation.setFromY(MAXOFFSET * -1);
+                undoTranslateAnimation.setToY(0);
+                break;
+            case LEFT:
+                undoTranslateAnimation.setFromX(MAXOFFSET);
+                undoTranslateAnimation.setToX(0);
+                break;
+            case RIGHT:
+                undoTranslateAnimation.setFromX(MAXOFFSET * -1);
+                undoTranslateAnimation.setToX(0);
+                break;
+        }
+        undoTranslateAnimation.setNode(control);
+        undoTranslateAnimation.playFromStart();
+    }
+
+
+
+
+    /* UI FUNCTIONS */
+    private FadeTransition victoryFadeAnimation;    // Animation to show or hide victory pane.
+    private FadeTransition errorFadeAnimation;      // Animation to show or hide file-error pane.
+
+    /** Set title and default styles;
+     *  Initialize animations;
+     */
+    private void initializeUI()
+    {
+        // Set title and other styles
+        lblTitle.setText(gameHandler.getGameTitle());
+        pnVictoryPane.setOpacity(0);
+        lblError.setOpacity(0);
+
+        // Victory pane show
+        victoryFadeAnimation = new FadeTransition(Duration.millis(1200));
+        victoryFadeAnimation.setFromValue(0.1);
+        victoryFadeAnimation.setToValue(1);
+        victoryFadeAnimation.setNode(pnVictoryPane);
+
+        // Error pane show
+        errorFadeAnimation = new FadeTransition(Duration.millis(2500));
+        errorFadeAnimation.setFromValue(1);
+        errorFadeAnimation.setToValue(0);
+        errorFadeAnimation.setNode(lblError);
+    }
+    /** Format string for move counter in the victory pane.
+     * @param num: move count;
+     * @param digitCount: number of digit showed.
+     * @return text for the counter;
+     */
+    private String formatCounters(int num, int digitCount)
+    {
+        // reach the correct number of digits
+        String temp = String.valueOf(num);
+        while(temp.length() < digitCount) {
+            temp = '0' + temp;
+        }
+
+        // Format the output string: " n n n n "
+        String res = " ";
+        for(int i = 0; i < temp.length(); i++)
+        {
+            res += temp.charAt(i) + " ";
+        }
+
+        return res;
+    }
+    /**
+     * Set the value of the move counter.
+     */
+    private void updateMoveCounter()
+    {
+        int count = gameHandler.getMoveCounter();
+
+        lblCounterUnit.setText(String.valueOf(count % 10));
+        lblCounterTens.setText(String.valueOf(count % 100  / 10));
+        lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
+        lblCounterThousands.setText(String.valueOf(count % 10000  / 1000));
+    }
+    /**
+     * Show victory pane.
+     */
+    private void showVictoryPanel()
+    {
+        // Moves counter
+        lblVictoryMovesCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
+
+        // Hints counter
+        lblVictoryHintsCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
+
+        // Show victory pane
+        victoryFadeAnimation.playFromStart();
+        pnOverlay.setVisible(true);
+        pnVictoryPane.setVisible(true);
     }
 }

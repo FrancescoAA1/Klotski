@@ -139,5 +139,10 @@
             </AnchorPane>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="lblError" opacity="0.0" styleClass="reset_button" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <Label layoutX="30.0" layoutY="1.0" prefHeight="22.0" prefWidth="393.0" text="Cannot load previous saved moves: file not found." AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="29.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
