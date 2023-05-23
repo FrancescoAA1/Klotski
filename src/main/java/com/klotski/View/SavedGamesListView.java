@@ -2,10 +2,9 @@ package com.klotski.View;
 
 import com.klotski.Controllers.DBConnector;
 import com.klotski.Controllers.GameHandler;
-import com.klotski.UI.DispositionCard;
 import com.klotski.UI.SavedGameCard;
-import com.klotski.model.Disposition;
-import com.klotski.model.Match;
+import com.klotski.Model.Disposition;
+import com.klotski.Model.Match;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -15,22 +14,19 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class SavedListView implements Initializable {
+public class SavedGamesListView implements Initializable {
 
     @FXML
     private GridPane grid;

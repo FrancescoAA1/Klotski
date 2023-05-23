@@ -1,6 +1,4 @@
-package com.klotski.model;
-
-import javafx.util.Pair;
+package com.klotski.Model;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.klotski.model;
+package com.klotski.Model;
 
 import java.time.LocalDateTime;
 

@@ -1,9 +1,8 @@
 package com.klotski.Controllers;
 
-import com.klotski.model.*;
+import com.klotski.Model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameHandler
 {

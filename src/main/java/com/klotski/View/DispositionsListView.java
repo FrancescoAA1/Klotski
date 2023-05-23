@@ -3,7 +3,7 @@ package com.klotski.View;
 import com.klotski.Controllers.DBConnector;
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.DispositionCard;
-import com.klotski.model.Disposition;
+import com.klotski.Model.Disposition;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;

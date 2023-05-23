@@ -2,7 +2,7 @@ package com.klotski.View;
 
 import com.klotski.Controllers.GameHandler;
 import com.klotski.UI.Axis;
-import com.klotski.model.*;
+import com.klotski.Model.*;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.event.ActionEvent;

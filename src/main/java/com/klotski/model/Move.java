@@ -1,4 +1,4 @@
-package com.klotski.model;
+package com.klotski.Model;
 
 /**
  * Represents a correct move made by the player

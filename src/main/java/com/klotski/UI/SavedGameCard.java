@@ -1,12 +1,10 @@
 package com.klotski.UI;
 
-import com.klotski.model.Match;
+import com.klotski.Model.Match;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
-import java.text.SimpleDateFormat;
 
 import java.io.File;
 import java.time.LocalDateTime;

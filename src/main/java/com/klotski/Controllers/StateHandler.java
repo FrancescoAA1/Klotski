@@ -1,7 +1,7 @@
 package com.klotski.Controllers;
 
-import com.klotski.model.Disposition;
-import com.klotski.model.Move;
+import com.klotski.Model.Disposition;
+import com.klotski.Model.Move;
 import javafx.util.Pair;
 
 import java.io.*;
