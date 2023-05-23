@@ -7,19 +7,21 @@ import java.util.List;
 
 public class GameHandler
 {
-    private Grid grid;                  // Klotski data & logic (model)
-    private StateHandler history;       // Moves handler
+    /* VARS */
+    private Grid grid;                  // MODEL: Klotski data & logic
+    private Match currentMatch;         // MODEL: Current game.
+    private StateHandler history;       // CONTROLLER: Moves handler
     private Move lastUndoMove;          // Last undo move
-
-    private String imagePath;
-    private boolean isOriginal;
-
-    private Match currentMatch;
+    private String imagePath;   // Runtime data: info for savings;
+    private boolean isOriginal; // Runtime data: info for savings;
 
 
-    /** Constructor for saved games
-     * @param savedDispositionID
-     * @param match
+
+
+    /* CONSTRUCTORS */
+    /** Constructor for saved games (reloaded games)
+     * @param savedDispositionID: ID of the disposition to load (saved in DB)
+     * @param match: Match connected to this disposition (saved in DB)
      */
     public GameHandler(int savedDispositionID, Match match)
     {
@@ -40,12 +42,10 @@ public class GameHandler
         // Load previous match history
         history = new StateHandler(match.getName() + ".hst");
         history.restoreStatus();
-        // Change destination of th history
-        history.setFileName(currentMatch.getName() + ".hst");
     }
 
     /** Constructor for new games
-     * @param newDispositionID
+     * @param newDispositionID: ID of the original disposition to load (from DB).
      */
     public GameHandler(int newDispositionID)
     {
@@ -58,7 +58,6 @@ public class GameHandler
         db.connect();
         Disposition disposition = db.getDisposition(newDispositionID);
         imagePath = disposition.getImagePath();
-
         db.close();
 
         // Load correct grid
@@ -66,6 +65,23 @@ public class GameHandler
         history = new StateHandler(currentMatch.getName() + ".hst");
     }
 
+
+
+    /* GETTER */
+    public Move getLastUndoMove() { return lastUndoMove; }
+    public String getGameTitle() { return currentMatch.getName(); }
+
+
+
+
+    /* MODEL COMMUNICATION */
+
+    /**
+     * Execute a move requested by view (user).
+     * @param pos: position of the block to move
+     * @param dir: direction of the move
+     * @return TRUE if move is executed
+     */
     public boolean move(Position pos, Direction dir)
     {
         try
@@ -85,6 +101,9 @@ public class GameHandler
                 // Increment match score
                 currentMatch.incrementScore();
 
+                // Check if klotski is solved: in that case, terminate match
+                this.isSolved();
+
                 // Move valid
                 return true;
             }
@@ -97,7 +116,12 @@ public class GameHandler
         // Move not valid
         return false;
     }
-
+    /**
+     * Check if a move requested by view (user) is valid.
+     * @param pos: position of the block to move
+     * @param dir: direction of the move
+     * @return TRUE if move is valid
+     */
     public boolean checkMove(Position pos, Direction dir)
     {
         try
@@ -112,25 +136,12 @@ public class GameHandler
             return false;
         }
     }
-
-    public boolean isSolved()
-    {
-        if(!grid.isSolved())
-            return false;
-
-        // Set match end.
-        currentMatch.terminate();
-        return true;
-    }
-
-    public Position getPositionOfLastMovedBlock()
-    {
-        if(!history.hasState())
-            throw new RuntimeException("Moves not ready. View cannot request last position.");
-
-        return history.topMove().getEnd();
-    }
-
+    /**
+     * FInd the block (model) stored in a specific position
+     * @param pos: position of the block;
+     * @return: block in that position;
+     * @throws IllegalArgumentException: block not found;
+     */
     private Block findBlock(Position pos) throws IllegalArgumentException
     {
         // Reset iterator
@@ -144,9 +155,26 @@ public class GameHandler
                 return current;
         }
 
+        // Block not found.
         throw new IllegalArgumentException("Block not registered in that position.");
     }
+    /**
+     * Check if game is solved (model logic).
+     * @return TRUE if game is solved.
+     */
+    public boolean isSolved()
+    {
+        if(!grid.isSolved())
+            return false;
 
+        // Set match end.
+        currentMatch.terminate();
+        return true;
+    }
+    /**
+     * Get the whole list of blocks in this klotski match.
+     * @return list of blocks;
+     */
     public ArrayList<Block> getAllBlocks()
     {
         ArrayList<Block> currentBlocks = new ArrayList<Block>();
@@ -165,6 +193,33 @@ public class GameHandler
         return currentBlocks;
     }
 
+    /**
+     * Get the score ot the current match: score = #moves
+     * @return the count of moves executed by start.
+     */
+    public int getMoveCounter() { return currentMatch.getScore(); }
+
+
+
+    /* CONTROLLERS COMMUNICATION */
+    /**
+     * Get the position of the last moved block: no moves = no block
+     * @return position of the last moved block
+     */
+    public Position getPositionOfLastMovedBlock()
+    {
+        if(!history.hasState())
+            throw new RuntimeException("Moves not ready. View cannot request last position.");
+
+        return history.topMove().getEnd();
+    }
+    /**
+     * Undo the last move executed:
+     * get the last move by State Controller;
+     * get the opposite of that move;
+     * execute that move with Model;
+     * @return TRUE if undo is executed
+     */
     public boolean undo()
     {
         // If there are no moves, exit
@@ -203,11 +258,46 @@ public class GameHandler
         }
     }
 
-    public Move getLastUndoMove()
+
+
+
+    /* COMMUNICATION WITH DB CONTROLLER */
+    /**
+     * Save the current match (and disposition) in the DB.
+     */
+    public void saveGame()
     {
-        return lastUndoMove;
+        // Connect to DB.
+        DBConnector db = new DBConnector();
+        db.connect();
+
+        // Convert current disposition (model).
+        Disposition current = new Disposition(grid, false);
+        current.setImagePath(imagePath);
+
+        // If this is a new game, save as new.
+        // If this is a reloaded game, overwrite it;
+        if(isOriginal)
+            db.saveMatch(currentMatch, current);
+        else
+            db.updateMatch(currentMatch, current);
+
+        // Close DB.
+        db.close();
+
+        // Save moves
+        history.flush();
     }
 
+
+
+
+    /* UTILITIES */
+    /**
+     * Calculate the opposite direction of the given one.
+     * @param dir: original direction.
+     * @return opposite direction.
+     */
     private Direction calculateOpposite(Direction dir)
     {
         // Return opposite direction
@@ -220,32 +310,6 @@ public class GameHandler
         }
     }
 
-    public int getMoveCounter()
-    {
-        return currentMatch.getScore();
-    }
-
-    public void saveGame()
-    {
-        // Connect to DB and save game.
-        DBConnector db = new DBConnector();
-        db.connect();
-        Disposition current = new Disposition(grid, false);
-        current.setImagePath(imagePath);
-        if(isOriginal)
-            db.saveMatch(currentMatch, current);
-        else
-            db.updateMatch(currentMatch, current);
-        db.close();
-
-        // Save moves
-        history.flush();
-    }
-
-    public String getGameTitle()
-    {
-        return currentMatch.getName();
-    }
 
 
 
