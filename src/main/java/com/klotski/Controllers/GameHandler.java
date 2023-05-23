@@ -115,7 +115,12 @@ public class GameHandler
 
     public boolean isSolved()
     {
-        return grid.isSolved();
+        if(!grid.isSolved())
+            return false;
+
+        // Set match end.
+        currentMatch.terminate();
+        return true;
     }
 
     public Position getPositionOfLastMovedBlock()

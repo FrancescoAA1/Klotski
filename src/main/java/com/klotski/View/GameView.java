@@ -65,6 +65,9 @@ public class GameView
 
         // Load dynamically blocks from controller.
         loadKlotski();
+
+        // Check if the game is already end
+        checkVictory();
     }
     /**
      * Asks the controller if the klotski is solved.
@@ -272,6 +275,9 @@ public class GameView
     }
     public void HomeClicked(ActionEvent actionEvent)
     {
+        if(gameHandler.isSolved())
+            gameHandler.saveGame();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu");
     }
