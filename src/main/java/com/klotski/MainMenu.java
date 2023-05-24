@@ -1,5 +1,7 @@
 package com.klotski;
 
+import com.klotski.Controllers.NextMoveGateway;
+import com.klotski.Model.Disposition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -35,6 +37,10 @@ public class MainMenu extends Application {
     }
 
     public static void main(String[] args) {
+        NextMoveGateway next = new NextMoveGateway();
+        Disposition disp = new Disposition(false);
+        disp.setTextDisposition("2-1-0;0#2-2-0;3#2-1-2;0#2-1-1;0#1-2-2;3#2-1-3;0#1-1-1;2#1-1-3;2#1-1-2;4#1-1-3;4#1-1-0;2#1-1-2;2");
+        next.GetNextMove(1, disp);
         launch();
     }
 }
