@@ -423,6 +423,12 @@ public class GameHandler implements Observable
                 // Increment match score
                 currentMatch.incrementScore();
 
+                // Check if klotski is solved: in that case, terminate match
+                this.isSolved();
+
+                // Update view
+                view.updateMove(move, currentMatch.getScore());
+
                 // Move valid
                 return true;
             }
