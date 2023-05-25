@@ -107,7 +107,7 @@
          </padding>
       </GridPane>
       <Button layoutX="60.0" layoutY="657.0" mnemonicParsing="false" onAction="#UndoClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Undo" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="50.0" />
-      <Button fx:id="btnHint" layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
+      <Button fx:id="btnHint" layoutX="406.0" layoutY="657.0" mnemonicParsing="false" onAction="#NextBestMoveClicked" onContextMenuRequested="#FullHintGame" prefHeight="37.0" prefWidth="84.0" styleClass="little_button" text="Hint" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="50.0" />
       <AnchorPane fx:id="pnOverlay" prefHeight="200.0" prefWidth="200.0" styleClass="overlay" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane fx:id="pnVictoryPane" prefHeight="200.0" prefWidth="200.0" styleClass="victory_container" visible="false" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="180.0">
          <children>

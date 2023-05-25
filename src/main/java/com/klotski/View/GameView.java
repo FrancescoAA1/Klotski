@@ -1,6 +1,7 @@
 package com.klotski.View;
 
 import com.klotski.Controllers.GameHandler;
+import com.klotski.Controllers.NextMoveGateway;
 import com.klotski.Interfaces.Observer;
 import com.klotski.UI.Axis;
 import com.klotski.Model.*;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -31,6 +33,8 @@ public class GameView implements Observer
     /* VARS */
     private GameHandler gameHandler;    // CONTROLLER object
     private boolean hintFlag;
+
+    private boolean fullHintGame;
 
     /* VIEW VARS */
     @FXML
@@ -67,7 +71,7 @@ public class GameView implements Observer
         {
             GridPane.setColumnIndex( current, move.getEnd().getX());
             GridPane.setRowIndex( current, move.getEnd().getY());
-            startUndoAnimation(move.getDirection(), current);
+            startMoveAnimation(move.getDirection(), current);
         }
 
         // Load counter
@@ -192,8 +196,8 @@ public class GameView implements Observer
         else
         {
             // Show error
-            xTranslateAnimation.setNode((Node)actionEvent.getSource());
-            xTranslateAnimation.playFromStart();
+            xErrorTranslateAnimation.setNode((Node)actionEvent.getSource());
+            xErrorTranslateAnimation.playFromStart();
             errorFadeAnimation.playFromStart();
             return false;
         }
@@ -296,6 +300,19 @@ public class GameView implements Observer
             return;
         hintFlag = true;
         gameHandler.hint();
+    }
+    public void FullHintGame(ContextMenuEvent e)
+    {
+        fullHintGame = !fullHintGame;
+        if(fullHintGame)
+        {
+            if(gameHandler.isSolved())
+                return;
+            if(hintFlag)
+                return;
+            hintFlag = true;
+            gameHandler.hint();
+        }
     }
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
@@ -438,8 +455,8 @@ public class GameView implements Observer
                 Direction dir = translation > 0 ? Direction.DOWN : Direction.UP;
                 if (!gameHandler.move(currentPos, dir))
                 {
-                    yTranslateAnimation.setNode(current);
-                    yTranslateAnimation.play();
+                    yErrorTranslateAnimation.setNode(current);
+                    yErrorTranslateAnimation.play();
                 }
                 break;
             }
@@ -451,8 +468,8 @@ public class GameView implements Observer
                 Direction dir = translation > 0 ? Direction.RIGHT : Direction.LEFT;
                 if (!gameHandler.move(currentPos, dir))
                 {
-                    xTranslateAnimation.setNode(current);
-                    xTranslateAnimation.play();
+                    xErrorTranslateAnimation.setNode(current);
+                    xErrorTranslateAnimation.play();
                 }
                 break;
             }
@@ -465,9 +482,9 @@ public class GameView implements Observer
     /* BLOCK SLIDING UI */
     private static final int MAXOFFSET = 106;   // Max drag consented
     private static final int MINOFFSET = 10;    // Drag sensibility
-    private TranslateTransition xTranslateAnimation;        // Animation for horizontal move-error
-    private TranslateTransition yTranslateAnimation;        // Animation for vertical move-error
-    private TranslateTransition undoTranslateAnimation;     // Animation for undo move
+    private TranslateTransition xErrorTranslateAnimation;        // Animation for horizontal move-error
+    private TranslateTransition yErrorTranslateAnimation;        // Animation for vertical move-error
+    private TranslateTransition moveTranslateAnimation;     // Animation for moves (user-move, undo, hints)
     private TranslateTransition victoryTranslateAnimation;     // Animation for victory
     private TranslateTransition reverseVictoryTranslateAnimation;     // Animation for "Continue Game" after victory
 
@@ -477,20 +494,20 @@ public class GameView implements Observer
     private void initializeKlotskiAnimations()
     {
         // X translation for move error
-        xTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        xTranslateAnimation.setFromX(-3);
-        xTranslateAnimation.setToX(3);
-        xTranslateAnimation.setCycleCount(4);
-        xTranslateAnimation.setAutoReverse(true);
-        xTranslateAnimation.setOnFinished(e -> {xTranslateAnimation.getNode().setTranslateX(0);});
+        xErrorTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        xErrorTranslateAnimation.setFromX(-3);
+        xErrorTranslateAnimation.setToX(3);
+        xErrorTranslateAnimation.setCycleCount(4);
+        xErrorTranslateAnimation.setAutoReverse(true);
+        xErrorTranslateAnimation.setOnFinished(e -> {xErrorTranslateAnimation.getNode().setTranslateX(0);});
 
         // Y translation for move error
-        yTranslateAnimation = new TranslateTransition(Duration.millis(40));
-        yTranslateAnimation.setFromY(-3);
-        yTranslateAnimation.setToY(3);
-        yTranslateAnimation.setCycleCount(4);
-        yTranslateAnimation.setAutoReverse(true);
-        yTranslateAnimation.setOnFinished(e -> {yTranslateAnimation.getNode().setTranslateY(0);});
+        yErrorTranslateAnimation = new TranslateTransition(Duration.millis(40));
+        yErrorTranslateAnimation.setFromY(-3);
+        yErrorTranslateAnimation.setToY(3);
+        yErrorTranslateAnimation.setCycleCount(4);
+        yErrorTranslateAnimation.setAutoReverse(true);
+        yErrorTranslateAnimation.setOnFinished(e -> {yErrorTranslateAnimation.getNode().setTranslateY(0);});
 
         // Victory translation
         victoryTranslateAnimation = new TranslateTransition(Duration.millis(700));
@@ -515,35 +532,35 @@ public class GameView implements Observer
         reverseVictoryTranslateAnimation.setOnFinished(e -> UndoClicked(e));
     }
     /** Configure and start undo animation for klotski blocks;
-     * @param undo direction of the animation;
+     * @param dir direction of the animation;
      * @param control klotski block;
      */
-    private void startUndoAnimation(Direction undo, Pane control)
+    private void startMoveAnimation(Direction dir, Pane control)
     {
-        // UNDO translation
-        undoTranslateAnimation = new TranslateTransition(Duration.millis(150));
-        switch(undo)
+        // MOVE translation
+        moveTranslateAnimation = new TranslateTransition(Duration.millis(150));
+        switch(dir)
         {
             case UP:
-                undoTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateY());
-                undoTranslateAnimation.setToY(0);
+                moveTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateY());
+                moveTranslateAnimation.setToY(0);
                 break;
             case DOWN:
-                undoTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateY());
-                undoTranslateAnimation.setToY(0);
+                moveTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateY());
+                moveTranslateAnimation.setToY(0);
                 break;
             case LEFT:
-                undoTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateX());
-                undoTranslateAnimation.setToX(0);
+                moveTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateX());
+                moveTranslateAnimation.setToX(0);
                 break;
             case RIGHT:
-                undoTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateX());
-                undoTranslateAnimation.setToX(0);
+                moveTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateX());
+                moveTranslateAnimation.setToX(0);
                 break;
         }
-        undoTranslateAnimation.setNode(control);
-        undoTranslateAnimation.playFromStart();
-        undoTranslateAnimation.setOnFinished(e -> {hintFlag = false;});
+        moveTranslateAnimation.setNode(control);
+        moveTranslateAnimation.playFromStart();
+        moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e);});
     }
 
 
