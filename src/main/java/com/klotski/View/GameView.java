@@ -1,6 +1,7 @@
 package com.klotski.View;
 
 import com.klotski.Controllers.GameHandler;
+import com.klotski.Interfaces.Observer;
 import com.klotski.UI.Axis;
 import com.klotski.Model.*;
 import javafx.animation.FadeTransition;
@@ -25,7 +26,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameView
+public class GameView implements Observer
 {
     /* VARS */
     private GameHandler gameHandler;    // CONTROLLER object
@@ -40,6 +41,100 @@ public class GameView
     @FXML
     private AnchorPane pnOverlay, pnVictoryPane, lblError;      // Popups
 
+
+
+    /* OBSERVER PATTERN */
+
+    /**
+     * Updates the view setting the current move in the grid
+     * @param move current move
+     * @param movesCounter move counter
+     */
+    @Override
+    public void updateMove(Move move, int movesCounter)
+    {
+        Direction dir = move.getDirection();
+
+        // Do Move
+        switch(dir)
+        {
+            case UP:
+            case DOWN:  GridPane.setRowIndex( current, move.getEnd().getY()); break;
+            case LEFT:
+            case RIGHT:  GridPane.setColumnIndex( current, move.getEnd().getX()); break;
+        }
+
+        // Move Counter
+        updateMoveCounter(movesCounter);
+    }
+
+    /**
+     * Updates the view resetting the previous move in the grid
+     * @param move previous move
+     * @param movesCounter move counter
+     */
+    @Override
+    public void updateUndo(Move move, int movesCounter)
+    {
+        // Get moved block
+        Position pos = move.getInit();
+        current = null;
+        for(Node child : grid.getChildren())
+        {
+            if(GridPane.getColumnIndex(child) == pos.getX() && GridPane.getRowIndex(child) == pos.getY())
+                current = (Pane)child;
+        }
+
+        // Set end position
+        if(current != null)
+        {
+            GridPane.setColumnIndex( current, move.getEnd().getX());
+            GridPane.setRowIndex( current, move.getEnd().getY());
+            startUndoAnimation(move.getDirection(), current);
+        }
+
+        // Load counter
+        updateMoveCounter(movesCounter);
+    }
+
+    /** Dynamically create all the blocks of the gamegrid, based on the current match
+     * registered on the Controller.
+     */
+    @Override
+    public void updateAll(String matchName, ArrayList<Block> blocks, int movesCounter)
+    {
+        // Load all blocks in VIEW
+        for (Block current: blocks)
+        {
+            if(current.isSpecial())
+                CreateBigSquare(current.getPos().getX(), current.getPos().getY());
+            else if (current.getWidth() == 2 && current.getHeight() == 1)
+                CreateHorizontalRectangle(current.getPos().getX(), current.getPos().getY());
+            else if (current.getWidth() == 1 && current.getHeight() == 2)
+                CreateVerticalRectangle(current.getPos().getX(), current.getPos().getY());
+            else
+                CreateSquare(current.getPos().getX(), current.getPos().getY());
+        }
+
+        // Load move counter
+        updateMoveCounter(movesCounter);
+
+        // Load title
+        lblTitle.setText(matchName);
+    }
+
+    /**
+     * If game is solver: start victory animation
+     * At animation end, victory window opens automatically
+     * @param isSolved
+     */
+    @Override
+    public void notifyVictory(boolean isSolved)
+    {
+        if(isSolved)
+            // see: initializeAnimations();
+            victoryTranslateAnimation.playFromStart();
+    }
 
 
 
@@ -63,24 +158,8 @@ public class GameView
         // Initialize objects
         initializeKlotskiAnimations();
 
-        // Load dynamically blocks from controller.
-        loadKlotski();
-
-        // Check if the game is already end
-        checkVictory();
-    }
-    /**
-     * Asks the controller if the klotski is solved.
-     */
-    private void checkVictory()
-    {
-        if(!gameHandler.isSolved())
-            return;
-
-        // If game is solver: start victory animation
-        // At animation end, victory window opens automatically
-        // see: initializeAnimations();
-        victoryTranslateAnimation.playFromStart();
+        // Register observer
+        game.add(this);
     }
     /** Open another window.
      * @param fxmlLoader window loader.
@@ -118,30 +197,6 @@ public class GameView
 
     /* UTILITIES */
 
-    /** Dynamically create all the blocks of the gamegrid, based on the current match
-     * registered on the Controller.
-     */
-    private void loadKlotski()
-    {
-        // Get all blocks from CONTROLLER
-        ArrayList<Block> blocks = gameHandler.getAllBlocks();
-
-        // Load all blocks in VIEW
-        for (Block current: blocks)
-        {
-            if(current.isSpecial())
-                CreateBigSquare(current.getPos().getX(), current.getPos().getY());
-            else if (current.getWidth() == 2 && current.getHeight() == 1)
-                CreateHorizontalRectangle(current.getPos().getX(), current.getPos().getY());
-            else if (current.getWidth() == 1 && current.getHeight() == 2)
-                CreateVerticalRectangle(current.getPos().getX(), current.getPos().getY());
-            else
-                CreateSquare(current.getPos().getX(), current.getPos().getY());
-        }
-
-        updateMoveCounter();
-    }
-
     /** Undo last move.
      *  Handle the communication with the controller;
      *  Handle the UI effects;
@@ -150,38 +205,13 @@ public class GameView
      */
     private boolean undo(ActionEvent actionEvent)
     {
-        // No move to undo
+        // No move to undo, avoids file not found popup
         if(gameHandler.getMoveCounter() == 0)
             return false;
 
         // Execute undo
         if(gameHandler.undo())
-        {
-            // Get undo move
-            Move undo = gameHandler.getLastUndoMove();
-
-            // Get moved block
-            Position pos = undo.getInit();
-            current = null;
-            for(Node child : grid.getChildren())
-            {
-                if(GridPane.getColumnIndex(child) == pos.getX() && GridPane.getRowIndex(child) == pos.getY())
-                    current = (Pane)child;
-            }
-
-            // Set end position
-            if(current != null)
-            {
-                GridPane.setColumnIndex( current, undo.getEnd().getX());
-                GridPane.setRowIndex( current, undo.getEnd().getY());
-                startUndoAnimation(undo.getDirection(), current);
-            }
-
-            // Load counter
-            updateMoveCounter();
-
             return true;
-        }
         else
         {
             // Show error
@@ -284,13 +314,7 @@ public class GameView
     public void NextBestMoveClicked(ActionEvent actionEvent) {  }
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
-        // Hide victory pane
-        pnOverlay.setVisible(false);
-        pnVictoryPane.setVisible(false);
-        pnVictoryPane.setOpacity(0);
-
-        // Undo victory animations
-        reverseVictoryTranslateAnimation.playFromStart();
+        hideVictoryPanel();
     }
 
 
@@ -431,19 +455,7 @@ public class GameView
                 double translation = finalY - initialY;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.DOWN : Direction.UP;
-                if (gameHandler.move(currentPos, dir))
-                {
-                    // Set new position of the block after the move.
-                    Position destination = gameHandler.getPositionOfLastMovedBlock();
-                    GridPane.setRowIndex( current, destination.getY());
-
-                    // Move Counter
-                    updateMoveCounter();
-
-                    // Check victory
-                    checkVictory();
-                }
-                else
+                if (!gameHandler.move(currentPos, dir))
                 {
                     yTranslateAnimation.setNode(current);
                     yTranslateAnimation.play();
@@ -456,19 +468,7 @@ public class GameView
                 double translation = finalX - initialX;
                 // Check movement validity
                 Direction dir = translation > 0 ? Direction.RIGHT : Direction.LEFT;
-                if (gameHandler.move(currentPos, dir))
-                {
-                    // Set new position of the block after the move.
-                    Position destination = gameHandler.getPositionOfLastMovedBlock();
-                    GridPane.setColumnIndex( current, destination.getX());
-
-                    // Move Counter
-                    updateMoveCounter();
-
-                    // Check victory
-                    checkVictory();
-                }
-                else
+                if (!gameHandler.move(currentPos, dir))
                 {
                     xTranslateAnimation.setNode(current);
                     xTranslateAnimation.play();
@@ -576,8 +576,7 @@ public class GameView
      */
     private void initializeUI()
     {
-        // Set title and other styles
-        lblTitle.setText(gameHandler.getGameTitle());
+        // Set styles
         pnVictoryPane.setOpacity(0);
         lblError.setOpacity(0);
 
@@ -618,14 +617,12 @@ public class GameView
     /**
      * Set the value of the move counter.
      */
-    private void updateMoveCounter()
+    private void updateMoveCounter(int movesCounter)
     {
-        int count = gameHandler.getMoveCounter();
-
-        lblCounterUnit.setText(String.valueOf(count % 10));
-        lblCounterTens.setText(String.valueOf(count % 100  / 10));
-        lblCounterHundreds.setText(String.valueOf(count % 1000  / 100));
-        lblCounterThousands.setText(String.valueOf(count % 10000  / 1000));
+        lblCounterUnit.setText(String.valueOf(movesCounter % 10));
+        lblCounterTens.setText(String.valueOf(movesCounter % 100  / 10));
+        lblCounterHundreds.setText(String.valueOf(movesCounter % 1000  / 100));
+        lblCounterThousands.setText(String.valueOf(movesCounter % 10000  / 1000));
     }
     /**
      * Show victory pane.
@@ -642,5 +639,15 @@ public class GameView
         victoryFadeAnimation.playFromStart();
         pnOverlay.setVisible(true);
         pnVictoryPane.setVisible(true);
+    }
+    private void hideVictoryPanel()
+    {
+        // Hide victory pane
+        pnOverlay.setVisible(false);
+        pnVictoryPane.setVisible(false);
+        pnVictoryPane.setOpacity(0);
+
+        // Undo victory animations
+        reverseVictoryTranslateAnimation.playFromStart();
     }
 }

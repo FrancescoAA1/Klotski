@@ -1,16 +1,17 @@
 package com.klotski.Controllers;
 
+import com.klotski.Interfaces.Observable;
+import com.klotski.Interfaces.Observer;
 import com.klotski.Model.*;
 
 import java.util.ArrayList;
 
-public class GameHandler
+public class GameHandler implements Observable
 {
     /* VARS */
     private Grid grid;                  // MODEL: Klotski data & logic
     private Match currentMatch;         // MODEL: Current game.
     private StateHandler history;       // CONTROLLER: Moves handler
-    private Move lastUndoMove;          // Last undo move
     private String imagePath;   // Runtime data: info for savings;
     private boolean isOriginal; // Runtime data: info for savings;
 
@@ -66,9 +67,20 @@ public class GameHandler
 
 
 
-    /* GETTER */
-    public Move getLastUndoMove() { return lastUndoMove; }
-    public String getGameTitle() { return currentMatch.getName(); }
+
+    /* OBSERVER PATTERN */
+    private Observer view;
+    @Override
+    public void add(Observer o) {
+        view = o;
+        view.updateAll(currentMatch.getName(), this.getAllBlocks(), currentMatch.getScore());
+        view.notifyVictory(grid.isSolved());
+    }
+    @Override
+    public void remove(Observer o) {
+        if(o == view)
+            view = null;
+    }
 
 
 
@@ -102,6 +114,9 @@ public class GameHandler
 
                 // Check if klotski is solved: in that case, terminate match
                 this.isSolved();
+
+                // Update view
+                view.updateMove(move, currentMatch.getScore());
 
                 // Move valid
                 return true;
@@ -163,6 +178,7 @@ public class GameHandler
      */
     public boolean isSolved()
     {
+        view.notifyVictory(grid.isSolved());
         if(!grid.isSolved())
             return false;
 
@@ -239,10 +255,12 @@ public class GameHandler
             {
                 // Remove canceled move
                 history.popMove();
-                lastUndoMove = inverted;
 
                 // Decrement match score
                 currentMatch.decrementScore();
+
+                // Updating the view
+                view.updateUndo(inverted, getMoveCounter());
 
                 return true;
             }
