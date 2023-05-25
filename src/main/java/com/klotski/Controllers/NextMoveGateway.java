@@ -1,5 +1,6 @@
 package com.klotski.Controllers;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.klotski.Model.Disposition;
 import com.klotski.Model.Move;
 
@@ -64,7 +65,7 @@ public class NextMoveGateway
 
             if(responseCode == HTTP_OK)
             {
-                // estract data from Body response
+                // obtain data from Body response
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
@@ -78,7 +79,7 @@ public class NextMoveGateway
                 // the response is a JSON and I want to convert it with the related library
 
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(jsonString);
+                JsonNode jsonNode = mapper.readTree(response.toString());
 
                 String textNextMove = jsonNode.get(RESPONSE_KEY).asText();
 
@@ -92,9 +93,8 @@ public class NextMoveGateway
         }
         catch(IOException e)
         {
-            return null;
+            throw new RuntimeException("Unable to connect to API Socket or invalid params");
         }
     }
-
 
 }
