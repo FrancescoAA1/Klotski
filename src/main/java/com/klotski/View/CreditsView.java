@@ -1,8 +1,8 @@
 package com.klotski.View;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -12,11 +12,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.awt.*;
 
 public class CreditsView {
-
 
     /* BUTTON EVENT HANDLER */
 
@@ -57,5 +58,10 @@ public class CreditsView {
 
         // Show current stage
         stage.show();
+    }
+
+    public void openProfileClick(ActionEvent event) throws URISyntaxException, IOException
+    {
+        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/michele-bononi-871433a4/"));
     }
 }

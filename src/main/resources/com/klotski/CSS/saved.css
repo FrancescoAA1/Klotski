@@ -21,14 +21,12 @@
 
 .scroll-pane .scroll-bar:vertical,
 .scroll-pane .scroll-bar:horizontal {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #283943;
     -fx-background-insets: 0;
-    -fx-arrows-visible: false;
-    -fx-border-radius: 5px;
 }
 
-.scroll-pane .scroll-bar .thumb:hover {
-    -fx-background-color: #283943;
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: #eff1f0;
 }
 
 .card

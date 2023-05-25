@@ -4,6 +4,7 @@ module com.klotski {
     requires java.sql;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.annotation;
+    requires java.desktop;
 
     opens com.klotski to javafx.fxml;
     opens com.klotski.View to javafx.fxml;

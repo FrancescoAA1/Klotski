@@ -43,7 +43,7 @@
                <children>
                   <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
                      <children>
-                        <Hyperlink>
+                        <Hyperlink fx:id="linkUpLeft" onAction="#openProfileClick">
                            <graphic>
                               <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
                                  <image>
@@ -61,11 +61,15 @@
                <children>
                   <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
                      <children>
-                        <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
-                           <image>
-                              <Image url="@../Assets/man.png" />
-                           </image>
-                        </ImageView>
+                        <Hyperlink>
+                           <graphic>
+                              <ImageView fitHeight="116.0" fitWidth="156.0" onMouseClicked="#openProfileClick" pickOnBounds="true" preserveRatio="true" styleClass="image">
+                                 <image>
+                                    <Image url="@../Assets/man.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Hyperlink>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="MATTIA GALASSI" />
                      </children>
                   </VBox>
@@ -75,11 +79,15 @@
                <children>
                   <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
                      <children>
-                        <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" styleClass="image">
-                           <image>
-                              <Image url="@../Assets/man%20(2).png" />
-                           </image>
-                        </ImageView>
+                        <Hyperlink onAction="#openProfileClick">
+                           <graphic>
+                              <ImageView fitHeight="116.0" fitWidth="156.0" onMouseClicked="#openProfileClick" pickOnBounds="true" preserveRatio="true" styleClass="image">
+                                 <image>
+                                    <Image url="@../Assets/man%20(2).png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Hyperlink>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="FRANCESCO FANTIN" />
                      </children>
                   </VBox>
@@ -89,11 +97,15 @@
                <children>
                   <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0" styleClass="image">
                      <children>
-                        <ImageView fitHeight="116.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Assets/man%20(3).png" />
-                           </image>
-                        </ImageView>
+                        <Hyperlink onAction="#openProfileClick">
+                           <graphic>
+                              <ImageView fitHeight="116.0" fitWidth="156.0" onMouseClicked="#openProfileClick" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Assets/man%20(3).png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Hyperlink>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="148.0" styleClass="name" text="TOMAS LOVATO" />
                      </children>
                   </VBox>
