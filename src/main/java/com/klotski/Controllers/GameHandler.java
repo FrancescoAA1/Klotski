@@ -138,6 +138,32 @@ public class GameHandler implements Observable
         return false;
     }
     /**
+     * Execute an hint.
+     * @return TRUE if move is executed
+     */
+    public boolean hint()
+    {
+        try
+        {
+            // Get hint
+            Move move = gateway.GetNextMove(1, new Disposition(grid, false));
+
+            if(move != null)
+                // Execute as a normal move
+                move(move.getInit(), move.getDirection());
+            else
+                // No hint: Execute undo
+                undo();
+
+            return true;
+        }
+        catch(RuntimeException e)
+        {
+            System.out.println("No internet");
+            return false;
+        }
+    }
+    /**
      * Check if a move requested by view (user) is valid.
      * @param pos: position of the block to move
      * @param dir: direction of the move
@@ -267,7 +293,7 @@ public class GameHandler implements Observable
                 currentMatch.decrementScore();
 
                 // Updating the view
-                view.updateAutomaticMove(inverted, getMoveCounter());
+                view.updateMove(inverted, getMoveCounter());
 
                 return true;
             }
@@ -338,42 +364,6 @@ public class GameHandler implements Observable
 
 
 
-
-
-    public void getHint()
-    {
-        try
-        {
-            Move move = gateway.GetNextMove(1, new Disposition(grid, false));
-
-            if(move != null)
-            {
-                // Get the moving block
-                Block current = findBlock(move.getInit());
-
-                // Check the validity of the move
-                if(grid.move(current,move))
-                {
-                    // Register move
-                    history.pushMove(move);
-
-                    // Increment match score
-                    currentMatch.incrementScore();
-
-                    // Check if klotski is solved: in that case, terminate match
-                    this.isSolved();
-
-                    // Update view
-                    view.updateAutomaticMove(move, currentMatch.getScore());
-                }
-            }
-        }
-        catch(RuntimeException e)
-        {
-            System.out.println("No internet");
-        }
-
-    }
 
 
 

@@ -13,7 +13,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -47,35 +46,12 @@ public class GameView implements Observer
     /* OBSERVER PATTERN */
 
     /**
-     * Updates the view setting the current move in the grid
-     * @param move current move
-     * @param movesCounter move counter
-     */
-    @Override
-    public void updateMove(Move move, int movesCounter)
-    {
-        Direction dir = move.getDirection();
-
-        // Do Move
-        switch(dir)
-        {
-            case UP:
-            case DOWN:  GridPane.setRowIndex( current, move.getEnd().getY()); break;
-            case LEFT:
-            case RIGHT:  GridPane.setColumnIndex( current, move.getEnd().getX()); break;
-        }
-
-        // Move Counter
-        updateMoveCounter(movesCounter);
-    }
-
-    /**
      * Updates the view resetting the previous move in the grid
      * @param move previous move
      * @param movesCounter move counter
      */
     @Override
-    public void updateAutomaticMove(Move move, int movesCounter)
+    public void updateMove(Move move, int movesCounter)
     {
         // Get moved block
         Position pos = move.getInit();
@@ -314,10 +290,12 @@ public class GameView implements Observer
     }
     public void NextBestMoveClicked(ActionEvent actionEvent)
     {
+        if(gameHandler.isSolved())
+            return;
         if(hintFlag)
             return;
         hintFlag = true;
-        gameHandler.getHint();
+        gameHandler.hint();
     }
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
@@ -449,10 +427,6 @@ public class GameView implements Observer
         // Current position of the block selected by user
         Position currentPos = new Position(GridPane.getColumnIndex(current), GridPane.getRowIndex(current));
 
-        // Reset block position - View update #1
-        current.setTranslateY(0);
-        current.setTranslateX(0);
-
         // Get and check move.
         switch(direction)
         {
@@ -551,19 +525,19 @@ public class GameView implements Observer
         switch(undo)
         {
             case UP:
-                undoTranslateAnimation.setFromY(MAXOFFSET);
+                undoTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateY());
                 undoTranslateAnimation.setToY(0);
                 break;
             case DOWN:
-                undoTranslateAnimation.setFromY(MAXOFFSET * -1);
+                undoTranslateAnimation.setFromY(control.getTranslateY() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateY());
                 undoTranslateAnimation.setToY(0);
                 break;
             case LEFT:
-                undoTranslateAnimation.setFromX(MAXOFFSET);
+                undoTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET : MAXOFFSET + control.getTranslateX());
                 undoTranslateAnimation.setToX(0);
                 break;
             case RIGHT:
-                undoTranslateAnimation.setFromX(MAXOFFSET * -1);
+                undoTranslateAnimation.setFromX(control.getTranslateX() == 0 ? MAXOFFSET * -1 : MAXOFFSET * -1 + control.getTranslateX());
                 undoTranslateAnimation.setToX(0);
                 break;
         }
