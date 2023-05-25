@@ -14,6 +14,7 @@ public class GameHandler implements Observable
     private StateHandler history;       // CONTROLLER: Moves handler
     private String imagePath;   // Runtime data: info for savings;
     private boolean isOriginal; // Runtime data: info for savings;
+    private NextMoveGateway gateway;    // Create next move gateway for hint feature
 
 
 
@@ -42,6 +43,9 @@ public class GameHandler implements Observable
         // Load previous match history
         history = new StateHandler(match.getName() + ".hst");
         history.restoreStatus();
+
+        // Create next move gateway for hint feature
+        gateway = new NextMoveGateway();
     }
 
     /** Constructor for new games
@@ -63,6 +67,9 @@ public class GameHandler implements Observable
         // Load correct grid
         grid = disposition.convertToGrid();
         history = new StateHandler(currentMatch.getName() + ".hst");
+
+        // Create next move gateway for hint feature
+        gateway = new NextMoveGateway();
     }
 
 
@@ -260,7 +267,7 @@ public class GameHandler implements Observable
                 currentMatch.decrementScore();
 
                 // Updating the view
-                view.updateUndo(inverted, getMoveCounter());
+                view.updateAutomaticMove(inverted, getMoveCounter());
 
                 return true;
             }
@@ -274,7 +281,6 @@ public class GameHandler implements Observable
             return false;
         }
     }
-
 
 
 
@@ -334,7 +340,40 @@ public class GameHandler implements Observable
 
 
 
+    public void getHint()
+    {
+        try
+        {
+            Move move = gateway.GetNextMove(1, new Disposition(grid, false));
 
+            if(move != null)
+            {
+                // Get the moving block
+                Block current = findBlock(move.getInit());
+
+                // Check the validity of the move
+                if(grid.move(current,move))
+                {
+                    // Register move
+                    history.pushMove(move);
+
+                    // Increment match score
+                    currentMatch.incrementScore();
+
+                    // Check if klotski is solved: in that case, terminate match
+                    this.isSolved();
+
+                    // Update view
+                    view.updateAutomaticMove(move, currentMatch.getScore());
+                }
+            }
+        }
+        catch(RuntimeException e)
+        {
+            System.out.println("No internet");
+        }
+
+    }
 
 
 

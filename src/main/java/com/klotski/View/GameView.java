@@ -13,6 +13,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -30,6 +31,7 @@ public class GameView implements Observer
 {
     /* VARS */
     private GameHandler gameHandler;    // CONTROLLER object
+    private boolean hintFlag;
 
     /* VIEW VARS */
     @FXML
@@ -40,7 +42,6 @@ public class GameView implements Observer
     private Label lblTitle, lblVictoryMovesCounter, lblVictoryHintsCounter;     // Other labels
     @FXML
     private AnchorPane pnOverlay, pnVictoryPane, lblError;      // Popups
-
 
 
     /* OBSERVER PATTERN */
@@ -74,7 +75,7 @@ public class GameView implements Observer
      * @param movesCounter move counter
      */
     @Override
-    public void updateUndo(Move move, int movesCounter)
+    public void updateAutomaticMove(Move move, int movesCounter)
     {
         // Get moved block
         Position pos = move.getInit();
@@ -311,7 +312,13 @@ public class GameView implements Observer
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
         OpenWindow(fxmlLoader, "Main Menu");
     }
-    public void NextBestMoveClicked(ActionEvent actionEvent) {  }
+    public void NextBestMoveClicked(ActionEvent actionEvent)
+    {
+        if(hintFlag)
+            return;
+        hintFlag = true;
+        gameHandler.getHint();
+    }
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
         hideVictoryPanel();
@@ -562,8 +569,8 @@ public class GameView implements Observer
         }
         undoTranslateAnimation.setNode(control);
         undoTranslateAnimation.playFromStart();
+        undoTranslateAnimation.setOnFinished(e -> {hintFlag = false;});
     }
-
 
 
 
