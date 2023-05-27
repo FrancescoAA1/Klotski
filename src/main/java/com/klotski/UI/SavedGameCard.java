@@ -13,6 +13,7 @@ public class SavedGameCard {
     private static final String SEPARATOR = "T";
     private String ImagePath;
     private int dispositionID;
+    private int originalDispositionID;
     private Match match;
     private LocalDateTime gameDate;
 
@@ -25,16 +26,20 @@ public class SavedGameCard {
     public int getDispositionID() {
         return dispositionID;
     }
+    public int getOriginalDispositionID() {
+        return originalDispositionID;
+    }
 
 
     private Pane control;
 
-    public SavedGameCard(String imagePath, LocalDateTime game_d, Match currentMatch, int disposition_ID) {
+    public SavedGameCard(String imagePath, LocalDateTime game_d, Match currentMatch, int disposition_ID, int originalDisposition_ID) {
         ImagePath = imagePath;
         match = currentMatch;
         gameDate = game_d;
         control = GenerateControl();
         dispositionID = disposition_ID;
+        originalDispositionID = originalDisposition_ID;
     }
 
     private Pane GenerateControl()

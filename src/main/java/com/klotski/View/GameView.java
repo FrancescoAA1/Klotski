@@ -298,8 +298,8 @@ public class GameView implements Observer
             return;
         if(hintFlag)
             return;
-        hintFlag = true;
-        gameHandler.hint();
+        hintFlag = gameHandler.hint();
+
     }
     public void FullHintGame(ContextMenuEvent e)
     {
@@ -310,8 +310,7 @@ public class GameView implements Observer
                 return;
             if(hintFlag)
                 return;
-            hintFlag = true;
-            gameHandler.hint();
+            hintFlag = gameHandler.hint();
         }
     }
     public void ContinueGameClicked(ActionEvent actionEvent)
@@ -631,7 +630,7 @@ public class GameView implements Observer
         lblVictoryMovesCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
 
         // Hints counter
-        lblVictoryHintsCounter.setText(formatCounters(gameHandler.getMoveCounter(), 4));
+        lblVictoryHintsCounter.setText(formatCounters(gameHandler.getHintCounter(), 4));
 
         // Show victory pane
         victoryFadeAnimation.playFromStart();

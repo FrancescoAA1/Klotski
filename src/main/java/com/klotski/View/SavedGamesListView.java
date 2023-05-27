@@ -68,7 +68,7 @@ public class SavedGamesListView implements Initializable {
             LocalDateTime dateTime = LocalDateTime.parse(m.getKey().getName(), formatter);
 
             //Creating a new SavedGameCard
-            SavedGameCard card = new SavedGameCard(getClass().getResource(imagePath).getPath(), dateTime, m.getKey(), dispositionID);
+            SavedGameCard card = new SavedGameCard(getClass().getResource(imagePath).getPath(), dateTime, m.getKey(), dispositionID, disp.getOriginalNumber());
 
             //Adding the mouseClick Event Handler
             card.getControl().setOnMouseClicked(e -> onMouseClicked(e));
@@ -99,7 +99,7 @@ public class SavedGamesListView implements Initializable {
         SavedGameCard card = getCurrentSavedGameCard(event);
 
         // Create new game
-        GameHandler gameHandler = new GameHandler(card.getDispositionID(), card.getMatch());
+        GameHandler gameHandler = new GameHandler(card.getDispositionID(), card.getOriginalDispositionID(), card.getMatch());
 
         // Communications inter-view
         GameView gameView = fxmlLoader.getController();

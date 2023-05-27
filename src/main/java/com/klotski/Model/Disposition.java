@@ -23,27 +23,16 @@ public class Disposition
     private int originalNumber;
 
     /**
-     * This is the "default constructor"
-     *
-     * @param isOriginal: specify if this is an initial game disposition or not
-     */
-    public Disposition(boolean isOriginal)
-    {
-        this.isOriginal = isOriginal;
-        originalNumber = 0;
-    }
-
-    /**
      * This is the constructor to use when you want to freeze the state of a grid
      *
      * @param isOriginal: specify if this is an initial game disposition or not
      * @param snapGrid:   the grid that you want to freeze saving his configuration
      */
-    public Disposition(Grid snapGrid, boolean isOriginal)
+    public Disposition(Grid snapGrid, boolean isOriginal, int originalDispositionID)
     {
         this.isOriginal = isOriginal;
         takeSnapshot(snapGrid);
-        originalNumber = 0;
+        originalNumber = originalDispositionID;
     }
 
     /**

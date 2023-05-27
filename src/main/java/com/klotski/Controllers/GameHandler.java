@@ -16,7 +16,7 @@ public class GameHandler implements Observable
     private boolean isOriginal; // Runtime data: info for savings;
     private NextMoveGateway gateway;    // Create next move gateway for hint feature
 
-
+    private int originalDispositionID;  // ID of the original disposition;
 
 
     /* CONSTRUCTORS */
@@ -24,9 +24,11 @@ public class GameHandler implements Observable
      * @param savedDispositionID: ID of the disposition to load (saved in DB)
      * @param match: Match connected to this disposition (saved in DB)
      */
-    public GameHandler(int savedDispositionID, Match match)
+    public GameHandler(int savedDispositionID, int originalDisposition_ID, Match match)
     {
         // Initialize vars
+        views = new ArrayList<Observer>();
+        originalDispositionID = originalDisposition_ID;
         isOriginal = false;
         currentMatch = match;
 
@@ -54,6 +56,8 @@ public class GameHandler implements Observable
     public GameHandler(int newDispositionID)
     {
         // Initialize vars
+        views = new ArrayList<Observer>();
+        originalDispositionID = newDispositionID;
         isOriginal = true;
         currentMatch = new Match();
 
@@ -76,17 +80,18 @@ public class GameHandler implements Observable
 
 
     /* OBSERVER PATTERN */
-    private Observer view;
+    private ArrayList<Observer> views;
     @Override
-    public void add(Observer o) {
-        view = o;
-        view.updateAll(currentMatch.getName(), this.getAllBlocks(), currentMatch.getScore());
-        view.notifyVictory(grid.isSolved());
+    public void add(Observer o)
+    {
+        views.add(o);
+        o.updateAll("CONFIGURATION " + originalDispositionID, this.getAllBlocks(), currentMatch.getScore());
+        o.notifyVictory(grid.isSolved());
     }
     @Override
-    public void remove(Observer o) {
-        if(o == view)
-            view = null;
+    public void remove(Observer o)
+    {
+        views.remove(o);
     }
 
 
@@ -122,8 +127,9 @@ public class GameHandler implements Observable
                 // Check if klotski is solved: in that case, terminate match
                 this.isSolved();
 
-                // Update view
-                view.updateMove(move, currentMatch.getScore());
+                // Update views
+                for(Observer view : views)
+                    view.updateMove(move, currentMatch.getScore());
 
                 // Move valid
                 return true;
@@ -146,11 +152,14 @@ public class GameHandler implements Observable
         try
         {
             // Get hint
-            Move move = gateway.GetNextMove(1, new Disposition(grid, false));
+            Move move = gateway.GetNextMove(originalDispositionID, new Disposition(grid, false,  originalDispositionID));
 
             if(move != null)
+            {
                 // Execute as a normal move
                 move(move.getInit(), move.getDirection());
+                currentMatch.increaseHints();
+            }
             else
                 // No hint: Execute undo
                 undo();
@@ -211,7 +220,9 @@ public class GameHandler implements Observable
      */
     public boolean isSolved()
     {
-        view.notifyVictory(grid.isSolved());
+        // Notify to views
+        for(Observer view : views)
+            view.notifyVictory(grid.isSolved());
         if(!grid.isSolved())
             return false;
 
@@ -246,6 +257,12 @@ public class GameHandler implements Observable
      * @return the count of moves executed by start.
      */
     public int getMoveCounter() { return currentMatch.getScore(); }
+
+    /**
+     * Get the hint count ot the current match
+     * @return the count of hints executed by start.
+     */
+    public int getHintCounter() { return currentMatch.getHintsNumber(); }
 
 
 
@@ -292,8 +309,9 @@ public class GameHandler implements Observable
                 // Decrement match score
                 currentMatch.decrementScore();
 
-                // Updating the view
-                view.updateMove(inverted, getMoveCounter());
+                // Updating views
+                for(Observer view : views)
+                    view.updateMove(inverted, getMoveCounter());
 
                 return true;
             }
@@ -321,13 +339,16 @@ public class GameHandler implements Observable
         db.connect();
 
         // Convert current disposition (model).
-        Disposition current = new Disposition(grid, false);
+        Disposition current = new Disposition(grid, isOriginal, originalDispositionID);
         current.setImagePath(imagePath);
 
         // If this is a new game, save as new.
         // If this is a reloaded game, overwrite it;
         if(isOriginal)
+        {
             db.saveMatch(currentMatch, current);
+            isOriginal = false;
+        }
         else
             db.updateMatch(currentMatch, current);
 
@@ -383,7 +404,7 @@ public class GameHandler implements Observable
         // Conncect to DB and save game.
         DBConnector db = new DBConnector();
         db.connect();
-        Disposition current = new Disposition(grid, false);
+        Disposition current = new Disposition(grid, false, originalDispositionID);
         current.setImagePath(imagePath);
         if(isOriginal)
             db.saveMatch(currentMatch, current);
@@ -408,7 +429,7 @@ public class GameHandler implements Observable
             if(grid.move(current,move))
             {
                 // Register move
-                history.pushMovetmp(move, new Disposition(grid, false));
+                history.pushMovetmp(move, new Disposition(grid, false, originalDispositionID));
 
                 // Increment match score
                 currentMatch.incrementScore();
@@ -416,8 +437,9 @@ public class GameHandler implements Observable
                 // Check if klotski is solved: in that case, terminate match
                 this.isSolved();
 
-                // Update view
-                view.updateMove(move, currentMatch.getScore());
+                // Update views
+                for(Observer view : views)
+                    view.updateMove(move, currentMatch.getScore());
 
                 // Move valid
                 return true;
