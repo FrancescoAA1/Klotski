@@ -11,6 +11,9 @@ public class Match {
     // describe the match's name and by default is automatically calculated using the current date
     private String name;
 
+    // describe the number of hints used in the match
+    private int hintsNumber;
+
     public Match(String name)
     {
         isTerminated = false;
@@ -43,6 +46,12 @@ public class Match {
     }
     public boolean isTerminated() {
         return isTerminated;
+    }
+    public int getHintsNumber() {
+        return hintsNumber;
+    }
+    public void setHintsNumber(int hints) {
+        hintsNumber = hints;
     }
     public void setScore(int score) {
         this.score = score;

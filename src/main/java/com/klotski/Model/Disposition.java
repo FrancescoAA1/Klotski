@@ -20,6 +20,7 @@ public class Disposition
     private String textDisposition;
     private String imagePath;
     private boolean isOriginal;
+    private int originalNumber;
 
     /**
      * This is the "default constructor"
@@ -29,6 +30,7 @@ public class Disposition
     public Disposition(boolean isOriginal)
     {
         this.isOriginal = isOriginal;
+        originalNumber = 0;
     }
 
     /**
@@ -41,6 +43,7 @@ public class Disposition
     {
         this.isOriginal = isOriginal;
         takeSnapshot(snapGrid);
+        originalNumber = 0;
     }
 
     /**
@@ -78,6 +81,14 @@ public class Disposition
     public void setTextDisposition(String textDisposition)
     {
         this.textDisposition = textDisposition;
+    }
+    public int getOriginalNumber()
+    {
+        return originalNumber;
+    }
+    public void setOriginalNumber(int originalDispositionNumber)
+    {
+        originalNumber = originalDispositionNumber;
     }
 
     /**
