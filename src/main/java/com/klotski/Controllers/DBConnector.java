@@ -93,13 +93,14 @@ public class DBConnector {
 
         // I want to create the Query structure to insert into DB a new disposition
         // the disposition_id field is not necessary because is auto-calculated by DB
-        String querysql1 = "INSERT INTO DISPOSITIONS (schema, original, disposition_image) VALUES(?,?,?)";
+        String querysql1 = "INSERT INTO DISPOSITIONS (schema, original, disposition_image, original_number) VALUES(?,?,?,?)";
         // Now I want to set all field of parametrized query
         try {
             PreparedStatement statement = connector.prepareStatement(querysql1);
             statement.setString(1, disposition.getTextDisposition());
             statement.setInt(2, 0); // this is not an original disposition
             statement.setString(3, disposition.getImagePath());
+            statement.setInt(4, disposition.getOriginalNumber());
             // run query
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -117,7 +118,7 @@ public class DBConnector {
 
         // I want to create the Query structure to insert into DB a new match
         // the match_id field is not necessary because is auto-calculated by DB
-        String querysql3 = "INSERT INTO MATCHES(name, disposition_id, score, terminated) VALUES(?, ?, ?, ?)";
+        String querysql3 = "INSERT INTO MATCHES(name, disposition_id, score, terminated, hints_number) VALUES(?, ?, ?, ?, ?)";
         // Now I want to set all fields of parametrized query
         try {
             PreparedStatement statement = connector.prepareStatement(querysql3);
@@ -125,6 +126,7 @@ public class DBConnector {
             statement.setInt(2, lastDispositionID);
             statement.setInt(3, match.getScore());
             statement.setInt(4, match.isTerminated() ? 1 : 0);
+            statement.setInt(5, match.getHintsNumber());
             // run query
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -149,7 +151,7 @@ public class DBConnector {
         if (connector == null)
             connect();
         // I want to create the Query structure to select alla matches from DB
-        String querysql = "SELECT name, disposition_id, score, terminated FROM MATCHES ORDER BY match_id";
+        String querysql = "SELECT name, disposition_id, score, terminated, hints_number FROM MATCHES ORDER BY match_id";
 
         try {
             Statement statement = connector.createStatement();
@@ -165,6 +167,7 @@ public class DBConnector {
 
                 if (result.getInt("terminated") == 1)
                     tmp.terminate();
+                tmp.setHintsNumber(result.getInt("hints_number"));
 
                 matches.add(new Pair<Match, Integer>(tmp, result.getInt("disposition_id")));
             }
@@ -188,11 +191,11 @@ public class DBConnector {
         if (connector == null)
             connect();
         // I want to create the Query structure to select the specific disposition
-        String querysql = "SELECT schema, original, disposition_image FROM DISPOSITIONS WHERE disposition_id = ?";
+        String querysql = "SELECT schema, original, disposition_image, original_number FROM DISPOSITIONS WHERE disposition_id = ?";
 
         try {
             PreparedStatement statement = connector.prepareStatement(querysql);
-            //insert the param fro ID
+            //insert the param for ID
             statement.setInt(1, disposition_id);
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery();
@@ -200,12 +203,14 @@ public class DBConnector {
             String image = result.getString("disposition_image");
             String schema = result.getString("schema");
             int original = result.getInt("original");
+            int origin_number = result.getInt("original_number");
 
             if (original == 1)
                 disposition = new Disposition(schema, true);
             else disposition = new Disposition(schema, false);
 
             disposition.setImagePath(image);
+            disposition.setOriginalNumber(origin_number);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -365,13 +370,14 @@ public class DBConnector {
 
         // the field ID , name and disposition are not changed
         // so I only need to update score and terminated status
-        String querysql1 = "UPDATE MATCHES SET score = ?, terminated = ? WHERE match_id = ?";
+        String querysql1 = "UPDATE MATCHES SET score = ?, terminated = ?, hints_number = ? WHERE match_id = ?";
 
         try {
             PreparedStatement statement = connector.prepareStatement(querysql1);
             statement.setInt(1, match.getScore());
             statement.setInt(2, match.isTerminated()?1:0);
-            statement.setInt(3, matchID);
+            statement.setInt(3, match.getHintsNumber());
+            statement.setInt(4, matchID);
             // run query
             int rowsAffected = statement.executeUpdate();
             // if no rows where affected by the update => something went wrong
@@ -388,7 +394,7 @@ public class DBConnector {
 
         // step 4 - Update the disposition
 
-        // the field ID, originals and disposition_image are not changed
+        // the field ID, originals, original_number and disposition_image are not changed
         // so I only need to update the schema
         String querysql2 = "UPDATE DISPOSITIONS SET schema = ? WHERE disposition_id = ?";
 

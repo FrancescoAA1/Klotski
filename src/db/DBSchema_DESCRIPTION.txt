@@ -2,37 +2,35 @@
 Sono presenti 2 tabelle: 
 
 1) DISPOSITION: contiene l'insieme delle disposizioni di gioco del Klotski. Possono essere 
-Sia quelle proposte per la partenza che quelle di salvataggio di fine partita. Per riconoscere 
-le due tipologie si utilizza il campo "original" che se impostato TRUE indica una configurazione di partenza, FALSE altrimenti.
-Il campo "schema" rappresenta una codifica della configurazione di gioco tramite una stringa composta da numeri che rappresentano univocamente i blocchi e gli spazi della griglia di gioco. Tale griglia viene scritta concatenando ogni riga composta da 4 elementi ciascuna. Gli '0' rappresentano gli spazi vuoti 
-
-ESEMPIO: 
-
-1 2 2 3 
-1 2 2 3 
-4 5 5 6 
-4 7 8 6 
-9 0 0 10
+Sia quelle proposte per la partenza (con campo original = 1) che quelle di salvataggio di fine partita. (original = 0)
+E' possobile ottenre il numero della disposizione di partenza (se non originale) tramite il cambo original_number
+Il campo "schema" rappresenta una codifica della configurazione di gioco tramite una stringa composta da numeri che rappresentano univocamente i blocchi e gli spazi della griglia di gioco.
+La tecnica usate è la seguente: per ogni blocco scrivo una riga con posizione,
 
 2) MATCHES: contiene lo storico delle partite che possiedono un nome, il numero dei punti e un puntatore alla disposizione salvata per l'ultima mossa effettuata.  
 L'ID del match rappresenta il nome del file da ricercare in locale su cui viene salvato lo storico. il nome invece è una stringa contenente la data di creazione.
+vnegono inoltre salvati il numero di hints utilizzati per quel match
 
 ================================ SCRIPT FOR https://dbdiagram.io/ ================================
 
 
-// tabella disposizioni: la disposizione
-Table DISPOSITION {
-  disposition_id integer [primary key]
-  schema varchar
-  original boolean
-  disposition_image varchar
-}
-Table MATCHES {
-  match_id integer [primary key]
-  name varchar
-  last_disposition integer //the disposition ID
-  score integer
-  terminated boolean
+Table "DISPOSITIONS" {
+  "disposition_id" INTEGER [unique, not null]
+  "schema" TEXT [not null]
+  "disposition_image" TEXT
+  "original" INTEGER [not null]
+  "original_number" INTEGER
+  "PRIMARY" "KEY(disposition_id AUTOINCREMENT)"
 }
 
-Ref: MATCHES.last_disposition - DISPOSITION.disposition_id 
+Table "MATCHES" {
+  "match_id" INTEGER [unique, not null]
+  "disposition_id" INTEGER [unique, not null]
+  "name" TEXT [unique, not null]
+  "score" INTEGER [not null]
+  "terminated" INTEGER [not null]
+  "hints_number" INTEGER [not null]
+  "PRIMARY" "KEY(match_id AUTOINCREMENT)"
+}
+
+Ref:"DISPOSITIONS"."disposition_id" < "MATCHES"."disposition_id"

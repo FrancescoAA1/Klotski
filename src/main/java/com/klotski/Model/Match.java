@@ -53,6 +53,12 @@ public class Match {
     public void setHintsNumber(int hints) {
         hintsNumber = hints;
     }
+    public void increaseHints() {
+        hintsNumber++;
+    }
+    public void decreaseHints() {
+        hintsNumber--;
+    }
     public void setScore(int score) {
         this.score = score;
     }
