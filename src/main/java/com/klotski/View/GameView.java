@@ -42,9 +42,9 @@ public class GameView implements Observer
     @FXML
     private Label lblCounterUnit, lblCounterTens, lblCounterHundreds, lblCounterThousands;  // Move counter labels
     @FXML
-    private Label lblTitle, lblVictoryMovesCounter, lblVictoryHintsCounter;     // Other labels
+    private Label lblTitle, lblVictoryMovesCounter, lblVictoryHintsCounter, lblError;     // Other labels
     @FXML
-    private AnchorPane pnOverlay, pnVictoryPane, lblError;      // Popups
+    private AnchorPane pnOverlay, pnVictoryPane;      // Popups
 
 
     /* OBSERVER PATTERN */
@@ -117,6 +117,17 @@ public class GameView implements Observer
             victoryTranslateAnimation.playFromStart();
     }
 
+    /**
+     * Show the error launched by Controller-
+     * @param error Error to show.
+     */
+    @Override
+    public void notifyError(String error)
+    {
+        lblError.setText(error);
+        errorFadeAnimation.playFromStart();
+    }
+
 
 
     /* COMMUNICATION FUNCTIONS */
@@ -186,10 +197,6 @@ public class GameView implements Observer
      */
     private boolean undo(ActionEvent actionEvent)
     {
-        // No move to undo, avoids file not found popup
-        if(gameHandler.getMoveCounter() == 0)
-            return false;
-
         // Execute undo
         if(gameHandler.undo())
             return true;
@@ -198,7 +205,6 @@ public class GameView implements Observer
             // Show error
             xErrorTranslateAnimation.setNode((Node)actionEvent.getSource());
             xErrorTranslateAnimation.playFromStart();
-            errorFadeAnimation.playFromStart();
             return false;
         }
     }
@@ -299,7 +305,9 @@ public class GameView implements Observer
         if(hintFlag)
             return;
         hintFlag = gameHandler.hint();
-
+        System.out.println("T");
+        if(!hintFlag)
+            System.out.println("-");
     }
     public void FullHintGame(ContextMenuEvent e)
     {
@@ -557,7 +565,7 @@ public class GameView implements Observer
         }
         moveTranslateAnimation.setNode(control);
         moveTranslateAnimation.playFromStart();
-        moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e);});
+        moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e); System.out.print("F");});
     }
 
 

@@ -162,13 +162,14 @@ public class GameHandler implements Observable
             }
             else
                 // No hint: Execute undo
-                undo();
+                return undo();
 
             return true;
         }
         catch(RuntimeException e)
         {
-            System.out.println("No internet");
+            for(Observer view : views)
+                view.notifyError("No internet: cannot get next move.");
             return false;
         }
     }
@@ -289,7 +290,13 @@ public class GameHandler implements Observable
     {
         // If there are no moves, exit
         if(!history.hasState())
+        {
+            // But if move counter in Model has moves = moves-file not found...
+            if(currentMatch.getScore() > 0)
+                for(Observer view : views)
+                    view.notifyError("Cannot load previous saved moves: file not found.");
             return false;
+        }
 
         // Get last move
         Move last = history.topMove();

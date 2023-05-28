@@ -10,4 +10,5 @@ public interface Observer
     public void updateMove(Move move, int movesCounter);
     public void updateAll(String matchName, ArrayList<Block> blocks, int movesCounter);
     public void notifyVictory(boolean isSolved);
+    public void notifyError(String error);
 }
