@@ -57,7 +57,8 @@ public class Match {
         hintsNumber++;
     }
     public void decreaseHints() {
-        hintsNumber--;
+        if(hintsNumber > 0)
+            hintsNumber--;
     }
     public void setScore(int score) {
         this.score = score;

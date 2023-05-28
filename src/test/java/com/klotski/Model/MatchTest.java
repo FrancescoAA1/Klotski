@@ -5,32 +5,53 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
-
     @Test
-    void getScore() {
+    public void testIsTerminated() {
+        Match match = new Match();
+        assertFalse(match.isTerminated());
+
+        match.terminate();
+        assertTrue(match.isTerminated());
+    }
+    @Test
+    public void testName() {
+        Match match = new Match("Test Match");
+        assertEquals("Test Match", match.getName());
+
+        Match matchWithDate = new Match();
+        assertNotNull(matchWithDate.getName());
     }
 
     @Test
-    void getName() {
-    }
+    public void testScore() {
+        Match match = new Match();
+        assertEquals(0, match.getScore());
 
-    @Test
-    void isTerminated() {
-    }
+        match.incrementScore();
+        assertEquals(1, match.getScore());
 
-    @Test
-    void setScore() {
-    }
+        match.decrementScore();
+        assertEquals(0, match.getScore());
 
-    @Test
-    void terminate() {
+        match.setScore(5);
+        assertEquals(5, match.getScore());
     }
-
     @Test
-    void incrementScore() {
-    }
+    public void testHintsNumber() {
+        Match match = new Match();
+        assertEquals(0, match.getHintsNumber());
 
-    @Test
-    void decrementScore() {
+        match.setHintsNumber(5);
+        assertEquals(5, match.getHintsNumber());
+
+        match.increaseHints();
+        assertEquals(6, match.getHintsNumber());
+
+        match.decreaseHints();
+        assertEquals(5, match.getHintsNumber());
+
+        match = new Match();
+        match.decreaseHints();
+        assertEquals(0, match.getHintsNumber());
     }
 }
