@@ -41,7 +41,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
+                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0" styleClass="image">
                      <children>
                         <Hyperlink fx:id="linkUpLeft" onAction="#openProfileClick">
                            <graphic>
@@ -59,7 +59,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
+                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0" styleClass="image">
                      <children>
                         <Hyperlink>
                            <graphic>
@@ -77,7 +77,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0">
+                  <VBox alignment="CENTER" layoutX="2.0" layoutY="2.0" prefHeight="161.0" prefWidth="154.0" styleClass="image">
                      <children>
                         <Hyperlink onAction="#openProfileClick">
                            <graphic>

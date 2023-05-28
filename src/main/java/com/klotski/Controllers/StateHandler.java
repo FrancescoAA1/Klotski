@@ -107,12 +107,6 @@ public class StateHandler {
         recordings.push(move);
         count++;
     }
-    public void pushMovetmp(Move move, Disposition disp)
-    {
-        rectemp.push(new Pair<Move, Disposition>(move, disp));
-        recordings.push(move);
-        count++;
-    }
     /** Remove the last move from recordings
      * @return the last move removed or NULL if the collection is empty
      */
@@ -160,32 +154,6 @@ public class StateHandler {
             {
                 // automatically invoking toString provided by Move to write the line format
                 filewriter.println(record);
-            }
-        }
-        catch (IOException e)
-        {
-            if(filewriter != null)
-                filewriter.close();
-            return false;
-        }
-        filewriter.close();
-        return true;
-    }
-    public boolean flush2()
-    {
-        PrintWriter filewriter = null;
-        try
-        {
-            //Try to open file in writing mode
-            //The second parameter set to false allows you to overwrite the file.
-            //So if I want to save a game that was already saved,
-            // just pass the same filename and it gets overwritten
-            filewriter = new PrintWriter(new FileWriter(currentPath + DEFAULT_PATH + fileName, false));
-            // write all stack of recordings
-            for ( Pair<Move, Disposition> pair:rectemp)
-            {
-                // automatically invoking toString provided by Move to write the line format
-                filewriter.println(pair.getKey().toString() + "|" + pair.getValue().getTextDisposition());
             }
         }
         catch (IOException e)

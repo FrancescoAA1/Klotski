@@ -448,9 +448,8 @@ public class GameView implements Observer
         {
             case VERTICAL:
             {
-                // If requested movement is too long, truncate it
-                double translation = finalY - initialY;
                 // Check movement validity
+                double translation = finalY - initialY;
                 Direction dir = translation > 0 ? Direction.DOWN : Direction.UP;
                 if (!gameHandler.move(currentPos, dir))
                 {
@@ -461,9 +460,8 @@ public class GameView implements Observer
             }
             case HORIZONTAL:
             {
-                // If requested movement is too long, truncate it
-                double translation = finalX - initialX;
                 // Check movement validity
+                double translation = finalX - initialX;
                 Direction dir = translation > 0 ? Direction.RIGHT : Direction.LEFT;
                 if (!gameHandler.move(currentPos, dir))
                 {
