@@ -305,9 +305,6 @@ public class GameView implements Observer
         if(hintFlag)
             return;
         hintFlag = gameHandler.hint();
-        System.out.println("T");
-        if(!hintFlag)
-            System.out.println("-");
     }
     public void FullHintGame(ContextMenuEvent e)
     {
@@ -565,7 +562,7 @@ public class GameView implements Observer
         }
         moveTranslateAnimation.setNode(control);
         moveTranslateAnimation.playFromStart();
-        moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e); System.out.print("F");});
+        moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e);});
     }
 
 
