@@ -44,6 +44,9 @@ class DispositionTest {
 
     @Test
     void testTakeSnapshot() {
+        Disposition disp = null;
+        assertThrows(IllegalArgumentException.class, () -> {new Disposition(null, false)};
+
     }
 
     @Test

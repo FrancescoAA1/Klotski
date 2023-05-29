@@ -88,6 +88,7 @@ public class Disposition
      */
     public void takeSnapshot(Grid grid, boolean alternative)
     {
+        if(grid == null) throw new IllegalArgumentException("Cannot take snapshot of null grid");
         // forall block I want to write his attributes in the txt string
         grid.makeEmpty();
         textDisposition = ""; // delete all previous savings
