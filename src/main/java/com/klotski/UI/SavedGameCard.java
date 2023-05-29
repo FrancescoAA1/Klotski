@@ -37,9 +37,9 @@ public class SavedGameCard {
         ImagePath = imagePath;
         match = currentMatch;
         gameDate = game_d;
-        control = GenerateControl();
         dispositionID = disposition_ID;
         originalDispositionID = originalDisposition_ID;
+        control = GenerateControl();
     }
 
     private Pane GenerateControl()
@@ -60,16 +60,21 @@ public class SavedGameCard {
         img.getStyleClass().add("image");
 
         // DispositionNumber Label
+        Label lbl_id = new Label("START CONFIGURATION: " + String.valueOf(originalDispositionID));
+        lbl_id.setLayoutX(100);
+        lbl_id.setLayoutY(20);
+        lbl_id.getStyleClass().add("label");
+
         Label lbl_mov = new Label("MOVE COUNT: " + String.valueOf(match.getScore()));
         lbl_mov.setLayoutX(100);
-        lbl_mov.setLayoutY(20);
+        lbl_mov.setLayoutY(40);
         lbl_mov.getStyleClass().add("label");
 
         String[] gameDateParts = gameDate.toString().split(SEPARATOR);
 
         Label lbl_date = new Label("DATE: " + gameDateParts[0] + " " + gameDateParts[1]);
         lbl_date.setLayoutX(100);
-        lbl_date.setLayoutY(40);
+        lbl_date.setLayoutY(60);
         lbl_date.getStyleClass().add("label");
 
         String state = "";
@@ -83,11 +88,12 @@ public class SavedGameCard {
         }
         Label lbl_state = new Label("MATCH STATUS: " + state);
         lbl_state.setLayoutX(100);
-        lbl_state.setLayoutY(60);
+        lbl_state.setLayoutY(80);
         lbl_state.getStyleClass().add("label");
 
 
         // Add children
+        game.getChildren().add(lbl_id);
         game.getChildren().add(lbl_state);
         game.getChildren().add(lbl_mov);
         game.getChildren().add(lbl_date);
