@@ -62,8 +62,6 @@ public class DispositionCard {
         card.setOpacity(0.85);
 
         // Disposition ImageView
-        int ind = ImagePath.lastIndexOf("/com/");
-        ImagePath = ImagePath.substring(ind);
         ImageView img = new ImageView(new Image(getClass().getResource(ImagePath).toString()));
         img.setFitHeight(100);
         img.setFitWidth(150);

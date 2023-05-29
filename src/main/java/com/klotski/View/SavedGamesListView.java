@@ -68,7 +68,7 @@ public class SavedGamesListView implements Initializable {
             LocalDateTime dateTime = LocalDateTime.parse(m.getKey().getName(), formatter);
 
             //Creating a new SavedGameCard
-            SavedGameCard card = new SavedGameCard(getClass().getResource(imagePath).getPath(), dateTime, m.getKey(), dispositionID, disp.getOriginalNumber());
+            SavedGameCard card = new SavedGameCard(imagePath, dateTime, m.getKey(), dispositionID, disp.getOriginalNumber());
 
             //Adding the mouseClick Event Handler
             card.getControl().setOnMouseClicked(e -> onMouseClicked(e));

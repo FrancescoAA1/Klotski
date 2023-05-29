@@ -43,7 +43,7 @@ public class DispositionsListView implements Initializable
 
         for(Disposition d: disp)
         {
-            DispositionCard current = new DispositionCard(getClass().getResource(d.getImagePath()).getPath(), disposition_index++);
+            DispositionCard current = new DispositionCard(d.getImagePath(), disposition_index++);
             current.getControl().setOnMouseClicked(e -> onCardMouseClicked(e));
             cards.add(current);
         }
