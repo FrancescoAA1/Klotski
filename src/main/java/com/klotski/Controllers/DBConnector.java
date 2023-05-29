@@ -4,10 +4,6 @@ import com.klotski.Model.Disposition;
 import com.klotski.Model.Match;
 import javafx.util.Pair;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -17,47 +13,33 @@ import java.util.ArrayList;
 public class DBConnector {
 
     // The relative path where the DB is located
-    private static final String URL = "/target/classes/com/klotski/Data/DB/Klotski.db";
+    private static final String URL = "/com/klotski/Data/DB/Klotski.db";
     //JDBC connector
     private static final String PREFIX_CONNECTOR = "jdbc:sqlite:";
-    // the current path to obtain the absolute path to DB
-    private String currentPath;
+    //JDBC connector
+    private static final String JAR_PREFIX_CONNECTOR = "jdbc:sqlite::resource:";
     // the object that keep the DB connection alive
     private Connection connector;
-
-    /**
-     * Constructor
-     * I need to obtain the current working directory
-     */
-    public DBConnector()
-    {
-        // get the current directory
-        try {
-            currentPath = new java.io.File(".").getCanonicalPath();
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to get the current directory");
-        }
-    }
 
     /**
      * Connect to local DB if the file dedicated exists
      */
     public void connect()
     {
-        // check if DB file exists...otherwise throw an error
-        // create a Path to check in filesystem the existence
-
-        Path path = Paths.get(currentPath + URL);
-
-        if (!Files.exists(path))
-            throw new IllegalStateException("The DB file does not exist");
-
-        // here the file exist so I am able to connect
-        try {
-            //Try to establish the connection
-            connector = DriverManager.getConnection(PREFIX_CONNECTOR + currentPath + URL);
-        } catch (Exception e) {
-            System.out.println("Unable to connect to teh local Klotski.db");
+        try
+        {
+            //Try to establish the connection (DEBUG BUILD)
+            connector = DriverManager.getConnection(PREFIX_CONNECTOR + getClass().getResource(URL));
+        }
+        catch (Exception e)
+        {
+            try
+            {
+                //Try to establish the connection (JAR FILE)
+                connector = DriverManager.getConnection(JAR_PREFIX_CONNECTOR + getClass().getResource(URL));
+            } catch (Exception e1) {
+                System.out.println("Unable to connect to the local Klotski.db");
+            }
         }
     }
 

@@ -52,8 +52,9 @@ public class SavedGameCard {
         game.setOpacity(0.75);
 
         // Disposition ImageView
-        File file = new File(ImagePath);
-        ImageView img = new ImageView(new Image(file.toURI().toString()));
+        int ind = ImagePath.lastIndexOf("/com/");
+        ImagePath = ImagePath.substring(ind);
+        ImageView img = new ImageView(new Image(getClass().getResource(ImagePath).toString()));
         img.setFitHeight(80);
         img.setFitWidth(60);
         img.setLayoutX(15);

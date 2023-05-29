@@ -31,7 +31,7 @@ public class Disposition
     public Disposition(Grid snapGrid, boolean isOriginal, int originalDispositionID)
     {
         this.isOriginal = isOriginal;
-        takeSnapshot(snapGrid);
+        takeSnapshot(snapGrid, false);
         originalNumber = originalDispositionID;
     }
 
@@ -84,8 +84,9 @@ public class Disposition
      * this method is used to convert the grid disposition into a string to be serialized
      *
      * @param grid: the grid to be snap
+     * @param alternative: if TRUE: invert the order of free blocks.
      */
-    public void takeSnapshot(Grid grid)
+    public void takeSnapshot(Grid grid, boolean alternative)
     {
         // forall block I want to write his attributes in the txt string
         grid.makeEmpty();
@@ -107,7 +108,8 @@ public class Disposition
 
         for (int count = 0; count < free.size(); count++)
         {
-            Block block = free.get(count);
+            // If alternative TRUE -> invert the order of the free blocks.
+            Block block = free.get(alternative ? free.size() - count - 1 : count);
 
             textDisposition = textDisposition +
                     block.getHeight() + FIELD_SEPARATOR +

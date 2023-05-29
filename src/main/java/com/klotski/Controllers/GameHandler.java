@@ -151,8 +151,20 @@ public class GameHandler implements Observable
     {
         try
         {
+            // Create current disposition
+            Disposition disp = new Disposition(grid, false,  originalDispositionID);
+            disp.takeSnapshot(grid, false);
+
             // Get hint
-            Move move = gateway.GetNextMove(originalDispositionID, new Disposition(grid, false,  originalDispositionID));
+            Move move = gateway.GetNextMove(originalDispositionID, disp);
+            if(move == null)
+            {
+                // Generate alternative current disposition (inverted free blocks)
+                disp.takeSnapshot(grid, true);
+
+                // Get hint
+                move = gateway.GetNextMove(originalDispositionID, disp);
+            }
 
             if(move != null)
             {
