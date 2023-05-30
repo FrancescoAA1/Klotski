@@ -60,8 +60,23 @@ public class CreditsView {
         stage.show();
     }
 
-    public void openProfileClick(ActionEvent event) throws URISyntaxException, IOException
+    public void topLeftProfileClick(ActionEvent event) throws URISyntaxException, IOException
     {
-        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/michele-bononi-871433a4/"));
+        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/tommaso-danieli-520700278"));
+    }
+
+    public void topRightProfileClick(ActionEvent event) throws URISyntaxException, IOException
+    {
+        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/francesco-fantin-2819801a2/"));
+    }
+
+    public void downLeftProfileClick(ActionEvent event) throws URISyntaxException, IOException
+    {
+        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/mattia-galassi-a624b4172/"));
+    }
+
+    public void downRightProfileClick(ActionEvent event) throws URISyntaxException, IOException
+    {
+        Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/tomas-lovato-34783a162/"));
     }
 }
