@@ -87,6 +87,8 @@ public class DBConnector {
             statement.executeUpdate();
         } catch (SQLException e) {
             return false;
+        } catch (NullPointerException e) {
+            return false;
         }
         // In this case the insertion has been done
         // I sort the table in descending order by ID so
@@ -112,6 +114,8 @@ public class DBConnector {
             // run query
             statement.executeUpdate();
         } catch (SQLException e) {
+            return false;
+        } catch (NullPointerException e){
             return false;
         }
 
@@ -368,6 +372,10 @@ public class DBConnector {
         } catch (SQLException e) {
             return false;
         }
+        catch (NullPointerException e)
+        {
+            return false;
+        }
 
         // step 3 - Get the ID of the disposition associated to the match
         int dispositionID = getDispositionAssociated(matchID);
@@ -390,6 +398,9 @@ public class DBConnector {
             if(rowsAffected==0) return false;
 
         } catch (SQLException e) {
+            return false;
+        } catch (NullPointerException e)
+        {
             return false;
         }
 
