@@ -1,28 +1,63 @@
 package com.klotski.UI;
 
+import javafx.scene.layout.Pane;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class DispositionCardTest {
 
-    @Test
-    void setImagePath() {
+    private static DispositionCard dispositionCard;
+
+    @BeforeAll
+    public static void setup()
+    {
+        String imagePath = "m1.png";
+
+        int dispositionNumber = 12;
+
+        dispositionCard = new DispositionCard(imagePath, dispositionNumber);
     }
 
     @Test
-    void getImagePath() {
+    void setImagePath()
+    {
+        String imagePath = "m2.png";
+
+        dispositionCard.setImagePath(imagePath);
+
+        assertEquals(imagePath, dispositionCard.getImagePath());
     }
 
     @Test
-    void setDispositionNumber() {
+    void getImagePath()
+    {
+        String imagePath = "m2.png";
+
+        String result = dispositionCard.getImagePath();
+
+        assertEquals(imagePath, result);
     }
 
     @Test
-    void getDispositionNumber() {
+    void setDispositionNumber()
+    {
+        int dispositionNumber = 2;
+
+        //Setting disposition number
+        dispositionCard.setDispositionNumber(dispositionNumber);
+
+        assertEquals(dispositionNumber, dispositionCard.getDispositionNumber());
     }
 
     @Test
-    void getControl() {
+    void getDispositionNumber()
+    {
+        int dispositionNumber = 12;
+
+        int result = dispositionCard.getDispositionNumber();
+
+        // Check disposition number is equal to the one provided
+        assertEquals(dispositionNumber, result);
     }
 }

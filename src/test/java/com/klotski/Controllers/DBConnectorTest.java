@@ -26,11 +26,11 @@ class DBConnectorTest {
         dbConnector.connect();
 
         //Creating Valid and Invalid Match
-        validMatch = new Match("2023-05-27_20-59-08");
+        validMatch = new Match("2024-05-27_20-59-08");
         invalidMatch = null;
 
         //Creating Valid and Invalid Disposition
-        validDisposition = new Disposition("", true);
+        validDisposition = new Disposition("2-1-0;0#2-2-1;0#2-1-3;0#2-1-0;2#1-2-1;2#2-1-3;2#1-1-1;3#1-1-2;3#1-1-0;4#1-1-3;4#1-1-1;4#1-1-2;4", false);
         validDisposition.setImagePath("/com/klotski/Images/m1.png");
         validDisposition.setOriginalNumber(1);
 
@@ -48,29 +48,34 @@ class DBConnectorTest {
     void saveMatch_ValidMatchAndDisposition() {
 
 
-        //Check match gets saved with valid match and disposition
+        //Checking match gets saved with valid match and disposition
 
-        boolean result = dbConnector.saveMatch(validMatch, validDisposition);
+        boolean saveResult = dbConnector.saveMatch(validMatch, validDisposition);
 
-        //this test will give false if the match is already existing, which it is you run the class twice
-        assertTrue(result);
+        assertTrue(saveResult);
+
+        //Deleting the match just saved and check the deletion worked out right
+        boolean deleteResult = dbConnector.deleteMatch(validMatch);
+
+        assertTrue(deleteResult);
     }
 
     @Test
     void saveMatch_InvalidMatchOrDisposition() {
 
-        //Check match gets saved with invalid match and disposition
+        //Checking match gets saved with invalid match and disposition
 
         boolean result = dbConnector.saveMatch(invalidMatch, invalidDisposition);
 
         assertFalse(result);
+
     }
 
     @Test
     void saveMatch_InvalidDisposition()
     {
 
-        //Check match gets saved with valid match and invalid disposition
+        //Checking match gets saved with valid match and invalid disposition
 
         boolean result = dbConnector.saveMatch(validMatch, invalidDisposition);
 
@@ -80,7 +85,7 @@ class DBConnectorTest {
     @Test
     void saveMatch_InvalidMatch()
     {
-        //Check match gets saved with invalid match and valid disposition
+        //Checking match gets saved with invalid match and valid disposition
 
         boolean result = dbConnector.saveMatch(invalidMatch, validDisposition);
 
@@ -88,44 +93,39 @@ class DBConnectorTest {
     }
 
     @Test
-    void connect()
+    void listAllRecordedMatches_MatchesSaved()
     {
-        //Nothing to Assert: evaluate if the test has to be removed
-    }
-
-    @Test
-    void saveMatch()
-    {
-        //Previously Assert: evaluate if the test has to be removed
-    }
-
-    @Test
-    void listAllRecordedMatches_NoMatchesSaved_ReturnsEmptyList()
-    {
+        //Checking the method does not return null
         ArrayList<Pair<Match, Integer>> matches = dbConnector.listAllRecordedMatches();
-
         assertNotNull(matches);
-        assertTrue(matches.isEmpty());
     }
 
     @Test
     void getDisposition_ValidDisposition()
     {
 
-        int dispositionID = dbConnector.lastSavedDispositionID();
+        //Saving a match
+        dbConnector.saveMatch(validMatch, validDisposition);
 
+        //Getting the disposition just saved
+        int dispositionID = dbConnector.lastSavedDispositionID();
         Disposition disposition = dbConnector.getDisposition(dispositionID);
 
+        //Checking it is not null
         assertNotNull(disposition);
+
+        //Checking the saved disposition values are equal to the one passed as a parameter to saveMatch()
         assertEquals(validDisposition.getTextDisposition(), disposition.getTextDisposition());
         assertEquals(validDisposition.isOriginal(), disposition.isOriginal());
         assertEquals(validDisposition.getImagePath(), disposition.getImagePath());
         assertEquals(validDisposition.getOriginalNumber(), disposition.getOriginalNumber());
+        dbConnector.deleteMatch(validMatch);
     }
 
     @Test
     void getDisposition_InvalidDisposition()
     {
+        //Checking getDisposition()'s response to an Invalid Disposition
         int dispositionID = -10;
 
         Disposition disposition = dbConnector.getDisposition(dispositionID);
@@ -136,40 +136,27 @@ class DBConnectorTest {
     @Test
     void listAllOriginalDispositions_EmptyList()
     {
+        //Checking the method does not return null
         ArrayList<Disposition> originalDispositions = dbConnector.listAllOriginalDispositions();
 
         assertNotNull(originalDispositions);
     }
 
     @Test
-    void lastSavedMatchID_NoMatch()
-    {
-        int lastMatchID = dbConnector.lastSavedMatchID();
-
-        assertEquals(0, lastMatchID);
-    }
-
-    @Test
-    void lastSavedDispositionID_NoDisposition()
-    {
-        int lastDispositionID = dbConnector.lastSavedDispositionID();
-
-        assertEquals(0, lastDispositionID);
-    }
-
-    @Test
     void getMatchID_ExistingMatch()
     {
 
+        //Checking matchID of the lastSaved match
         int matchID = dbConnector.getMatchID(validMatch);
+        int matchLastId = dbConnector.lastSavedMatchID();
 
-        assertNotEquals(0, matchID);
+        assertEquals(matchLastId, matchID);
     }
 
     @Test
     void getMatchID_InvalidMatch()
     {
-
+        //Checking matchID of invalid Match
         Match match = new Match("");
 
         int matchID = dbConnector.getMatchID(match);
@@ -178,18 +165,22 @@ class DBConnectorTest {
     }
 
     @Test
-    void getMatchID()
+    void updateMatch_InvalidDisposition()
     {
-        int matchID = dbConnector.getMatchID(validMatch);
-
-        assertEquals(12, matchID);
+        //Updating match with Invalid Disposition
+        dbConnector.saveMatch(validMatch, validDisposition);
+        boolean result = dbConnector.updateMatch(validMatch, invalidDisposition);
+        dbConnector.deleteMatch(validMatch);
+        assertFalse(result);
     }
 
     @Test
-    void updateMatch()
+    void updateMatch_ValidDisposition()
     {
-        //to be checked
+        //Updating match with Valid Disposition
+        dbConnector.saveMatch(validMatch, validDisposition);
         boolean result = dbConnector.updateMatch(validMatch, validDisposition);
+        dbConnector.deleteMatch(validMatch);
         assertTrue(result);
     }
 }

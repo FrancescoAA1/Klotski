@@ -269,14 +269,14 @@ public class DBConnector {
             ResultSet result = statement.executeQuery(querysql);
             // check if I've got some rows, otherwise there has been an error in the query
             if(!result.next())
-                return -1;
+                return 0;
 
             lastMatchID = result.getInt("match_id");
 
             return lastMatchID;
 
         } catch (SQLException e) {
-            return 0;
+            return -1;
         }
     }
     /**
@@ -439,18 +439,21 @@ public class DBConnector {
         // if it is equals to zero something went wrong
         if(matchID == 0) return false;
 
+
+        // step 3 - Get the ID of the disposition associated to the match
+        int dispositionID = getDispositionAssociated(matchID);
+        // if it is equals to zero something went wrong
+        if(dispositionID == 0) return false;
+
         // step 2 - update the match row
 
         // the field ID , name and disposition are not changed
         // so I only need to update score and terminated status
-        String querysql1 = "UPDATE MATCHES SET score = ?, terminated = ?, hints_number = ? WHERE match_id = ?";
-
+        String querysql1 = "DELETE FROM MATCHES WHERE match_id = ?;";
         try {
             PreparedStatement statement = connector.prepareStatement(querysql1);
-            statement.setInt(1, match.getScore());
-            statement.setInt(2, match.isTerminated()?1:0);
-            statement.setInt(3, match.getHintsNumber());
-            statement.setInt(4, matchID);
+            statement.setInt(1, matchID);
+
             // run query
             int rowsAffected = statement.executeUpdate();
             // if no rows where affected by the update => something went wrong
@@ -464,19 +467,15 @@ public class DBConnector {
             return false;
         }
 
-        // step 3 - Get the ID of the disposition associated to the match
-        int dispositionID = getDispositionAssociated(matchID);
-        // if it is equals to zero something went wrong
-        if(dispositionID == 0) return false;
-
         // step 4 - Update the disposition
 
         // the field ID, originals, original_number and disposition_image are not changed
         // so I only need to update the schema
-        String querysql2 = "UPDATE DISPOSITIONS SET schema = ? WHERE disposition_id = ?";
+        String querysql2 = "DELETE FROM DISPOSITIONS WHERE disposition_id = ?;";
 
         try {
             PreparedStatement statement = connector.prepareStatement(querysql2);
+            statement.setInt(1, dispositionID);
             // run query
             int rowsAffected = statement.executeUpdate();
             // if no rows where affected by the update => something went wrong
