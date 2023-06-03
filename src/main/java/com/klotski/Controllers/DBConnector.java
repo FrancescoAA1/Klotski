@@ -185,11 +185,15 @@ public class DBConnector {
             statement.setInt(1, disposition_id);
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery();
+            // check if I've got some rows, otherwise there has been an error in the query
+            if(!result.next())
+                return null;
             // I get only one row
             String image = result.getString("disposition_image");
             String schema = result.getString("schema");
             int original = result.getInt("original");
             int origin_number = result.getInt("original_number");
+
 
             if (original == 1)
                 disposition = new Disposition(schema, true);
@@ -245,7 +249,7 @@ public class DBConnector {
     /**
      * This method is reserved to return the ID of the last match saved in DB
      *
-     * @return the last match's ID saved on DB
+     * @return the last match's ID saved on DB. Returns -1 if the table is empty
      * 0 if something goes wrong
      */
     public int lastSavedMatchID()
@@ -263,6 +267,9 @@ public class DBConnector {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql);
+            // check if I've got some rows, otherwise there has been an error in the query
+            if(!result.next())
+                return -1;
 
             lastMatchID = result.getInt("match_id");
 
@@ -275,7 +282,7 @@ public class DBConnector {
     /**
      * This method is reserved to return the ID of the last disposition saved in DB
      *
-     * @return the last disposition's ID saved on DB
+     * @return the last disposition's ID saved on DB. Returns -1 if the DB table is empty
      * 0 if something goes wrong
      */
     public int lastSavedDispositionID()
@@ -289,6 +296,9 @@ public class DBConnector {
             Statement statement = connector.createStatement();
             // executes the DB SELECT and the result is saved in result record collection
             ResultSet result = statement.executeQuery(querysql);
+            // check if I've got some rows, otherwise there has been an error in the query
+            if(!result.next())
+                return -1;
 
             lastDispositionID = result.getInt("disposition_id");
 
@@ -303,7 +313,7 @@ public class DBConnector {
      * This method is reserved to return the ID of the match specified in params
      * if it is saved in DB
      * @param match: the game whose ID you want to get
-     * @return the match ID if it is saved in DB
+     * @return the match ID if it is saved in DB.
      * 0 if something goes wrong or match is not in DB
      */
     public int getMatchID(Match match)
@@ -407,11 +417,86 @@ public class DBConnector {
         return true;
     }
     /**
+     * This method is reserved to delete an already existing match in
+     * the DB, and also it's associated disposition
+     *
+     * @param match: the match to be removed
+     * @return TRUE: if the DB UPDATE is correct, otherwise FALSE
+     */
+    public boolean deleteMatch(Match match)
+    {
+        // if is not already connected to DB
+        if (connector == null)
+            connect();
+        // the steps are:
+        // (1) Get the id of the match to remove
+        // (2) Update the match with new data
+        // (3) Get the ID of the disposition associated to the match
+        // (4) Update the disposition
+
+        // step 1 - Get the id of the match to update
+        int matchID = getMatchID(match);
+        // if it is equals to zero something went wrong
+        if(matchID == 0) return false;
+
+        // step 2 - update the match row
+
+        // the field ID , name and disposition are not changed
+        // so I only need to update score and terminated status
+        String querysql1 = "UPDATE MATCHES SET score = ?, terminated = ?, hints_number = ? WHERE match_id = ?";
+
+        try {
+            PreparedStatement statement = connector.prepareStatement(querysql1);
+            statement.setInt(1, match.getScore());
+            statement.setInt(2, match.isTerminated()?1:0);
+            statement.setInt(3, match.getHintsNumber());
+            statement.setInt(4, matchID);
+            // run query
+            int rowsAffected = statement.executeUpdate();
+            // if no rows where affected by the update => something went wrong
+            if(rowsAffected==0) return false;
+
+        } catch (SQLException e) {
+            return false;
+        }
+        catch (NullPointerException e)
+        {
+            return false;
+        }
+
+        // step 3 - Get the ID of the disposition associated to the match
+        int dispositionID = getDispositionAssociated(matchID);
+        // if it is equals to zero something went wrong
+        if(dispositionID == 0) return false;
+
+        // step 4 - Update the disposition
+
+        // the field ID, originals, original_number and disposition_image are not changed
+        // so I only need to update the schema
+        String querysql2 = "UPDATE DISPOSITIONS SET schema = ? WHERE disposition_id = ?";
+
+        try {
+            PreparedStatement statement = connector.prepareStatement(querysql2);
+            // run query
+            int rowsAffected = statement.executeUpdate();
+            // if no rows where affected by the update => something went wrong
+            if(rowsAffected==0) return false;
+
+        } catch (SQLException e) {
+            return false;
+        } catch (NullPointerException e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    /**
      * This method is reserved to return the ID of disposition associated
      * to the match with the ID specified in params
      * if th eID is correct
      * @param match_id: the ID of the match whose disposition ID you want to get
-     * @return the disposition ID associated to the match if it is saved in DB
+     * @return the disposition ID associated to the match if it is saved in DB.
      * 0 if something goes wrong or match_id is not correct
      */
     private int getDispositionAssociated(int match_id)
@@ -437,4 +522,5 @@ public class DBConnector {
             return 0;
         }
     }
+
 }
