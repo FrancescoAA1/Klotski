@@ -24,19 +24,32 @@ public class GameHandler implements Observable
      * @param savedDispositionID: ID of the disposition to load (saved in DB)
      * @param match: Match connected to this disposition (saved in DB)
      */
-    public GameHandler(int savedDispositionID, int originalDisposition_ID, Match match)
+    public GameHandler(int savedDispositionID, Match match) throws IllegalArgumentException
     {
         // Initialize vars
         views = new ArrayList<Observer>();
-        originalDispositionID = originalDisposition_ID;
         isOriginal = false;
         currentMatch = match;
+        if(currentMatch == null)
+            throw new IllegalArgumentException("This match is null!");
 
         // Connect to DB and get disposition
         DBConnector db = new DBConnector();
         db.connect();
         Disposition disposition = db.getDisposition(savedDispositionID);
+        if(disposition != null) originalDispositionID = disposition.getOriginalNumber();
+        Disposition original = db.getDisposition(originalDispositionID);
         db.close();
+
+        // Validity checks
+        if(original == null)
+            throw new IllegalArgumentException("Original disposition does not exists!");
+        if(!original.isOriginal())
+            throw new IllegalArgumentException("Original disposition is not original!");
+        if(disposition == null)
+            throw new IllegalArgumentException("Saved disposition does not exists!");
+        if(disposition.isOriginal())
+            throw new IllegalArgumentException("Saved disposition is original!");
 
         // Load correct grid
         grid = disposition.convertToGrid();
@@ -53,7 +66,7 @@ public class GameHandler implements Observable
     /** Constructor for new games
      * @param newDispositionID: ID of the original disposition to load (from DB).
      */
-    public GameHandler(int newDispositionID)
+    public GameHandler(int newDispositionID) throws IllegalArgumentException
     {
         // Initialize vars
         views = new ArrayList<Observer>();
@@ -65,8 +78,14 @@ public class GameHandler implements Observable
         DBConnector db = new DBConnector();
         db.connect();
         Disposition disposition = db.getDisposition(newDispositionID);
-        imagePath = disposition.getImagePath();
         db.close();
+
+        // Validity checks
+        if(disposition == null)
+            throw new IllegalArgumentException("This disposition does not exists!");
+        if(!disposition.isOriginal())
+            throw new IllegalArgumentException("This disposition is not original!");
+        imagePath = disposition.getImagePath();
 
         // Load correct grid
         grid = disposition.convertToGrid();
@@ -351,31 +370,35 @@ public class GameHandler implements Observable
     /**
      * Save the current match (and disposition) in the DB.
      */
-    public void saveGame()
+    public boolean saveGame()
     {
-        // Connect to DB.
-        DBConnector db = new DBConnector();
-        db.connect();
+        boolean result = true;
 
         // Convert current disposition (model).
         Disposition current = new Disposition(grid, isOriginal, originalDispositionID);
         current.setImagePath(imagePath);
 
+        // Connect to DB.
+        DBConnector db = new DBConnector();
+        db.connect();
+
         // If this is a new game, save as new.
         // If this is a reloaded game, overwrite it;
         if(isOriginal)
         {
-            db.saveMatch(currentMatch, current);
+            result = db.saveMatch(currentMatch, current);
             isOriginal = false;
         }
         else
-            db.updateMatch(currentMatch, current);
+            result = db.updateMatch(currentMatch, current);
 
         // Close DB.
         db.close();
 
         // Save moves
-        history.flush();
+        result = result && history.flush();
+
+        return result;
     }
 
 

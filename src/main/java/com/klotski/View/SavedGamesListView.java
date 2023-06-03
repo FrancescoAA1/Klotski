@@ -99,7 +99,7 @@ public class SavedGamesListView implements Initializable {
         SavedGameCard card = getCurrentSavedGameCard(event);
 
         // Create new game
-        GameHandler gameHandler = new GameHandler(card.getDispositionID(), card.getOriginalDispositionID(), card.getMatch());
+        GameHandler gameHandler = new GameHandler(card.getDispositionID(), card.getMatch());
 
         // Communications inter-view
         GameView gameView = fxmlLoader.getController();
