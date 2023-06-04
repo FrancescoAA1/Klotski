@@ -80,12 +80,23 @@ public class NextMoveGateway {
 
                 String textNextMove = jsonNode.get(RESPONSE_KEY).asText();
 
+
+
                 if (!textNextMove.equals(API_ERROR_VALUE)) {
-                    return Move.convertToMove(textNextMove);
+                    Move nextMove = Move.convertToMove(textNextMove);
+                    return nextMove;
                 } else return null;
             } else return null;
         } catch (IOException e) {
-            throw new RuntimeException("Unable to connect to API Socket or invalid params");
+            throw new IllegalStateException("Unable to connect to API Socket or invalid params");
+        }
+        catch (NullPointerException e)
+        {
+            throw new IllegalArgumentException("Invalid params, cannot obtain the next move with a null disposition.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("Invalid params, cannot obtain the next move with the params given");
         }
     }
 

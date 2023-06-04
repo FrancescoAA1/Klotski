@@ -1,5 +1,6 @@
 package com.klotski.Model;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 /**
@@ -95,30 +96,37 @@ public class Disposition
 
         // the format is: height-width-position
 
-        while (grid.hasNext()) {
-            Block block = grid.next();
-            textDisposition = textDisposition +
-                    block.getHeight() + FIELD_SEPARATOR +
-                    block.getWidth() + FIELD_SEPARATOR +
-                    block.getPos() ;
-
-            textDisposition += LINE_SEPARATOR;
-        }
-        // Now I have to obtain the free block and I write them on the snap
-        ArrayList<Block> free = grid.getFree();
-
-        for (int count = 0; count < free.size(); count++)
+        try
         {
-            // If alternative TRUE -> invert the order of the free blocks.
-            Block block = free.get(alternative ? free.size() - count - 1 : count);
+            while (grid.hasNext()) {
+                Block block = grid.next();
+                textDisposition = textDisposition +
+                        block.getHeight() + FIELD_SEPARATOR +
+                        block.getWidth() + FIELD_SEPARATOR +
+                        block.getPos() ;
 
-            textDisposition = textDisposition +
-                    block.getHeight() + FIELD_SEPARATOR +
-                    block.getWidth() + FIELD_SEPARATOR +
-                    block.getPos() ;
-
-            if (count < free.size() - 1) // if is the last I can't add the line separator
                 textDisposition += LINE_SEPARATOR;
+            }
+            // Now I have to obtain the free block and I write them on the snap
+            ArrayList<Block> free = grid.getFree();
+
+            for (int count = 0; count < free.size(); count++)
+            {
+                // If alternative TRUE -> invert the order of the free blocks.
+                Block block = free.get(alternative ? free.size() - count - 1 : count);
+
+                textDisposition = textDisposition +
+                        block.getHeight() + FIELD_SEPARATOR +
+                        block.getWidth() + FIELD_SEPARATOR +
+                        block.getPos() ;
+
+                if (count < free.size() - 1) // if is the last I can't add the line separator
+                    textDisposition += LINE_SEPARATOR;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new InvalidParameterException("Cannot take snapshot of this grid. Bad content");
         }
     }
 

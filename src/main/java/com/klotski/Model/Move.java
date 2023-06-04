@@ -117,5 +117,18 @@ public class Move
         Position end = new Position(end_x,end_y);
         return end;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Move other = (Move) obj;
+        return init.equals(other.init) && end.equals(other.end) && direction == other.direction;
+    }
 
 }

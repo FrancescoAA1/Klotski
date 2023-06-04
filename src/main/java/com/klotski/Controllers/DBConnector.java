@@ -249,8 +249,8 @@ public class DBConnector {
     /**
      * This method is reserved to return the ID of the last match saved in DB
      *
-     * @return the last match's ID saved on DB. Returns -1 if the table is empty
-     * 0 if something goes wrong
+     * @return the last match's ID saved on DB. Returns 0 if the table is empty
+     * or something goes wrong
      */
     public int lastSavedMatchID()
     {
@@ -276,14 +276,14 @@ public class DBConnector {
             return lastMatchID;
 
         } catch (SQLException e) {
-            return -1;
+            return 0;
         }
     }
     /**
      * This method is reserved to return the ID of the last disposition saved in DB
      *
-     * @return the last disposition's ID saved on DB. Returns -1 if the DB table is empty
-     * 0 if something goes wrong
+     * @return the last disposition's ID saved on DB. Returns 0 if the DB table is empty
+     * or if something goes wrong
      */
     public int lastSavedDispositionID()
     {
@@ -298,7 +298,7 @@ public class DBConnector {
             ResultSet result = statement.executeQuery(querysql);
             // check if I've got some rows, otherwise there has been an error in the query
             if(!result.next())
-                return -1;
+                return 0;
 
             lastDispositionID = result.getInt("disposition_id");
 
@@ -465,7 +465,7 @@ public class DBConnector {
         }
 
         // step 3 - remove the disposition
-        
+
         String querysql2 = "DELETE FROM DISPOSITIONS WHERE disposition_id = ?;";
 
         try {

@@ -1,5 +1,6 @@
 package com.klotski.Model;
 
+import com.sun.source.tree.AssertTree;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidParameterException;
@@ -51,7 +52,7 @@ class DispositionTest {
         assertThrows(IllegalArgumentException.class, () -> {new Disposition(null, false, 0);});
         assertThrows(IllegalArgumentException.class, () -> {disp.takeSnapshot(null,true);}, "Cannot take snapshot of null grid");
         Grid grid = new Grid();
-        assertThrows(InvalidParameterException.class, () -> {new Disposition(grid, false, 0);}, "Cannot take a snap of the grid set. Problem found in grid.");
+        assertThrows(InvalidParameterException.class, () -> {new Disposition(grid, false, 0);}, "Cannot take snapshot of this grid. Bad content");
         assertThrows(InvalidParameterException.class, () -> {disp.takeSnapshot(grid, false);}, "Cannot take a snap of the grid set. Problem found in grid.");
         disp.setTextDisposition("2-1-0;0#2-2-1;0#2-1-3;0#2-1-0;2#1-2-1;2#2-1-3;2#1-1-1;3#1-1-2;3#1-1-0;4#1-1-3;4#1-1-1;4#1-1-2;4");
         Grid grid2 = disp.convertToGrid();
@@ -60,7 +61,20 @@ class DispositionTest {
 
     @Test
     void testConvertToGrid() {
-        Disposition disposition = new Disposition("1-1-0;0#2-2-1;0#1-1-3;2#2-1-0;3#2-1-3;0#1-2-1;2#1-1-0;1#1-2-2;4#1-1-1;3#1-2-2;3#1-1-0;2#1-1-1;4", false);
-
+        // test with a general disposition
+        Disposition disposition = new Disposition("1-1-0;1#2-2-1;0#1-1-3;0#2-1-0;3#2-1-3;1#2-1-1;2#1-1-1;4#1-1-2;2#1-2-2;4#1-2-2;3#1-1-0;0#1-1-0;2", false);
+        assertFalse(disposition.convertToGrid().isSolved());
+        // test with a solved disposition
+        disposition = new Disposition("1-1-1;1#2-2-1;3#1-1-3;3#2-1-0;1#2-1-3;0#2-1-2;0#1-1-1;2#1-1-3;4#1-2-0;0#1-2-2;2#1-1-0;3#1-1-0;4", false);
+        assertTrue(disposition.convertToGrid().isSolved());
+        // test with a disposition without the red block
+        disposition = new Disposition("2-1-0;0#2-1-3;0#1-1-0;2#1-2-1;2#1-1-3;2#1-1-0;3#1-2-1;3#1-1-3;3#1-2-1;4#1-1-0;4#1-1-3;4", false);
+        assertNull(disposition.convertToGrid());
+        // create this configuration -> 2-1-0;0#2-2-1;0#1-1-3;0#1-1-3;1#1-2-0;2#1-2-2;2#1-2-0;3#1-2-2;3#1-1-0;4#1-1-3;4#1-1-2;4#1-1-1;4
+        // I'm expecting that I can do this move: 0;4 1;4 RIGHT
+        // In this case the grid created id correct
+        disposition.setTextDisposition("2-1-0;0#2-2-1;0#1-1-3;0#1-1-3;1#1-2-0;2#1-2-2;2#1-2-0;3#1-2-2;3#1-1-0;4#1-1-3;4#1-1-2;4#1-1-1;4");
+        Grid grid = disposition.convertToGrid();
+        assertTrue(grid.move(new Block(new Position(0,4), 1, 1), Move.convertToMove("0;4 1;4 RIGHT")));
     }
 }
