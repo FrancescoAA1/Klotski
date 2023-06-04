@@ -430,9 +430,8 @@ public class DBConnector {
             connect();
         // the steps are:
         // (1) Get the id of the match to remove
-        // (2) Update the match with new data
-        // (3) Get the ID of the disposition associated to the match
-        // (4) Update the disposition
+        // (2) Get the ID of the disposition associated to the match
+        // (3) Delete match and the disposition
 
         // step 1 - Get the id of the match to update
         int matchID = getMatchID(match);
@@ -440,15 +439,13 @@ public class DBConnector {
         if(matchID == 0) return false;
 
 
-        // step 3 - Get the ID of the disposition associated to the match
+        // step 2 - Get the ID of the disposition associated to the match
         int dispositionID = getDispositionAssociated(matchID);
         // if it is equals to zero something went wrong
         if(dispositionID == 0) return false;
 
-        // step 2 - update the match row
+        // step 3 - remove the match row
 
-        // the field ID , name and disposition are not changed
-        // so I only need to update score and terminated status
         String querysql1 = "DELETE FROM MATCHES WHERE match_id = ?;";
         try {
             PreparedStatement statement = connector.prepareStatement(querysql1);
@@ -467,10 +464,8 @@ public class DBConnector {
             return false;
         }
 
-        // step 4 - Update the disposition
-
-        // the field ID, originals, original_number and disposition_image are not changed
-        // so I only need to update the schema
+        // step 3 - remove the disposition
+        
         String querysql2 = "DELETE FROM DISPOSITIONS WHERE disposition_id = ?;";
 
         try {
@@ -487,7 +482,6 @@ public class DBConnector {
         {
             return false;
         }
-
         return true;
     }
     /**
