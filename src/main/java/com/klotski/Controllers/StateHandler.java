@@ -197,8 +197,12 @@ public class StateHandler {
                 throw new IllegalArgumentException();
         }
         catch (Exception e)
-        { return false; }
-
+        {
+            if(filereader != null)
+                filereader.close();
+            return false;
+        }
+        filereader.close();
         return true;
     }
 }
