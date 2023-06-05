@@ -321,6 +321,8 @@ public class GameView implements Observer
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
         hideVictoryPanel();
+        // Disable full-hint game mode, if enabled.
+        fullHintGame = false;
     }
 
 
@@ -561,6 +563,15 @@ public class GameView implements Observer
                 break;
         }
         moveTranslateAnimation.setNode(control);
+
+        // If full hint game mode is enabled, limit animations... (no flickering caused by thread overloaded).
+        if(fullHintGame)
+        {
+            moveTranslateAnimation.setFromX(0);
+            moveTranslateAnimation.setFromY(0);
+            moveTranslateAnimation.setDuration(Duration.millis(40));
+        }
+
         moveTranslateAnimation.playFromStart();
         moveTranslateAnimation.setOnFinished(e -> {hintFlag = false; if(fullHintGame) NextBestMoveClicked(e);});
     }
