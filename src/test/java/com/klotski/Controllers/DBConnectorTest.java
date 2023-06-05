@@ -147,8 +147,10 @@ class DBConnectorTest {
     {
 
         //Checking matchID of the lastSaved match
+        dbConnector.saveMatch(validMatch, validDisposition);
         int matchID = dbConnector.getMatchID(validMatch);
         int matchLastId = dbConnector.lastSavedMatchID();
+        dbConnector.deleteMatch(validMatch);
 
         assertEquals(matchLastId, matchID);
     }
