@@ -2,7 +2,7 @@
 <html xmlns:str="http://exslt.org/strings" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Test Results &mdash; MatchTest</title>
+        <title>Test Results &mdash; All in Klotski</title>
         <style type="text/css">
           html {
             height: 100%
@@ -572,9 +572,9 @@ jQuery.cookie = function(name, value, options) {
     <body>
         <div id="container">
             <div id="header">
-                <div class="time" xmlns="">72 ms</div>
+                <div class="time" xmlns="">26.48 s</div>
                 <h1>
-                    MatchTest: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">4 total, </span><span class="passed">4 passed</span></strong>
+                    All in Klotski: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">80 total, </span><span class="passed">80 passed</span></strong>
                 </h1>
                 <div id="treecontrol">
                     <ul>
@@ -591,34 +591,471 @@ jQuery.cookie = function(name, value, options) {
             </div>
             <div id="content">
                 <ul id="tree">
-                    /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/bin/java -ea -Didea.test.cyclic.buffer.size=1048576 -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=52800:/Applications/IntelliJ IDEA.app/Contents/bin --patch-module com.klotski=/Users/mattiagalassi/Desktop/Documenti_Mattia_Galassi/UniPd_Anno_2/2_semestre/Ingegneria_del_software/Klotski/target/test-classes --add-reads com.klotski=ALL-UNNAMED --add-opens com.klotski/com.klotski.Model=ALL-UNNAMED --add-modules com.klotski -Dfile.encoding=UTF-8 -classpath /Users/mattiagalassi/.m2/repository/org/junit/platform/junit-platform-launcher/1.9.1/junit-platform-launcher-1.9.1.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar:/Applications/IntelliJ IDEA.app/Contents/plugins/junit/lib/junit5-rt.jar:/Applications/IntelliJ IDEA.app/Contents/plugins/junit/lib/junit-rt.jar:/Users/mattiagalassi/Desktop/Documenti_Mattia_Galassi/UniPd_Anno_2/2_semestre/Ingegneria_del_software/Klotski/target/test-classes:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar:/Users/mattiagalassi/.m2/repository/org/xerial/sqlite-jdbc/3.41.2.1/sqlite-jdbc-3.41.2.1.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2.jar:/Users/mattiagalassi/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/Users/mattiagalassi/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/mattiagalassi/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/Users/mattiagalassi/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/mattiagalassi/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/Users/mattiagalassi/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar -p /Users/mattiagalassi/Desktop/Documenti_Mattia_Galassi/UniPd_Anno_2/2_semestre/Ingegneria_del_software/Klotski/target/classes:/Users/mattiagalassi/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.0/jackson-core-2.15.0.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-mac.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-mac.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-mac.jar:/Users/mattiagalassi/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.0/jackson-databind-2.15.0.jar:/Users/mattiagalassi/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-mac.jar:/Users/mattiagalassi/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.0/jackson-annotations-2.15.0.jar com.intellij.rt.junit.JUnitStarter -ideVersion5 -junit5 com.klotski.Model.MatchTest
-Process finished with exit code 0
 
-                    <li class="level test" xmlns="">
+                    Process finished with exit code 0
+                    <br>
+                    <br>
+                    <br>
+
+                    <li xmlns="" class="level top open">
                         <span><em class="time">
-                                <div class="time">65 ms</div>
-                            </em><em class="status">passed</em>testHintsNumber()</span>
+                                <div class="time">33 ms</div>
+                            </em>DispositionTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">23 ms</div>
+                                    </em><em class="status">passed</em>testSetAndGetImagePath()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">4 ms</div>
+                                    </em><em class="status">passed</em>testTakeSnapshot()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">3 ms</div>
+                                    </em><em class="status">passed</em>testConvertToGrid()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testIsOriginal()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testSetAndGetOriginalNumber()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testSetAndGetTextDisposition()</span>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="level test">
+                    <li class="level top open">
                         <span><em class="time">
-                                <div class="time">2 ms</div>
-                            </em><em class="status">passed</em>testScore()</span>
+                                <div class="time">39 ms</div>
+                            </em>MatchTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">36 ms</div>
+                                    </em><em class="status">passed</em>testHintsNumber()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testScore()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testName()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testIsTerminated()</span>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="level test">
+                    <li class="level top open">
                         <span><em class="time">
-                                <div class="time">3 ms</div>
-                            </em><em class="status">passed</em>testName()</span>
+                                <div class="time">8 ms</div>
+                            </em>BlockTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">3 ms</div>
+                                    </em><em class="status">passed</em>testIsSpecial_MainBlock()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testGetWidth()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testGetHeight()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testIsSpecial_NonMainBlock()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testGetPos()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>testSetPos()</span>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="level test">
+                    <li class="level top open">
                         <span><em class="time">
-                                <div class="time">2 ms</div>
-                            </em><em class="status">passed</em>testIsTerminated()</span>
+                                <div class="time">18.55 s</div>
+                            </em>GameHandlerTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">880 ms</div>
+                                    </em><em class="status">passed</em>saveGame()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">14 ms</div>
+                                    </em><em class="status">passed</em>constructorTest()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">6 ms</div>
+                                    </em><em class="status">passed</em>getAllBlocks()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">3.34 s</div>
+                                    </em><em class="status">passed</em>getHintCounter()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">14.10 s</div>
+                                    </em><em class="status">passed</em>isSolved()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">170 ms</div>
+                                    </em><em class="status">passed</em>hint()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>move()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>undo()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">5 ms</div>
+                                    </em><em class="status">passed</em>checkMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">5 ms</div>
+                                    </em><em class="status">passed</em>getMoveCounter()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">5 ms</div>
+                                    </em><em class="status">passed</em>getPositionOfLastMovedBlock()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">7 ms</div>
+                            </em>PositionTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testSetX()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testSetY()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testToString()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>getX()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>getY()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testConvertToPosition_ValidPosition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testEquals_DifferentCoordinates()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testEquals_SameCoordinates()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>testConvertToPosition_InvalidPosition()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">11 ms</div>
+                            </em>MoveTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testConstructorWithTwoParameters()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>testConvertToMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testConstructorWithThreeParameters()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testEquals()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">56 ms</div>
+                            </em>DBConnectorTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">3 ms</div>
+                                    </em><em class="status">passed</em>listAllOriginalDispositions_EmptyList()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>updateMatch_InvalidDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>getDisposition_ValidDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">9 ms</div>
+                                    </em><em class="status">passed</em>getMatchID_ExistingMatch()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">3 ms</div>
+                                    </em><em class="status">passed</em>saveMatch_InvalidMatch()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>saveMatch_InvalidMatchOrDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>listAllRecordedMatches_MatchesSaved()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>getDisposition_InvalidDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">7 ms</div>
+                                    </em><em class="status">passed</em>saveMatch_ValidMatchAndDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>updateMatch_ValidDisposition()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>getMatchID_InvalidMatch()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>saveMatch_InvalidDisposition()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">9 ms</div>
+                            </em>GridTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testMove_invalidMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testMoveFree_validMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testGetFree()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testMove_validMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testCheckCollision_invalidMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testSetBlock_full_list()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testIsSolved_unsolved()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testHasNext_not_present()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testMoveFree_invalidMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testCheckCollision_validMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testHasNext_present()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>testNext_present()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time"></em><em class="status">passed</em>testNext_not_present()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">14 ms</div>
+                            </em>StateHandlerTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>topMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">8 ms</div>
+                                    </em><em class="status">passed</em>restoreStatus()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>popMove()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">2 ms</div>
+                                    </em><em class="status">passed</em>flush()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1 ms</div>
+                                    </em><em class="status">passed</em>pushMove()</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="level top open">
+                        <span><em class="time">
+                                <div class="time">7.76 s</div>
+                            </em>NextMoveGatewayTest</span>
+                        <ul>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">354 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition1()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">503 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition2()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">784 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition3()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">899 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition4()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1.33 s</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition5()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">998 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition6()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">1.05 s</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition7()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">566 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition8()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">580 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDisposition9()</span>
+                            </li>
+                            <li class="level test">
+                                <span><em class="time">
+                                        <div class="time">695 ms</div>
+                                    </em><em class="status">passed</em>getNextMoveWithDispositionGlobalWrong()</span>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
         <div id="footer">
-            <p>Generated by IntelliJ IDEA on 29/05/23, 23:20</p>
+            <p>Generated by IntelliJ IDEA on 06/06/23, 19:21</p>
         </div>
     </body>
 </html>
