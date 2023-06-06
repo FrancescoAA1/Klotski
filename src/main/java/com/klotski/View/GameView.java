@@ -266,51 +266,60 @@ public class GameView implements Observer
 
 
     /* BUTTON EVENT HANDLER */
+    /**
+     * Undo button event handler: undo last move.
+     * @param actionEvent click event.
+     */
     public void UndoClicked(ActionEvent actionEvent)
     {
+        // Disable full-hint mode, if enabled
+        fullHintGame = false;
         // Execute undo
         undo(actionEvent);
     }
+    /**
+     * Reset button event handler: reset all the match (all moves and score).
+     * @param actionEvent click event.
+     */
     public void ResetClicked(ActionEvent actionEvent)
     {
+        // Disable full-hint mode, if enabled
+        fullHintGame = false;
         // Undo all operations
-        while(gameHandler.getMoveCounter() > 0)
-        {
-            // Execute undo: if history-file is not found, exit reset
-            if(!undo(actionEvent))
-                break;
-        }
+        gameHandler.reset();
     }
+    /**
+     * Save button event handler: save match.
+     * @param actionEvent click event.
+     */
     public void SaveClicked(ActionEvent actionEvent)
     {
         gameHandler.saveGame();
     }
-    public void DispositionListClicked(ActionEvent actionEvent)
-    {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/dispositions.fxml"));
-        OpenWindow(fxmlLoader, "Disposition");
-    }
-    public void HomeClicked(ActionEvent actionEvent)
-    {
-        if(gameHandler.isSolved())
-            gameHandler.saveGame();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
-        OpenWindow(fxmlLoader, "Main Menu");
-    }
+    /**
+     * Hint button event handler: request next best move.
+     * @param actionEvent click event.
+     */
     public void NextBestMoveClicked(ActionEvent actionEvent)
     {
+        // Execute hint
         if(gameHandler.isSolved())
             return;
         if(hintFlag)
             return;
         hintFlag = gameHandler.hint();
     }
+    /**
+     * Hints button event handler: request next best moves, until game is solved.
+     * @param e right click event.
+     */
     public void FullHintGame(ContextMenuEvent e)
     {
+        // Enable or disable full-hint gamemode.
         fullHintGame = !fullHintGame;
         if(fullHintGame)
         {
+            // Start hints
             if(gameHandler.isSolved())
                 return;
             if(hintFlag)
@@ -318,11 +327,37 @@ public class GameView implements Observer
             hintFlag = gameHandler.hint();
         }
     }
+    /**
+     * Continue game button event handler: retry game after victory.
+     * @param actionEvent click event.
+     */
     public void ContinueGameClicked(ActionEvent actionEvent)
     {
-        hideVictoryPanel();
         // Disable full-hint game mode, if enabled.
         fullHintGame = false;
+        // Hide victory panel.
+        hideVictoryPanel();
+    }
+    /**
+     * Exit button event handler: go to disposition list view.
+     * @param actionEvent click event.
+     */
+    public void DispositionListClicked(ActionEvent actionEvent)
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/dispositions.fxml"));
+        OpenWindow(fxmlLoader, "Disposition");
+    }
+    /**
+     * Exit button event handler: go to main menu.
+     * @param actionEvent click event.
+     */
+    public void HomeClicked(ActionEvent actionEvent)
+    {
+        if(gameHandler.isSolved())
+            gameHandler.saveGame();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/klotski/GUI/menu.fxml"));
+        OpenWindow(fxmlLoader, "Main Menu");
     }
 
 
@@ -651,6 +686,9 @@ public class GameView implements Observer
         pnOverlay.setVisible(true);
         pnVictoryPane.setVisible(true);
     }
+    /**
+     * Hide victory pane.
+     */
     private void hideVictoryPanel()
     {
         // Hide victory pane

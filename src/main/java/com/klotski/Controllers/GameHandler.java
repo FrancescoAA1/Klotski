@@ -363,6 +363,17 @@ public class GameHandler implements Observable
             return false;
         }
     }
+    /**
+     * Undo all the executed moves and reset hint score.
+     */
+    public void reset()
+    {
+        // Remove all moves
+        while(undo());
+
+        // Reset hint score
+        currentMatch.setHintsNumber(0);
+    }
 
 
 
