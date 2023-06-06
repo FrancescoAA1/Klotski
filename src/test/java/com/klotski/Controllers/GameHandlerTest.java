@@ -140,6 +140,29 @@ class GameHandlerTest
     }
 
     @Test
+    void reset() {
+        // Create controller for valid new game
+        GameHandler controller = new GameHandler(validDisposition.getOriginalNumber());
+
+        // Valid Move
+        controller.move(new Position(0,4), Direction.RIGHT);
+        controller.move(new Position(0,2), Direction.DOWN);
+
+        // Valid Hint
+        Random rnd = new Random();
+        int bound = rnd.nextInt(0,20);
+        for(int i = 0; i < bound; i++)
+        {
+            controller.hint();
+        }
+
+        // Reset all
+        controller.reset();
+        assertTrue(controller.getMoveCounter() == 0);
+        assertTrue(controller.getHintCounter() == 0);
+    }
+
+    @Test
     void isSolved() {
         // Create controller for valid new game
         GameHandler controller = new GameHandler(validDisposition.getOriginalNumber());
