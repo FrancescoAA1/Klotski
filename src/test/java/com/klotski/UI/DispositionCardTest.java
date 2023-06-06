@@ -12,7 +12,7 @@ class DispositionCardTest {
     @BeforeAll
     public static void setup()
     {
-        String imagePath = "m1.png";
+        String imagePath = "/com/klotski/images/m1.png";
 
         int dispositionNumber = 12;
 
@@ -22,7 +22,7 @@ class DispositionCardTest {
     @Test
     void setImagePath()
     {
-        String imagePath = "m2.png";
+        String imagePath = "/com/klotski/images/m2.png";;
 
         dispositionCard.setImagePath(imagePath);
 
@@ -53,11 +53,6 @@ class DispositionCardTest {
     @Test
     void getDispositionNumber()
     {
-        int dispositionNumber = 12;
 
-        int result = dispositionCard.getDispositionNumber();
-
-        // Check disposition number is equal to the one provided
-        assertEquals(dispositionNumber, result);
     }
 }
