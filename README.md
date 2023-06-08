@@ -25,14 +25,14 @@ le seguenti quattro opzioni (presentate in senso orario dal pulsante in
 alto a sinistra):
 
 #### 1. **Nuova Partita**:
-Questa opzione consente all\'utente di iniziare una nuova [partita]{.underline}. L\'utente può
-scegliere una delle configurazioni preesistenti (Figura 3) e iniziare a
+Questa opzione consente all\'utente di iniziare una nuova partita. L\'utente può
+scegliere una delle configurazioni preesistenti e iniziare a
 giocare immediatamente. Alternativamente, l'utente può scegliere di
 tornare al menu principale cliccando sulla freccia in alto a sinistra.
 
 #### 2. **Carica Partita**: 
 L\'opzione \"Carica Partita\" consente all\'utente
-di riprendere una partita precedentemente salvata (Figura 4). Per ogni
+di riprendere una partita precedentemente salvata. Per ogni
 partita salvata, è indicata il numero della configurazione, il numero di
 mosse già effettuate, la data di inizio e lo stato della stessa. Tale
 modalità permette all\'utente di tornare a un punto specifico del gioco
@@ -55,8 +55,7 @@ l\'utente viene presentato con il classico riquadro di gioco, che
 rappresenta il campo di gioco del puzzle. Qui l'utente può trascinare i
 blocchi con il mouse, tornare alla mossa precedente, salvare la partita
 in corso, ottenere suggerimenti per la prossima mossa migliore e tornare
-alla lista delle configurazioni disponibili. Con riferimento alla Figura
-2 presente nella pagina successiva, si elencano in senso orario (a
+alla lista delle configurazioni disponibili. Si elencano in senso orario (a
 partire dall'angolo in alto a sinistra) i pulsanti che consentono di
 svolgere le funzionalità menzionate sopra:
 
@@ -93,6 +92,6 @@ svolgere le funzionalità menzionate sopra:
  parte bassa e centrale del riquadro blu. In tal caso, il giocatore
  potrà visualizzare il banner di vittoria, che mostra il numero di
  mosse eseguite e gli indizi forniti. Inoltre, la finestra fornisce la
- possibilità di tornare al menu (pulsante Home) oppure di ritornare
- alla mossa precedente la vittoria (pulsante Continue).
+ possibilità di tornare al menu (pulsante **Home**) oppure di ritornare
+ alla mossa precedente la vittoria (pulsante **Continue**).
 
