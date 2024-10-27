@@ -95,7 +95,10 @@ svolgere le funzionalità menzionate sopra:
  possibilità di tornare al menu (pulsante **Home**) oppure di ritornare
  alla mossa precedente la vittoria (pulsante **Continue**).
 
- Istruzioni d’Uso
+_________________________________________________________________________
+
+ <h1>Istruzioni d’Uso</h1>
+ 
 1. Per scaricare l’applicativo, accedi anzitutto al seguente link:
 https://github.com/FrancescoAA1/Klotski/releases/ Qui troverai due versioni del gioco, disponibili
 rispettivamente per sistemi operativi Windows e MacOS.
