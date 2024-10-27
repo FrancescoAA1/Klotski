@@ -95,3 +95,44 @@ svolgere le funzionalità menzionate sopra:
  possibilità di tornare al menu (pulsante **Home**) oppure di ritornare
  alla mossa precedente la vittoria (pulsante **Continue**).
 
+ Istruzioni d’Uso
+1. Per scaricare l’applicativo, accedi anzitutto al seguente link:
+https://github.com/FrancescoAA1/Klotski/releases/ Qui troverai due versioni del gioco, disponibili
+rispettivamente per sistemi operativi Windows e MacOS.
+2. Individua la versione corrispondente al tuo sistema operativo e clicca sul file Klotski.jar per avviare il
+download del programma.
+3. Una volta completato il processo, troverai il file nella cartella Download del tuo computer.
+4. A questo punto, prima di avviare l'eseguibile, assicurati di avere Java installato sulla tua macchina. Puoi
+verificare se Java è già installato seguendo questi passaggi:
+• Apri il Prompt dei comandi di Windows o il Terminale di MacOS.
+• Digita il comando java -version e premi Invio.
+• Se il comando restituisce informazioni sulla versione di Java installata, significa che Java è già
+presente sulla tua macchina. In tal caso, puoi passare al passaggio successivo.
+• Se il comando non viene riconosciuto o se non hai Java installato, puoi scaricare quest’ultimo dal sito
+ufficiale: https://www.java.com/it/download/manual.jsp
+• Assicurati inoltre di aver installato la versione di JDK (versione 17 o successive) necessaria a poter
+eseguire le librerie utilizzate dal Klotski.jar. Se non hai un JDK installato puoi scaricarlo direttamente
+dal sito ufficiale seguendo il link: https://www.oracle.com/java/technologies/downloads/
+5. Una volta completato il download e l'installazione di Java (se necessario), torna alla cartella di download
+del tuo computer e fai doppio clic sul file .jar del gioco Klotski.
+L'eseguibile del gioco Klotski si aprirà e potrai iniziare a giocare.
+Nota: dal link riportato nel primo passaggio, è possibile scaricare i file zip del gioco al fine di ispezionare il
+codice.
+Nota per utenti MacOS: al fine di poter eseguire correttamente il file Klotski.jar sono necessarie le
+seguenti operazioni:
+• Consentire l’esecuzione di applicazioni provenienti da sviluppatori non identificati. Per fare
+questo, aprire le “Impostazioni di Sistema” recarsi alla voce “Privacy e sicurezza” e dare il
+consenso all’esecuzione di KlotskiMacOS.jar cliccando sull’apposito pulsante e inserendo le
+credenziali dell’utente corrente (che deve possedere di privilegi di root).
+• A questo punto, per poter avviare KlotskiMacOS.jar con un doppio click sull’icona è
+indispensabile spostare il file all’interno di una cartella con privilegi di root per tutti gli utenti. Per
+fare ciò, creare una cartella, cliccare il tasto desto su di essa e premere sulla voce “Ottieni
+Informazioni”. Dopo aver raggiunto la sezione “Condivisione e permessi” selezionare i privilegi di
+“lettura e scrittura” per ogni utente che abbia accesso a quella cartella.
+• Se si vuole invece eseguire KlotskiMacOS.jar in cartelle qualsiasi che non rispecchino i requisiti
+del punto precedente è necessario avviare il file dal terminale. Per fare ciò apri un terminale
+nella cartella che contiene KlotskiMacOS.jar ed esegui il seguente comando:
+sudo java -jar KlotskiMacOS.jar
+(In tal caso nella cartella che contiene il file verrà creata la cartella “target” dal gioco contenete al suo interno i file di
+log delle partite)
+
