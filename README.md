@@ -1,149 +1,87 @@
-<h1>KLOTSKI</h1>
+# KLOTSKI
 
-## **Il gioco**
+## **The Game**
 
-Klotski è un puzzle costituito da una scatola di dimensioni 4x5 in cui
-sono inseriti blocchi colorati di dimensioni variabili, tra cui un
-blocco quadrato rosso di lato 2 caselle. L'obiettivo del gioco è quello
-di posizionare il blocco rosso in prossimità dell'uscita presente sul
-fondo della tabella adoperando il minor numero di mosse possibili. Per
-fare ciò, l'utente ha la possibilità di spostare verticalmente oppure
-orizzontalmente i blocchi, verificando che il blocco mosso non vada a
-finire in caselle occupate.
+Klotski is a puzzle consisting of a 4x5 grid box containing colored blocks of various sizes, including a red square block of size 2x2. The goal of the game is to move the red block toward the exit located at the bottom of the grid, using the fewest possible moves. To achieve this, the user can move blocks vertically or horizontally, ensuring that a moved block does not end up in occupied cells.
 
-Il gioco, nato nel XX secolo, è stato distribuito in numerose
-configurazioni, differenti l'una dall'altra per tipologie di blocchi e
-grado di difficoltà. In questa versione desktop, l'utente potrà mettere
-alla prova le proprie abilità logiche con alcune delle configurazioni
-più conosciute, il tutto tramite funzionalità aggiuntive che favoriscano
-una risoluzione più veloce del rompicapo.
+The game, originally created in the 20th century, has been released in many different configurations, each varying in block types and difficulty level. In this desktop version, the user will be able to challenge their logical skills with some of the most well-known configurations, supported by additional features designed to help solve the puzzle more efficiently.
 
 __________________________________________________________________________
 
-All'avvio del gioco, viene visualizzato un menu principale intuitivo con
-le seguenti quattro opzioni (presentate in senso orario dal pulsante in
-alto a sinistra):
+At startup, the game displays an intuitive main menu with the following four options (presented clockwise starting from the top-left button):
 
-#### 1. **Nuova Partita**:
-Questa opzione consente all\'utente di iniziare una nuova partita. L\'utente può
-scegliere una delle configurazioni preesistenti e iniziare a
-giocare immediatamente. Alternativamente, l'utente può scegliere di
-tornare al menu principale cliccando sulla freccia in alto a sinistra.
+#### 1. **New Game**:
+This option allows the user to start a new game. The user can choose one of the predefined configurations and begin playing immediately. Alternatively, the user can return to the main menu by clicking the back arrow in the top-left corner.
 
-#### 2. **Carica Partita**: 
-L\'opzione \"Carica Partita\" consente all\'utente
-di riprendere una partita precedentemente salvata. Per ogni
-partita salvata, è indicata il numero della configurazione, il numero di
-mosse già effettuate, la data di inizio e lo stato della stessa. Tale
-modalità permette all\'utente di tornare a un punto specifico del gioco
-senza perdere i progressi precedenti. Anche in questo caso l'utente può
-tornare al menu principale cliccando sulla freccia in alto a sinistra.
+#### 2. **Load Game**:
+The "Load Game" option allows the user to resume a previously saved game. For each saved game, the configuration number, number of moves already made, start date, and current status are displayed. This mode allows the user to return to a specific point in the game without losing progress. Again, the user can return to the main menu by clicking the back arrow in the top-left corner.
 
-#### 3. **Esci**: 
-L\'opzione \"Esci\" consente all\'utente di chiudere il gioco.
+#### 3. **Exit**:
+The "Exit" option allows the user to close the game.
 
-#### 4. **Crediti**: 
-Nella sezione \"Crediti\", l\'utente può visualizzare i
-nomi degli sviluppatori del gioco Klotski. Cliccando su ciascuna icona,
-è possibile visualizzare i profili LinkedIn di ciascun developer.
+#### 4. **Credits**:
+In the "Credits" section, the user can view the names of the Klotski game developers. By clicking on each icon, it is possible to view each developer’s LinkedIn profile.
 
 _________________________________________________________________________
 
-Nel caso di selezione delle opzioni **Nuova Partita** e **Carica
-Partita**, dopo la scelta della configurazione o della partita,
-l\'utente viene presentato con il classico riquadro di gioco, che
-rappresenta il campo di gioco del puzzle. Qui l'utente può trascinare i
-blocchi con il mouse, tornare alla mossa precedente, salvare la partita
-in corso, ottenere suggerimenti per la prossima mossa migliore e tornare
-alla lista delle configurazioni disponibili. Si elencano in senso orario (a
-partire dall'angolo in alto a sinistra) i pulsanti che consentono di
-svolgere le funzionalità menzionate sopra:
+When selecting either **New Game** or **Load Game**, after choosing a configuration or a saved game, the user is presented with the classic game board, representing the puzzle field. Here, the user can drag blocks with the mouse, undo the previous move, save the current game, request hints for the next best move, and return to the list of available configurations. The buttons enabling these features are listed clockwise starting from the top-left corner:
 
--   Pulsante **Home**, per ritornare al menu
+- **Home** button, to return to the main menu
 
--   Pulsante **Level**, per ritornare alla
-    finestra delle configurazioni 
+- **Level** button, to return to the configuration selection screen
 
--   Pulsante **Hint**, per ottenere suggerimenti; come indicato nelle
-    specifiche del progetto, il gioco è in grado di risolvere ciascuna
-    configurazione dall'inizio della partita senza l'intervento
-    dell'utente. Al contrario, nel caso in cui il giocatore avvii la
-    partita e provi una configurazione di mosse che non coincidono con
-    la soluzione ottimale, la funzionalità Hint punta a ripristinare la
-    configurazione iniziale (decrementando il numero di mosse), per poi
-    eseguire la soluzione migliore.
+- **Hint** button, to receive suggestions; as specified in the project requirements, the game is capable of solving each configuration from the start without user intervention. However, if the player performs moves that do not match the optimal solution, the Hint function resets the configuration to the initial state (decreasing the number of moves) and then executes the optimal solution.
 
-> Nota Importante: cliccando con il tasto destro sul pulsante, è possibile
-> vedere una risoluzione velocizzata della configurazione.
+> Important Note: by right-clicking the button, it is possible to view a fast-forwarded solution of the configuration.
 
--   Pulsante **Save**, per salvare una qualsiasi partita. Il salvataggio
-    della partita in corso è immediatamente disponibile nella sezione
-    "Carica Partita", e permette all'utente di ripristinando le mosse
-    precedentemente eseguite.
+- **Save** button, to save the current game. The saved game is immediately available in the "Load Game" section, allowing the user to restore previously executed moves.
 
--   Pulsante **Undo**, per annullare la mossa corrente. Tale funzionalità
-    non è ovviamente disponibile all'inizio di una nuova partita, oppure
-    nel caso lo storico di una partita salvata sia stato eliminato.
+- **Undo** button, to undo the current move. This feature is not available at the start of a new game or if the history of a saved game has been deleted.
 
--   Pulsante **Home**, per ritornare al menu principale.
+- **Home** button, to return to the main menu.
 
- Come nella versione fisica del gioco, una partita si conclude con il
- posizionamento del blocco rosso in corrispondenza dell'apertura nella
- parte bassa e centrale del riquadro blu. In tal caso, il giocatore
- potrà visualizzare il banner di vittoria, che mostra il numero di
- mosse eseguite e gli indizi forniti. Inoltre, la finestra fornisce la
- possibilità di tornare al menu (pulsante **Home**) oppure di ritornare
- alla mossa precedente la vittoria (pulsante **Continue**).
+As in the physical version of the game, a match ends when the red block is positioned at the opening in the bottom-center of the blue frame. In this case, the player will see a victory banner displaying the number of moves performed and the hints used. Additionally, the window provides the option to return to the main menu (**Home** button) or to return to the move prior to victory (**Continue** button).
 
 _________________________________________________________________________
 
- <h1>Istruzioni d’Uso</h1>
- 
-1. Per scaricare l’applicativo, accedi anzitutto al seguente link:
-https://github.com/FrancescoAA1/Klotski/releases/ Qui troverai due versioni del gioco, disponibili
-rispettivamente per sistemi operativi Windows e MacOS.
-2. Individua la versione corrispondente al tuo sistema operativo e clicca sul file Klotski.jar per avviare il
-download del programma.
-3. Una volta completato il processo, troverai il file nella cartella Download del tuo computer.
-4. A questo punto, prima di avviare l'eseguibile, assicurati di avere Java installato sulla tua macchina. Puoi
-verificare se Java è già installato seguendo questi passaggi:
+# **User Instructions**
 
-• Apri il Prompt dei comandi di Windows o il Terminale di MacOS.
+1. To download the application, first access the following link:  
+https://github.com/FrancescoAA1/Klotski/releases/  
+There you will find two versions of the game, available respectively for Windows and macOS operating systems.
 
-• Digita il comando java -version e premi Invio.
+2. Select the version corresponding to your operating system and click on the file **Klotski.jar** to start downloading the program.
 
-• Se il comando restituisce informazioni sulla versione di Java installata, significa che Java è già
-presente sulla tua macchina. In tal caso, puoi passare al passaggio successivo.
+3. Once the download is complete, you will find the file in your computer’s Downloads folder.
 
-• Se il comando non viene riconosciuto o se non hai Java installato, puoi scaricare quest’ultimo dal sito
-ufficiale: https://www.java.com/it/download/manual.jsp
+4. Before running the executable, make sure you have Java installed on your machine. You can check whether Java is already installed by following these steps:
 
-• Assicurati inoltre di aver installato la versione di JDK (versione 17 o successive) necessaria a poter
-eseguire le librerie utilizzate dal Klotski.jar. Se non hai un JDK installato puoi scaricarlo direttamente
-dal sito ufficiale seguendo il link: https://www.oracle.com/java/technologies/downloads/
-6. Una volta completato il download e l'installazione di Java (se necessario), torna alla cartella di download
-del tuo computer e fai doppio clic sul file .jar del gioco Klotski.
-L'eseguibile del gioco Klotski si aprirà e potrai iniziare a giocare.
-Nota: dal link riportato nel primo passaggio, è possibile scaricare i file zip del gioco al fine di ispezionare il
-codice.
-Nota per utenti MacOS: al fine di poter eseguire correttamente il file Klotski.jar sono necessarie le
-seguenti operazioni:
+• Open the Windows Command Prompt or macOS Terminal.
 
-• Consentire l’esecuzione di applicazioni provenienti da sviluppatori non identificati. Per fare
-questo, aprire le “Impostazioni di Sistema” recarsi alla voce “Privacy e sicurezza” e dare il
-consenso all’esecuzione di KlotskiMacOS.jar cliccando sull’apposito pulsante e inserendo le
-credenziali dell’utente corrente (che deve possedere di privilegi di root).
+• Type the command `java -version` and press Enter.
 
-• A questo punto, per poter avviare KlotskiMacOS.jar con un doppio click sull’icona è
-indispensabile spostare il file all’interno di una cartella con privilegi di root per tutti gli utenti. Per
-fare ciò, creare una cartella, cliccare il tasto desto su di essa e premere sulla voce “Ottieni
-Informazioni”. Dopo aver raggiunto la sezione “Condivisione e permessi” selezionare i privilegi di
-“lettura e scrittura” per ogni utente che abbia accesso a quella cartella.
+• If the command returns information about the installed Java version, Java is already present on your system. In that case, you can proceed to the next step.
 
-• Se si vuole invece eseguire KlotskiMacOS.jar in cartelle qualsiasi che non rispecchino i requisiti
-del punto precedente è necessario avviare il file dal terminale. Per fare ciò apri un terminale
-nella cartella che contiene KlotskiMacOS.jar ed esegui il seguente comando:
+• If the command is not recognized or Java is not installed, you can download it from the official website:  
+https://www.java.com/it/download/manual.jsp
+
+• Make sure you have also installed the JDK (version 17 or later), which is required to run the libraries used by Klotski.jar. If you do not have a JDK installed, you can download it directly from the official website:  
+https://www.oracle.com/java/technologies/downloads/
+
+5. Once Java installation is complete (if necessary), return to your Downloads folder and double-click the Klotski .jar file.
+
+The Klotski executable will open and you can start playing.
+
+**Note:** From the link provided in step 1, it is also possible to download the zip files of the game in order to inspect the source code.
+
+**Note for macOS users:** to properly run KlotskiMacOS.jar, the following steps are required:
+
+• Allow execution of applications from unidentified developers. To do this, open "System Settings", go to "Privacy & Security", and authorize the execution of KlotskiMacOS.jar by clicking the appropriate button and entering the current user’s credentials (which must have root privileges).
+
+• To enable double-click execution of KlotskiMacOS.jar, the file must be placed inside a folder with root privileges for all users. To do this, create a folder, right-click it, and select "Get Info". In the "Sharing & Permissions" section, set "read and write" privileges for every user who has access to that folder.
+
+• If you want to run KlotskiMacOS.jar in any other folder that does not meet the above requirements, you must run it from the terminal. To do so, open a terminal in the folder containing KlotskiMacOS.jar and execute the following command:
+
 sudo java -jar KlotskiMacOS.jar
-(In tal caso nella cartella che contiene il file verrà creata la cartella “target” dal gioco contenete al suo interno i file di
-log delle partite)
 
+(In this case, a folder named "target" will be created by the game in the same directory, containing log files of the matches)
